@@ -29,7 +29,7 @@ ScaffoldingReadMe.txt
 # Sensitive information
 appsettings.json
 appsettings.Development.json
-DataAccess/Concrete/Context/MyDbContext.cs
+PortNumbers.txt
 
 # Logs
 logs/
