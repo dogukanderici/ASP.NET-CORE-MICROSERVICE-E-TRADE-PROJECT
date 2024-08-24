@@ -1,5 +1,4 @@
 IdentityServer	==>		5001
-Test			==>		7290
 Catalog			==>		7291
 Discount		==>		7292
 Order			==>		7293
