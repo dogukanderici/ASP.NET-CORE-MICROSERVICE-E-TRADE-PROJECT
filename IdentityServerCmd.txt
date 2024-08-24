@@ -1,0 +1,13 @@
+** Solution altýnda yeni bir IdentityServer klasörü oluþturulur.
+
+dotnet new -i identityserver4.templates
+
+** CMD ekranýnda oluþturulan bu klasörün yoluna gidilir.
+D: cd D:/...
+
+dotnet new is4aspid --name MultiShop.IdentityServer
+
+Yukarýdaki adýmlar uygulandýktan sonra IdentityServer Web Api ugulamasý oluþturulmuþ olacaktýr.
+Migrasyon iþlemleri için EntityFramework kütüphanlerini (SqlServer ve Tools) NuGet'dan yüklenmesi gereklidir.
+
+Migrasyon dosyasý oluþturulmadan (default olarak bir migrasyon dosyasý geliyor) update-database ile tablolar oluþturulur.

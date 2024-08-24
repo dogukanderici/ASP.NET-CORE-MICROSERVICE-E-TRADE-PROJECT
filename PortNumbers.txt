@@ -1,0 +1,6 @@
+IdentityServer	==>		5001
+Catalog			==>		7291
+Discount		==>		7292
+Order			==>		7293
+Cargo			==>		7294
+Basket			==>		7295

@@ -1,0 +1,55 @@
+﻿@model UpdateProductViewModel
+
+@{
+    ViewData["Title"] = "UpdateProduct";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Ürün Güncelleme Sayfası</h4>
+                <p class="alert alert-secondary">Ürün ile ilgili güncelleme işlemlerinizi aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="AddNewCategory" asp-area="Admin" asp-controller="Product" asp-action="UpdateProduct" method="post">
+                        @Html.HiddenFor(p => p.UpdateProductDto.ProductID)
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="UpdateProductDto.ProductName" class="control-label">Ürün Adı</label>
+                                <input asp-for="UpdateProductDto.ProductName" type="text" class="form-control" placeholder="Ürün Adı">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="UpdateProductDto.ProductPrice" class="control-label">Ürün Fiyatı</label>
+                                <input asp-for="UpdateProductDto.ProductPrice" type="number" step="0.01" min="0" class="form-control" placeholder="Ürün Fiyatı">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="UpdateProductDto.ProductImageUrl" class="control-label">Ürün Görseli</label>
+                                <input asp-for="UpdateProductDto.ProductImageUrl" type="text" class="form-control" placeholder="Ürün Görseli">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="UpdateProductDto.CategoryID" class="control-label">Ürün Kategorisi</label>
+                                <select asp-for="UpdateProductDto.CategoryID" asp-items="@ViewBag.CategoryList" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group has-feedback">
+                                <label asp-for="UpdateProductDto.ProductDescription" class="control-label">Ürün Açıklaması</label>
+                                <textarea asp-for="UpdateProductDto.ProductDescription" class="form-control" rows="5" placeholder="Ürün Açıklaması"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success">Güncelleme</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

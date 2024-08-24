@@ -1,0 +1,32 @@
+﻿@model UpdateCategoryViewModel
+@{
+    ViewData["Title"] = "UpdateCategory";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Kategori Güncelleme Sayfası</h4>
+                <p class="alert alert-secondary">Kategori ile ilgili güncelleme işlemlerinizi aşağıdaki alandan gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="UpdateCategory" asp-area="Admin" asp-controller="Category" asp-action="UpdateCategory" method="post">
+                        @Html.HiddenFor(c => c.UpdateCategoryDto.CategoryID)
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="@Model.UpdateCategoryDto.CategoryName" class="control-label">Kategori Adı</label>
+                                <input asp-for="@Model.UpdateCategoryDto.CategoryName" type="text" class="form-control" placeholder="Kategori Adı">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
