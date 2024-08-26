@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using MultiShop.Catalog.DataAccess.Abstract;
 using MultiShop.Catalog.DataAccess.Concrete;
 using MultiShop.Catalog.Services.CategoryServices;
+using MultiShop.Catalog.Services.FeatureSliderService;
 using MultiShop.Catalog.Services.ProductDetailService;
 using MultiShop.Catalog.Services.ProductImageServices;
 using MultiShop.Catalog.Services.ProductServices;
@@ -70,10 +71,21 @@ builder.Services.AddScoped<IProductImageDal, MongoProductImageDal>(sp =>
     return new MongoProductImageDal(mapper, databaseSettings, configuration, collectionName);
 });
 
+builder.Services.AddScoped<IFeatureSliderDal, MongoFeatureSliderDto>(sp =>
+{
+    var mapper = sp.GetRequiredService<IMapper>();
+    var databaseSettings = sp.GetRequiredService<IDatabaseSettings>();
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    string collectionName = "FeatureSliderCollectionSettings";
+
+    return new MongoFeatureSliderDto(mapper, databaseSettings, configuration, collectionName);
+});
+
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductDetailService, ProductDetailService>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
+builder.Services.AddScoped<IFeatureSliderService, FeatureSliderService>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

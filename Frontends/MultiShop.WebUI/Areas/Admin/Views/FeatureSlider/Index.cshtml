@@ -1,0 +1,64 @@
+﻿@model FeatureSliderListViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Öne Çıkan Listesi</h4>
+                <p>Öne Çıkanlarla ilgili işlemlerinizi aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="simple-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Öne Çıkan Başlığı</th>
+                                <th>Öne Çıkan Açıklama</th>
+                                <th>Öne Çıkan Durumu</th>
+                                <th>Sil / Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ResultFeatureSliderDto)
+                            {
+                                count++;
+
+                                <tr>
+                                    <th scope="row">@count</th>
+                                    <td>@item.Title</td>
+                                    <td>@item.Description</td>
+
+                                    @if (@item.IsActive)
+                                    {
+                                        <td><div><span class="btn btn-success btn-sm">AKTİF</span></div></td>
+                                    }
+                                    else
+                                    {
+                                        <td><div><span class="btn btn-danger btn-sm">PASİF</span></div></td>
+                                    }
+
+                                    <td>
+                                        <a class="btn btn-danger" asp-area="Admin" asp-controller="FeatureSlider" asp-action="DeleteFeatureSlider" asp-route-id="@item.FeatureSliderId">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-info" asp-area="Admin" asp-controller="FeatureSlider" asp-action="UpdateFeatureSlider" asp-route-id="@item.FeatureSliderId">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <a href="/admin/featureslider/create" class="btn btn-primary">Yeni Öne Çıkan Ekle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
