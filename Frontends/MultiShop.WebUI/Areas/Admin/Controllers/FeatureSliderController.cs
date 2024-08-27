@@ -29,7 +29,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
             ViewBag.v3 = "Öne Çıkan Listesi";
             var client = _httpClientFactory.CreateClient();
 
-            var responseMessage = await client.GetAsync("https://localhost:7291/api/featureslider");
+            var responseMessage = await client.GetAsync("https://localhost:7291/api/featuresliders");
 
             var model = new FeatureSliderListViewModel();
 
@@ -81,7 +81,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            var responseMessage = await client.PostAsync("https://localhost:7291/api/featureslider", stringContent);
+            var responseMessage = await client.PostAsync("https://localhost:7291/api/featuresliders", stringContent);
 
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -97,7 +97,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient();
 
-            var responseMessage = await client.GetAsync("https://localhost:7291/api/featureslider/" + id);
+            var responseMessage = await client.GetAsync("https://localhost:7291/api/featuresliders/" + id);
 
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -133,7 +133,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            var responseMessage = await client.PutAsync("https://localhost:7291/api/featureslider", stringContent);
+            var responseMessage = await client.PutAsync("https://localhost:7291/api/featuresliders", stringContent);
 
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -148,7 +148,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient();
 
-            var responseMessage = await client.DeleteAsync("https://localhost:7291/api/featureslider?id=" + id);
+            var responseMessage = await client.DeleteAsync("https://localhost:7291/api/featuresliders?id=" + id);
 
             if (responseMessage.IsSuccessStatusCode)
             {

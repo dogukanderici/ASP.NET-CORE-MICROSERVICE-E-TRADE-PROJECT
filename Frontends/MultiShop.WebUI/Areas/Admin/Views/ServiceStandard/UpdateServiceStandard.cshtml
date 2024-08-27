@@ -1,0 +1,45 @@
+﻿@model UpdateServiceStandardDto
+
+@{
+    ViewData["Title"] = "UpdateServiceStandard";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Servis Standardı Güncelleme Sayfası</h4>
+                <p class="alert alert-info">Servis Standardı ile ilgili güncelleme işlemlerinizi aşağıdaki alandan gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="UpdateServiceStandard" asp-area="Admin" asp-controller="ServiceStandard" asp-action="UpdateServiceStandard" method="post">
+                        @Html.HiddenFor(ss => ss.ServiceStandardId)
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ServiceStandardName" class="control-label">Servis Standardı Adı</label>
+                                <input asp-for="ServiceStandardName" type="text" class="form-control" placeholder="Servis Standardı Adı">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ServiceStandardIcon" class="control-label">Servis Standardı İkonu</label>
+                                <input asp-for="ServiceStandardIcon" type="text" class="form-control" placeholder="Servis Standardı İkonu">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="IsActive" class="control-label">Servis Standardı Durumu</label>
+                                <input asp-for="IsActive" type="checkbox" class="form-control" placeholder="Servis Standardı Durumu">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

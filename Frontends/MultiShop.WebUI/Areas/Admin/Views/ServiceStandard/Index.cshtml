@@ -1,0 +1,70 @@
+﻿@model ServiceStandardListViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Servis Standartları Listesi</h4>
+                <p>Servis Standartlarıyla ilgili işlemlerinizi aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="simple-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Standart Adı</th>
+                                <th>Standart İkonu</th>
+                                <th>Sil / Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.ResultServiceStandardDto == null)
+                            {
+                                <tr>
+                                    <td>Gösterilecek Veri Bulunamadı</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                if (Model.ResultServiceStandardDto.Count() < 1)
+                                {
+                                    <tr>
+                                        <td>Gösterilecek Veri Bulunamadı</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var item in Model.ResultServiceStandardDto)
+                                    {
+                                        count++;
+                                        <tr>
+                                            <th scope="row">@count</th>
+                                            <td>@item.ServiceStandardName</td>
+                                            <td><div class="@item.ServiceStandardIcon text-primary m-0 mr-3"></div></td>
+                                            <td>
+                                                <a class="btn btn-danger" asp-area="Admin" asp-controller="ServiceStandard" asp-action="DeleteServiceStandard" asp-route-id="@item.ServiceStandardId">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </a>
+                                                <a class="btn btn-info" asp-area="Admin" asp-controller="ServiceStandard" asp-action="UpdateServiceStandard" asp-route-id="@item.ServiceStandardId">
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                    <a href="/admin/servicestandard/create" class="btn btn-primary">Yeni Servis Standardı Ekle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

@@ -1,0 +1,56 @@
+﻿@model UpdateSpecialOfferDto
+@{
+    ViewData["Title"] = "UpdateSpecialOffer";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Kategori Güncelleme Sayfası</h4>
+                <p class="alert alert-info">Kategori ile ilgili güncelleme işlemlerinizi aşağıdaki alandan gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="UpdateSpecialOffer" asp-area="Admin" asp-controller="SpecialOffer" asp-action="UpdateSpecialOffer" method="post" enctype="multipart/form-data">
+                        @Html.HiddenFor(so => so.SpecailOfferId)
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="Title" class="control-label">Özel Teklif Başlık</label>
+                                <input asp-for="Title" type="text" class="form-control" placeholder="Özel Teklif Başlık">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="SubTitle" class="control-label">Özel Teklif Açıklama</label>
+                                <input asp-for="SubTitle" type="text" class="form-control" placeholder="Özel Teklif Açıklama">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="Image" class="control-label">Özel Teklif Görseli</label>
+                                <input asp-for="Image" type="file" class="form-control">
+                            </div>
+                        </div>
+                        @Html.HiddenFor(so => so.ImageUrl)
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="IsActive" class="control-label">Özel Teklif Durumu</label>
+                                <input asp-for="IsActive" type="checkbox" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group has-feedback">
+                                <a href="~/userfiles/@Model.ImageUrl" target="_blank">Kayıtlı Görseli Görüntülemek İçin Tıklayınız</a>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

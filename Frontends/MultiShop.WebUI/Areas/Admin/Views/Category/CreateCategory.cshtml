@@ -10,13 +10,19 @@
         <div class="col-md-12">
             <div class="chart-box">
                 <h4>Kategori Ekleme Sayfası</h4>
-                <p class="alert alert-secondary">Kategori ile ilgili ekleme işlemlerinizi aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
-                <div class ="row">
-                    <form id="AddNewCategory" asp-area="Admin" asp-controller="Category" asp-action="CreateCategory" method="post">
+                <p class="alert alert-info">Kategori ile ilgili ekleme işlemlerinizi aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="AddNewCategory" asp-area="Admin" asp-controller="Category" asp-action="CreateCategory" method="post" enctype="multipart/form-data">
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="CategoryName" class="control-label">Kategori Adı</label>
                                 <input asp-for="CategoryName" type="text" class="form-control" placeholder="Kategori Adı">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="CategoryImage" class="control-label">Kategori Görseli</label>
+                                <input asp-for="CategoryImage" type="file" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-12">

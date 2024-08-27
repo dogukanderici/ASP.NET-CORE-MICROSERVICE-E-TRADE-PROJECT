@@ -8,6 +8,8 @@ using MultiShop.Catalog.Services.FeatureSliderService;
 using MultiShop.Catalog.Services.ProductDetailService;
 using MultiShop.Catalog.Services.ProductImageServices;
 using MultiShop.Catalog.Services.ProductServices;
+using MultiShop.Catalog.Services.ServiceStandardServices;
+using MultiShop.Catalog.Services.SpecialOfferServices;
 using MultiShop.Catalog.Settings.Abstract;
 using MultiShop.Catalog.Settings.Concrete;
 using System.Reflection;
@@ -71,14 +73,34 @@ builder.Services.AddScoped<IProductImageDal, MongoProductImageDal>(sp =>
     return new MongoProductImageDal(mapper, databaseSettings, configuration, collectionName);
 });
 
-builder.Services.AddScoped<IFeatureSliderDal, MongoFeatureSliderDto>(sp =>
+builder.Services.AddScoped<IFeatureSliderDal, MongoFeatureSliderDal>(sp =>
 {
     var mapper = sp.GetRequiredService<IMapper>();
     var databaseSettings = sp.GetRequiredService<IDatabaseSettings>();
     var configuration = sp.GetRequiredService<IConfiguration>();
     string collectionName = "FeatureSliderCollectionSettings";
 
-    return new MongoFeatureSliderDto(mapper, databaseSettings, configuration, collectionName);
+    return new MongoFeatureSliderDal(mapper, databaseSettings, configuration, collectionName);
+});
+
+builder.Services.AddScoped<ISpecialOfferDal, MongoSpecialOfferDal>(sp =>
+{
+    var mapper = sp.GetRequiredService<IMapper>();
+    var databaseSettings = sp.GetRequiredService<IDatabaseSettings>();
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    string collectionName = "SpecialOfferCollectionSettings";
+
+    return new MongoSpecialOfferDal(mapper, databaseSettings, configuration, collectionName);
+});
+
+builder.Services.AddScoped<IServiceStandardDal, MongoServiceStandardDal>(sp =>
+{
+    var mapper = sp.GetRequiredService<IMapper>();
+    var databaseSettings = sp.GetRequiredService<IDatabaseSettings>();
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    string collectionName = "ServiceStandardCollectionSettings";
+
+    return new MongoServiceStandardDal(mapper, databaseSettings, configuration, collectionName);
 });
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -86,6 +108,8 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductDetailService, ProductDetailService>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
 builder.Services.AddScoped<IFeatureSliderService, FeatureSliderService>();
+builder.Services.AddScoped<ISpecialOfferService, SpecialOfferService>();
+builder.Services.AddScoped<IServiceStandardService, ServiceStandardService>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
