@@ -12,10 +12,12 @@ namespace MultiShop.Catalog.Services.ProductImageServices
     public class ProductImageService : IProductImageService
     {
         private IProductImageDal _productImageDal;
+        private readonly IMapper _mapper;
 
-        public ProductImageService(IProductImageDal productImageDal)
+        public ProductImageService(IProductImageDal productImageDal, IMapper mapper)
         {
             _productImageDal = productImageDal;
+            _mapper = mapper;
         }
 
         public async Task CreateDataAsync(CreateProductImageDto createDto)
@@ -33,6 +35,15 @@ namespace MultiShop.Catalog.Services.ProductImageServices
             var values = await _productImageDal.GetAllDataAsync();
 
             return values;
+        }
+
+        public async Task<GetByIdProductImageDto> GetByProductIdProductImagesAsync(string id)
+        {
+            var productImageValues = await _productImageDal.GetDataAsync(p => p.ProductID == id);
+
+            var productImageValuesFromDto = _mapper.Map<GetByIdProductImageDto>(productImageValues);
+
+            return productImageValuesFromDto;
         }
 
         public async Task<GetByIdProductImageDto> GetDataAsync(string id)

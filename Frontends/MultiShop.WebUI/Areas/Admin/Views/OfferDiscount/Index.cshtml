@@ -1,0 +1,58 @@
+﻿@model List<ResultOfferDiscountDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+    string buttonProperty = "";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Özel İndirim Listesi</h4>
+                <p class="alert alert-info">Özel İndirimlerle ilgili işlemlerinizi aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="bs-example" data-example-id="simple-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Özel İndirim Başlığı</th>
+                                <th>Özel İndirim Alt Başlığı</th>
+                                <th>Sil / Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                count++;
+                                <tr>
+                                    <th scope="row">@count</th>
+                                    <td>@item.OfferDiscountTitle</td>
+                                    <td>@item.OfferDiscountSubTitle</td>
+                                    <td>
+                                        <a class="btn btn-danger" asp-area="Admin" asp-controller="OfferDiscount" asp-action="DeleteOfferDiscount" asp-route-id="@item.OfferDiscountId">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-info" asp-area="Admin" asp-controller="OfferDiscount" asp-action="UpdateOfferDiscount" asp-route-id="@item.OfferDiscountId">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @if (Model.Count() < 2)
+                    {
+                        <a href="/admin/offerdiscount/create" class="btn btn-primary" @buttonProperty>Yeni Özel İndirim Ekle</a>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

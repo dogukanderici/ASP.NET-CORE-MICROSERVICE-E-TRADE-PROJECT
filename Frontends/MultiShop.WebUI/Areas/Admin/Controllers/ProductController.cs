@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MultiShop.Dtos.CatalogDtos.CategoryDtos;
 using MultiShop.Dtos.CatalogDtos.ProductDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
+using MultiShop.WebUI.Utilities.FileOperations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
@@ -13,10 +14,12 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IFileOperationHelper _fileOperationHelper;
 
-        public ProductController(IHttpClientFactory httpClientFactory)
+        public ProductController(IHttpClientFactory httpClientFactory, IFileOperationHelper fileOperationHelper)
         {
             _httpClientFactory = httpClientFactory;
+            _fileOperationHelper = fileOperationHelper;
         }
 
         [HttpGet]
@@ -68,6 +71,14 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient();
 
+            var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+            {
+                LoadedFile = createProductDto.ProductImage,
+                FilePath = "/wwwroot/userfiles/"
+            });
+
+            createProductDto.ProductImageUrl = imageUrl;
+
             var jsonData = JsonConvert.SerializeObject(createProductDto);
 
             StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -114,6 +125,17 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateProduct(UpdateProductDto updateProductDto)
         {
             var client = _httpClientFactory.CreateClient();
+
+            if (updateProductDto.ProductImage != null)
+            {
+                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                {
+                    LoadedFile = updateProductDto.ProductImage,
+                    FilePath = "/wwwroot/userfiles/"
+                });
+
+                updateProductDto.ProductImageUrl = imageUrl;
+            }
 
             var jsonData = JsonConvert.SerializeObject(updateProductDto);
 

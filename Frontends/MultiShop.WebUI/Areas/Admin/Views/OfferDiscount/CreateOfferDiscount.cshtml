@@ -1,0 +1,44 @@
+﻿@model CreateOfferDiscountDto
+
+@{
+    ViewData["Title"] = "CreateOfferDiscount";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Özel İndirim Ekleme Sayfası</h4>
+                <p class="alert alert-info">Özel İndirim ile ilgili ekleme işlemlerinizi aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="AddNewOfferDiscount" asp-area="Admin" asp-controller="OfferDiscount" asp-action="CreateOfferDiscount" method="post" enctype="multipart/form-data">
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="OfferDiscountTitle" class="control-label">Özel İndirim Başlığı</label>
+                                <input asp-for="OfferDiscountTitle" type="text" class="form-control" placeholder="Özel İndirim Başlığı">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="OfferDiscountSubTitle" class="control-label">Özel İndirim Alt Başlığı</label>
+                                <input asp-for="OfferDiscountSubTitle" type="text" class="form-control" placeholder="Özel İndirim Alt Başlığı">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="OfferDiscountSubImage" class="control-label">Özel İndirim Görseli</label>
+                                <input asp-for="OfferDiscountSubImage" type="file" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success">Kaydet</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

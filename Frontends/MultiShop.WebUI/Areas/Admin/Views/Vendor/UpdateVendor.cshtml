@@ -1,0 +1,41 @@
+﻿@model UpdateVendorDto
+
+@{
+    ViewData["Title"] = "UpdateVendor";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Marka Güncelleme Sayfası</h4>
+                <p class="alert alert-info">Marka ile ilgili güncelleme işlemlerinizi aşağıdaki alandan gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="UpdateVendor" asp-area="Admin" asp-controller="Vendor" asp-action="UpdateVendor" method="post" enctype="multipart/form-data">
+                        @Html.HiddenFor(v => v.VendorId)
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="VendorName" class="control-label">Marka Adı</label>
+                                <input asp-for="VendorName" type="text" class="form-control" placeholder="Marka Adı">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="VendorImage" class="control-label">Marka Görseli</label>
+                                <input asp-for="VendorImage" type="file" class="form-control">
+                            </div>
+                        </div>
+                        @Html.HiddenFor(v => v.VendorImageUrl)
+                        <div class="col-md-12">
+                            <a href="~/userfiles/@Model.VendorImageUrl">Kayıtlı Görselini Görüntülemek İçin Tıklayınız</a>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

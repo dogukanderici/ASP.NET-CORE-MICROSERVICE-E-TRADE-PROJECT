@@ -22,17 +22,6 @@ namespace MultiShop.Catalog.Services.ProductServices
             _categoryDal = categoryDal;
             _mapper = mapper;
         }
-
-        public async Task CreateDataAsync(CreateProductDto createDto)
-        {
-            await _productDal.CreateData(createDto);
-        }
-
-        public async Task DeleteDataAsync(string id)
-        {
-            await _productDal.DeleteData(p => p.ProductID == id);
-        }
-
         public Task<List<ResultProductDto>> GetAllDataAsync()
         {
             var values = _productDal.GetAllDataAsync();
@@ -45,6 +34,21 @@ namespace MultiShop.Catalog.Services.ProductServices
             var value = await _productDal.GetDataAsync(p => p.ProductID == id);
 
             return value;
+        }
+
+        public async Task CreateDataAsync(CreateProductDto createDto)
+        {
+            await _productDal.CreateData(createDto);
+        }
+
+        public async Task UpdateDataAsync(UpdateProductDto updateDto)
+        {
+            await _productDal.UpdateData(p => p.ProductID == updateDto.ProductID, updateDto);
+        }
+
+        public async Task DeleteDataAsync(string id)
+        {
+            await _productDal.DeleteData(p => p.ProductID == id);
         }
 
         public async Task<List<ResultProductWithCategoryDto>> GetProductsWithCategoryAsync()
@@ -63,9 +67,20 @@ namespace MultiShop.Catalog.Services.ProductServices
             return productValuesFromDto;
         }
 
-        public async Task UpdateDataAsync(UpdateProductDto updateDto)
+        public async Task<List<ResultProductWithCategoryDto>> GetProductsWithCategoryByCategoryIdAsync(string id)
         {
-            await _productDal.UpdateData(p => p.ProductID == updateDto.ProductID, updateDto);
+            var productValues = await _productDal.GetAllDataAsync(p => p.CategoryID == id);
+
+            var productValuesFromDto = _mapper.Map<List<ResultProductWithCategoryDto>>(productValues);
+
+            foreach (var item in productValuesFromDto)
+            {
+                var categoryResult = await _categoryDal.GetDataAsync(c => c.CategoryID == item.CategoryID);
+
+                item.Category = _mapper.Map<ResultCategoryDto>(categoryResult);
+            }
+
+            return productValuesFromDto;
         }
     }
 }

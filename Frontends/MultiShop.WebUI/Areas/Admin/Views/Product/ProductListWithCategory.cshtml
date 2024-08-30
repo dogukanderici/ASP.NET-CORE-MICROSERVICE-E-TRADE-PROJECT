@@ -22,6 +22,7 @@
                                 <th>Ürün Adı</th>
                                 <th>Ürün Fiyatı</th>
                                 <th>Ürün Kategorisi</th>
+                                <th>Ürün Görselleri</th>
                                 <th>Sil / Güncelle</th>
                             </tr>
                         </thead>
@@ -34,6 +35,11 @@
                                     <td>@item.ProductName</td>
                                     <td>@item.ProductPrice</td>
                                     <td>@item.Category.CategoryName</td>
+                                    <td>
+                                        <a class="btn btn-warning" asp-area="Admin" asp-controller="ProductImage" asp-action="UpdateProductImage" asp-route-id="@item.ProductID">
+                                            <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
                                     <td>
                                         <a class="btn btn-danger" asp-area="Admin" asp-controller="Product" asp-action="DeleteProduct" asp-route-id="@item.ProductID">
                                             <i class="fa fa-trash" aria-hidden="true"></i>

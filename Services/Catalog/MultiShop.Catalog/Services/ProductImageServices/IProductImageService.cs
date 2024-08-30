@@ -6,5 +6,6 @@ namespace MultiShop.Catalog.Services.ProductImageServices
 {
     public interface IProductImageService : IGenericService<ProductImage, ResultProductImageDto, CreateProductImageDto, UpdateProductImageDto, GetByIdProductImageDto>
     {
+        Task<GetByIdProductImageDto> GetByProductIdProductImagesAsync(string id);
     }
 }

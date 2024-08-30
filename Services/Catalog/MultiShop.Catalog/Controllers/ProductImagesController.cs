@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiShop.Catalog.Dtos.ProductDetailDtos;
 using MultiShop.Catalog.Dtos.ProductImageDtos;
@@ -7,6 +8,7 @@ using MultiShop.Catalog.Services.ProductImageServices;
 
 namespace MultiShop.Catalog.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductImagesController : ControllerBase
@@ -30,6 +32,15 @@ namespace MultiShop.Catalog.Controllers
         public async Task<IActionResult> GetProductImagebyId(string id)
         {
             var value = await _productImageService.GetDataAsync(id);
+
+            return Ok(value);
+        }
+
+        [HttpGet()]
+        [Route("ProductImagesByProductId")]
+        public async Task<IActionResult> ProductImagesByProductId(string id)
+        {
+            var value = await _productImageService.GetByProductIdProductImagesAsync(id);
 
             return Ok(value);
         }

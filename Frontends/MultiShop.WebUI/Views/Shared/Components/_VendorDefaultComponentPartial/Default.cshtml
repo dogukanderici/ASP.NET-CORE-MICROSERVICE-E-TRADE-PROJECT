@@ -1,25 +1,33 @@
-﻿<div class="container-fluid py-5">
+﻿@model List<ResultVendorDto>
+
+<div class="container-fluid py-5">
     <div class="row px-xl-5">
         <div class="col">
             <div class="owl-carousel vendor-carousel">
-                <div class="bg-light p-4">
-                    <img src="~/images/adidas.png" alt="">
-                </div>
-                <div class="bg-light p-4">
-                    <img src="~/images/hummel.jpg" alt="">
-                </div>
-                <div class="bg-light p-4">
-                    <img src="~/images/ikea.png" alt="">
-                </div>
-                <div class="bg-light p-4">
-                    <img src="~/images/koctas.jpg" alt="">
-                </div>
-                <div class="bg-light p-4">
-                    <img src="~/images/lacoste.jpg" alt="">
-                </div>
-                <div class="bg-light p-4">
-                    <img src="~/images/nike.png" alt="">
-                </div>
+                @if (Model != null)
+                {
+                    if (Model.Count() < 1)
+                    {
+                        <div class="bg-light p-4">
+                            <div>Henüz Kayıtlı Marka Bulunmamaktadır</div>
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <div class="bg-light p-4 d-flex justify-content-center align-items-center" style="height: 150px !important;">
+                                <img src="~/userfiles/@item.VendorImageUrl" alt="vendor-image" style="object-fit: cover;">
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <div class="bg-light p-4">
+                        <div>Kayıtlı Marka Bulunamadı</div>
+                    </div>
+                }
             </div>
         </div>
     </div>

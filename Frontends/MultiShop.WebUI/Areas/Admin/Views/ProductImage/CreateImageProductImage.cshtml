@@ -1,0 +1,51 @@
+﻿@model CreateProductImageDto
+
+@{
+    ViewData["Title"] = "CreateImageProductImage";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Ürün Görselleri Ekleme Sayfası</h4>
+                <p class="alert alert-info">Ürün Görselleri ile ilgili ekleme işlemlerinizi aşağıdaki alandan gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="UpdateProductImage" asp-area="Admin" asp-controller="ProductImage" asp-action="CreateImageProductImage" method="post" enctype="multipart/form-data">
+                        <input asp-for="ProductID" value="@ViewBag.productId" type="text" style="display: none;">
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ImageUrl1" class="control-label">Kategori Görseli</label>
+                                <input asp-for="ImageUrl1" type="file" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ImageUrl2" class="control-label">Kategori Görseli</label>
+                                <input asp-for="ImageUrl2" type="file" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ImageUrl3" class="control-label">Kategori Görseli</label>
+                                <input asp-for="ImageUrl3" type="file" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ImageUrl4" class="control-label">Kategori Görseli</label>
+                                <input asp-for="ImageUrl4" type="file" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success">Kaydet</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

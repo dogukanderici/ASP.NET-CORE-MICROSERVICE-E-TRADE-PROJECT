@@ -1,0 +1,47 @@
+﻿@model UpdateOfferDiscountDto
+
+@{
+    ViewData["Title"] = "UpdateOfferDiscount";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Özel İndirim Güncelleme Sayfası</h4>
+                <p class="alert alert-info">Özel İndirim ile ilgili güncelleme işlemlerinizi aşağıdaki alandan gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="UpdateOfferDiscount" asp-area="Admin" asp-controller="OfferDiscount" asp-action="UpdateOfferDiscount" method="post" enctype="multipart/form-data">
+                        @Html.HiddenFor(c => c.OfferDiscountId)
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="OfferDiscountTitle" class="control-label">Özel İndirim Başlığı</label>
+                                <input asp-for="OfferDiscountTitle" type="text" class="form-control" placeholder="Özel İndirim Başlığı">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="OfferDiscountSubTitle" class="control-label">Özel İndirim Alt Başlığı</label>
+                                <input asp-for="OfferDiscountSubTitle" type="text" class="form-control" placeholder="Özel İndirim Alt Başlığı">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="OfferDiscountSubImage" class="control-label">Özel İndirim Görseli</label>
+                                <input asp-for="OfferDiscountSubImage" type="file" class="form-control">
+                            </div>
+                        </div>
+                        @Html.HiddenFor(c => c.OfferDiscountSubImageUrl)
+                        <div class="col-md-12">
+                            <a href="~/userfiles/@Model.OfferDiscountSubImageUrl">Kayıtlı Kategori Görselini Görüntülemek İçin Tıklayınız</a>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

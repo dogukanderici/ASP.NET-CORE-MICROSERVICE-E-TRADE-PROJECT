@@ -1,0 +1,80 @@
+﻿@model UpdateProductImageDto
+
+@{
+    ViewData["Title"] = "UpdateProductImage";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Ürün Görselleri Güncelleme Sayfası</h4>
+                <p class="alert alert-info">Ürün Görselleri ile ilgili güncelleme işlemlerinizi aşağıdaki alandan gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="UpdateProductImage" asp-area="Admin" asp-controller="ProductImage" asp-action="UpdateProductImage" method="post" enctype="multipart/form-data">
+                        @Html.HiddenFor(pi => pi.ProductID)
+                        @Html.HiddenFor(pi => pi.ProductImageID)
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ImageUrl1" class="control-label">Ürün Görseli 1</label>
+                                <input asp-for="ImageUrl1" type="file" class="form-control">
+                            </div>
+                        </div>
+                        @Html.HiddenFor(pi => pi.Image1)
+                        <div class="col-md-1">
+                            <label class="control-label">Ürün Görseli 1</label>
+                            <a href="~/userfiles/@Model.Image1" target="_blank" class="form-control btn btn-primary"><i class="fa fa-picture-o" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="col-md-12">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ImageUrl2" class="control-label">Ürün Görseli 2</label>
+                                <input asp-for="ImageUrl2" type="file" class="form-control">
+                            </div>
+                        </div>
+                        @Html.HiddenFor(pi => pi.Image2)
+                        <div class="col-md-1">
+                            <label class="control-label">Ürün Görseli 2</label>
+                            <a href="~/userfiles/@Model.Image2" target="_blank" class="form-control btn btn-primary"><i class="fa fa-picture-o" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="col-md-12">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ImageUrl3" class="control-label">Ürün Görseli 3</label>
+                                <input asp-for="ImageUrl3" type="file" class="form-control">
+                            </div>
+                        </div>
+                        @Html.HiddenFor(pi => pi.Image3)
+                        <div class="col-md-1">
+                            <label class="control-label">Ürün Görseli 3</label>
+                            <a href="~/userfiles/@Model.Image3" target="_blank" class="form-control btn btn-primary"><i class="fa fa-picture-o" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="col-md-12">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ImageUrl4" class="control-label">Ürün Görseli 4</label>
+                                <input asp-for="ImageUrl4" type="file" class="form-control">
+                            </div>
+                        </div>
+                        @Html.HiddenFor(pi => pi.Image4)
+                        <div class="col-md-1">
+                            <label class="control-label">Ürün Görseli 4</label>
+                            <a href="~/userfiles/@Model.Image4" target="_blank" class="form-control btn btn-primary"><i class="fa fa-picture-o" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="col-md-12">
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

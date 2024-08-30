@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace MultiShop.Dtos.CatalogDtos.ProductDtos
         public string ProductName { get; set; }
         public decimal ProductPrice { get; set; }
         public string ProductImageUrl { get; set; }
+        public IFormFile ProductImage { get; set; }
         public string ProductDescription { get; set; }
         public string CategoryID { get; set; }
     }

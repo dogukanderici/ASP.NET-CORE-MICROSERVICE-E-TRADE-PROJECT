@@ -8,5 +8,6 @@ namespace MultiShop.Catalog.Services.ProductServices
     public interface IProductService : IGenericService<Product, ResultProductDto, CreateProductDto, UpdateProductDto, GetByIdProductDto>
     {
         Task<List<ResultProductWithCategoryDto>> GetProductsWithCategoryAsync();
+        Task<List<ResultProductWithCategoryDto>> GetProductsWithCategoryByCategoryIdAsync(string id);
     }
 }
