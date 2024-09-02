@@ -1,0 +1,38 @@
+﻿@model UpdateProductDetailDto
+
+@{
+    ViewData["Title"] = "UpdateProductDetail";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Ürün Açıklaması ve Bilgi Güncelleme Sayfası</h4>
+                <p class="alert alert-info">Ürün Detayları ile ilgili güncelleme işlemlerinizi aşağıdaki alandan gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="UpdateProductDetail" asp-area="Admin" asp-controller="ProductDetail" asp-action="UpdateProductDetail" method="post">
+                        @Html.HiddenFor(pd => pd.ProductDetailID)
+                        @Html.HiddenFor(pd => pd.ProductID)
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ProductDescription" class="control-label">Ürün Açıklaması</label>
+                                <textarea asp-for="ProductDescription" rows="6" type="text" class="form-control" placeholder="Ürün Açıklaması"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ProductInfo" class="control-label">Ürün Bilgisi</label>
+                                <textarea asp-for="ProductInfo" rows="6" type="text" class="form-control" placeholder="Ürün Bilgisi"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiShop.Catalog.Dtos.ProductDetailDtos;
 using MultiShop.Catalog.Dtos.ProductDtos;
@@ -7,6 +8,7 @@ using MultiShop.Catalog.Services.ProductServices;
 
 namespace MultiShop.Catalog.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductDetailsController : ControllerBase
@@ -56,6 +58,15 @@ namespace MultiShop.Catalog.Controllers
             await _productDetailService.UpdateDataAsync(updateProductDtoDetail);
 
             return Ok("Ürün Detayı Başarıyla Güncellendi.");
+        }
+
+        [HttpGet]
+        [Route("GetProductDetailsWithProductId")]
+        public async Task<IActionResult> GetProductDetailsWithProductId(string id)
+        {
+            var value = await _productDetailService.GetProductDetailsWithProductIdAsync(id);
+
+            return Ok(value);
         }
     }
 }

@@ -1,0 +1,32 @@
+﻿<div class="col-md-6">
+    <h4 class="mb-4">Bir Yorum Bırakınız</h4>
+    <small>Yorumunuzun alınması için geçerli bir e-posta adresi giriniz.*</small>
+    <div class="d-flex my-3">
+        <p class="mb-0 mr-2">Puanınız* :</p>
+        <div class="text-primary">
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+        </div>
+    </div>
+    <form id="AddNewComment" asp-controller="ProductList" asp-action="AddComment" method="post">
+        <input id="ProductId" value="@ViewBag.x" type="text" style="display: none !important;" name="ProductId" />
+        <div class="form-group">
+            <label for="name">Adınız*</label>
+            <input id="name" type="text" class="form-control" name="NameSurname">
+        </div>
+        <div class="form-group">
+            <label for="Email">E-Posta Adresiniz*</label>
+            <input id="Email" type="email" class="form-control" name="Email">
+        </div>
+        <div class="form-group">
+            <label for="CommentDetail">Yorumunuz*</label>
+            <textarea id="CommentDetail" cols="30" rows="5" class="form-control" name="CommentDetail"></textarea>
+        </div>
+        <div class="form-group mb-0">
+            <input type="submit" value="Yorum Yap" class="btn btn-primary px-3">
+        </div>
+    </form>
+</div>

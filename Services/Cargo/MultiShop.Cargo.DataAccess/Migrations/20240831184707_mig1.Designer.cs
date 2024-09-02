@@ -12,7 +12,7 @@ using MultiShop.Cargo.DataAccess.Concrete.Context;
 namespace MultiShop.Cargo.DataAccess.Migrations
 {
     [DbContext(typeof(CargoContext))]
-    [Migration("20240819111937_mig1")]
+    [Migration("20240831184707_mig1")]
     partial class mig1
     {
         /// <inheritdoc />

@@ -1,0 +1,64 @@
+﻿@model UpdateCommentDto
+
+@{
+    ViewData["Title"] = "UpdateComment";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Yorum Güncelleme Sayfası</h4>
+                <p class="alert alert-info">Yorum ile ilgili güncelleme işlemlerinizi aşağıdaki alandan gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="UpdateComment" asp-area="Admin" asp-controller="Comment" asp-action="UpdateComment" method="post">
+                        @Html.HiddenFor(c => c.UserCommentId)
+                        @Html.HiddenFor(c => c.ProductId)
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="NameSurname" class="control-label">Kullanıcı</label>
+                                <input asp-for="NameSurname" type="text" class="form-control" style="user-select: none !important;" placeholder="Kullanıcı">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="Email" class="control-label">E-Posta</label>
+                                <input asp-for="Email" type="text" class="form-control" placeholder="E-Posta">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="Rating" class="control-label">Puan</label>
+                                <input asp-for="Rating" type="number" class="form-control" placeholder="Puan">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="CreatedDate" class="control-label">Tarih</label>
+                                <input asp-for="CreatedDate" type="date" class="form-control" placeholder="Tarih">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="CommentDetail" class="control-label">Tarih</label>
+                                <textarea asp-for="CommentDetail" type="text" class="form-control" placeholder="Tarih"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="IsActive" class="control-label">Durum</label>
+                                <input asp-for="IsActive" type="checkbox" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success">Güncelle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

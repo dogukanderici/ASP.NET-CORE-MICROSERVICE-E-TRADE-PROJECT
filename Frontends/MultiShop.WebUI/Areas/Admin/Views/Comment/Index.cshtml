@@ -1,0 +1,52 @@
+﻿@model List<ResultCommentDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Yorum Listesi</h4>
+                <div class="bs-example" data-example-id="simple-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Kullanıcı</th>
+                                <th>Tarih</th>
+                                <th>Yorum</th>
+                                <th>Durum</th>
+                                <th>#</th>
+                                <th>Sil / Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@item.UserCommentId</th>
+                                    <td>@item.NameSurname</td>
+                                    <td>@item.CreatedDate</td>
+                                    <td>@item.CommentDetail</td>
+                                    <td>@item.IsActive</td>
+                                    <td>
+                                        <a class="btn btn-danger" asp-area="Admin" asp-controller="Comment" asp-action="DeleteComment" asp-route-id="@item.UserCommentId">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-info" asp-area="Admin" asp-controller="Comment" asp-action="UpdateComment" asp-route-id="@item.UserCommentId">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

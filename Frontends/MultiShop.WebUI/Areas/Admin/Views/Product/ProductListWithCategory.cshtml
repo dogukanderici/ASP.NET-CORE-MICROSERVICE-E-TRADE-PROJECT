@@ -23,7 +23,7 @@
                                 <th>Ürün Fiyatı</th>
                                 <th>Ürün Kategorisi</th>
                                 <th>Ürün Görselleri</th>
-                                <th>Sil / Güncelle</th>
+                                <th>Sil / Güncelle / Açıklama ve Bilgi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,6 +45,9 @@
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </a>
                                         <a class="btn btn-info" asp-area="Admin" asp-controller="Product" asp-action="UpdateProduct" asp-route-id="@item.ProductID">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-warning" asp-area="Admin" asp-controller="ProductDetail" asp-action="UpdateProductDetail" asp-route-id="@item.ProductID">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
                                     </td>

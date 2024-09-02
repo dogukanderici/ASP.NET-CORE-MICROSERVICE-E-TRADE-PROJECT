@@ -1,0 +1,36 @@
+﻿@model CreateProductDetailDto
+@{
+    ViewData["Title"] = "CreateProductDetail";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Ürün Açıklama ve Bilgi Ekleme Sayfası</h4>
+                <p class="alert alert-info">Ürün Detayları ile ilgili ekleme işlemlerinizi aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
+                <div class="row">
+                    <form id="AddNewProductDetail" asp-area="Admin" asp-controller="ProductDetail" asp-action="CreateProductDetail" method="post">
+                        <input asp-for="ProductID" value="@ViewBag.ProductIdForProductDetail" type="text" style="display: none;">
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ProductDescription" class="control-label">Ürün Açıklaması</label>
+                                <textarea asp-for="ProductDescription" rows="6" type="text" class="form-control" placeholder="Ürün Açıklaması"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <label asp-for="ProductInfo" class="control-label">Ürün Bilgisi</label>
+                                <textarea asp-for="ProductInfo" rows="6" type="text" class="form-control" placeholder="Ürün Bilgisi"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-success">Kaydet</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
