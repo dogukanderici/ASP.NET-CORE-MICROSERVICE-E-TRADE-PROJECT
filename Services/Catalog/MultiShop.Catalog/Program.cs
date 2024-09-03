@@ -5,6 +5,7 @@ using MultiShop.Catalog.DataAccess.Abstract;
 using MultiShop.Catalog.DataAccess.Concrete;
 using MultiShop.Catalog.Services.AboutServices;
 using MultiShop.Catalog.Services.CategoryServices;
+using MultiShop.Catalog.Services.ContactServices;
 using MultiShop.Catalog.Services.FeatureSliderService;
 using MultiShop.Catalog.Services.OfferDiscountServices;
 using MultiShop.Catalog.Services.ProductDetailService;
@@ -136,6 +137,16 @@ builder.Services.AddScoped<IAboutDal, MongoAboutDal>(sp =>
     return new MongoAboutDal(mapper, databaseSettings, configuration, collectionName);
 });
 
+builder.Services.AddScoped<IContactDal, MongoContactDal>(sp =>
+{
+    var mapper = sp.GetRequiredService<IMapper>();
+    var databaseSettings = sp.GetRequiredService<IDatabaseSettings>();
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    string collectionName = "ContactCollectionSettings";
+
+    return new MongoContactDal(mapper, databaseSettings, configuration, collectionName);
+});
+
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductDetailService, ProductDetailService>();
@@ -146,6 +157,7 @@ builder.Services.AddScoped<IServiceStandardService, ServiceStandardService>();
 builder.Services.AddScoped<IOfferDiscountService, OfferDiscountService>();
 builder.Services.AddScoped<IVendorService, VendorService>();
 builder.Services.AddScoped<IAboutService, AboutService>();
+builder.Services.AddScoped<IContactService, ContactService>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
