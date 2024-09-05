@@ -64,6 +64,6 @@ namespace MultiShop.IdentityServer.Utilities.Security.Jwt
                 );
 
             return jwt;
-        }
+       }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.FeatureSliderDtos;
+using MultiShop.WebUI.Services;
 using MultiShop.WebUI.Utilities.AuthTokenOperations;
 using Newtonsoft.Json;
 
@@ -16,6 +17,7 @@ namespace MultiShop.WebUI.ViewComponents.DefaultViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+
             var client = _httpClientFactory.CreateClient();
 
             // API erişimi için token alınır.

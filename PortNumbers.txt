@@ -1,3 +1,4 @@
+Ocelot			==>		5000
 IdentityServer	==>		5001
 Catalog			==>		7291
 Discount		==>		7292
@@ -5,3 +6,5 @@ Order			==>		7293
 Cargo			==>		7294
 Basket			==>		7295
 Comment			==>		7296
+Payment			==>		7297
+Image			==>		7298

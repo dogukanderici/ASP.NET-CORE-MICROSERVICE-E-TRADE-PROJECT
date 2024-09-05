@@ -39,7 +39,6 @@ builder.Services.AddHttpClient<IIdentityService, IdentityService>();
 builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<IFileOperationHelper, FileOperationHelper>();
-builder.Services.AddScoped<ILoginService, LoginService>();
 
 builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("ClientSettings"));
 
