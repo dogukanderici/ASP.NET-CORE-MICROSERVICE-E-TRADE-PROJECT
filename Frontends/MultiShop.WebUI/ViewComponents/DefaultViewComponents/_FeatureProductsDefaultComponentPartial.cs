@@ -22,7 +22,7 @@ namespace MultiShop.WebUI.ViewComponents.DefaultViewComponents
             AuthTokenOperation authTokenOperation = new AuthTokenOperation();
             await authTokenOperation.GetAuthTokenForAPI(_httpClientFactory, client);
 
-            var responseMessage = await client.GetAsync("https://localhost:7291/api/products");
+            var responseMessage = await client.GetAsync("http://localhost:7291/api/products");
 
             if (responseMessage.IsSuccessStatusCode)
             {

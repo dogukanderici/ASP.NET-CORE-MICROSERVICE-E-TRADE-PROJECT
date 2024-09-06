@@ -49,7 +49,7 @@ namespace MultiShop.WebUI.Controllers
 
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            var responseMessage = await client.PostAsync("https://localhost:7296/api/comments", stringContent);
+            var responseMessage = await client.PostAsync("http://localhost:7296/api/comments", stringContent);
 
             if (responseMessage.IsSuccessStatusCode)
             {

@@ -26,7 +26,7 @@ namespace MultiShop.WebUI.Controllers
 
             await authTokenOperation.GetAuthTokenForAPI(_httpClientFactory, client);
 
-            var responseMessage = await client.GetAsync("https://localhost:7291/api/categories");
+            var responseMessage = await client.GetAsync("http://localhost:7291/api/categories");
 
             if (responseMessage.IsSuccessStatusCode)
             {
