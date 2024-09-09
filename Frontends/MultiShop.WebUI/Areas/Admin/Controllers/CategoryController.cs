@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.CategoryDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
+using MultiShop.WebUI.Services.CatalogServices.CategoryServices;
 using MultiShop.WebUI.Utilities.FileOperations;
 using Newtonsoft.Json;
 using System.Text;
@@ -13,41 +14,25 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
     {
 
         private IHttpClientFactory _httpClientFactory;
+        private readonly ICategoryService _categoryService;
         private readonly IFileOperationHelper _fileOperationHelper;
 
-        public CategoryController(IHttpClientFactory httpClientFactory, IFileOperationHelper fileOperationHelper)
+        public CategoryController(IHttpClientFactory httpClientFactory, IFileOperationHelper fileOperationHelper, ICategoryService categoryService)
         {
             _httpClientFactory = httpClientFactory;
             _fileOperationHelper = fileOperationHelper;
+            _categoryService = categoryService;
         }
 
-        [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            ViewBag.v0 = "Kategori İşlemleri";
-            ViewBag.v1 = "Ana Sayfa";
-            ViewBag.v2 = "Kategoriler";
-            ViewBag.v3 = "Kategori Listesi";
-
-            // Bir client oluşturulur.
-            var client = _httpClientFactory.CreateClient();
-
-            // Get tipinde bir istek atmak için GetAsync kullanılır.
-            var responseMessage = await client.GetAsync("https://localhost:7291/api/categories");
+            SetViewBagContent("Kategori İşlemleri", "Ana Sayfa", "Kategoriler", "Kategori Listesi");
 
             var model = new CategoryListViewModel();
 
-            // Servisten 200'lü bir durum kodu dönmesi durumunda kullanılır.
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                // Gelen veriyi string formatta okur.
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+            var values = await _categoryService.GetAllDataAsync();
 
-                // Json formatında gelen veri metin tipine dönüştürülür.
-                var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
-
-                model.ResultCategoryDtos = values;
-            }
+            model.ResultCategoryDtos = values;
 
             return View(model);
         }
@@ -56,10 +41,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public IActionResult CreateCategory()
         {
-            ViewBag.v0 = "Kategori İşlemleri";
-            ViewBag.v1 = "Ana Sayfa";
-            ViewBag.v2 = "Kategoriler";
-            ViewBag.v3 = "Yeni Kategori Girişi";
+            SetViewBagContent("Kategori İşlemleri", "Ana Sayfa", "Kategoriler", "Yeni Kategori Girişi");
 
             return View();
         }
@@ -68,8 +50,6 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateCategory(CreateCategoryDto createCategoryDto)
         {
-            var client = _httpClientFactory.CreateClient();
-
             var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
             {
                 LoadedFile = createCategoryDto.CategoryImage,
@@ -78,13 +58,9 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 
             createCategoryDto.CategoryImageUrl = imageUrl;
 
-            var jsonData = JsonConvert.SerializeObject(createCategoryDto);
+            var requestResponse = await _categoryService.CreateDataAsync(createCategoryDto);
 
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var responseMessage = await client.PostAsync("https://localhost:7291/api/categories", stringContent);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestResponse.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Category", new { area = "Admin" });
             }
@@ -95,11 +71,9 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteCategory(string id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var requestResponse = await _categoryService.DeleteDataAsync(id);
 
-            var responseMessage = await client.DeleteAsync("https://localhost:7291/api/categories?id=" + id);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestResponse.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Category", new { area = "Admin" });
             }
@@ -111,28 +85,17 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateCategory(string id)
         {
-            var client = _httpClientFactory.CreateClient();
+            SetViewBagContent("Kategori İşlemleri", "Ana Sayfa", "Kategoriler", "Kategori Düzenleme");
 
-            var responseMessage = await client.GetAsync("https://localhost:7291/api/categories/" + id);
+            var value = await _categoryService.GetDataAsync(id);
 
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-
-                var value = JsonConvert.DeserializeObject<UpdateCategoryDto>(jsonData);
-
-                return View(value);
-            }
-
-            return View();
+            return View(value);
         }
 
         [HttpPost]
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryDto updateCategoryDto)
         {
-            var client = _httpClientFactory.CreateClient();
-
             if (updateCategoryDto.CategoryImage != null)
             {
                 var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
@@ -144,20 +107,21 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
                 updateCategoryDto.CategoryImageUrl = imageUrl;
             }
 
-            var jsonData = JsonConvert.SerializeObject(updateCategoryDto);
+            var requestResponse = await _categoryService.UpdateDataAsync(updateCategoryDto);
 
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var responseMessage = await client.PutAsync("https://localhost:7291/api/categories", stringContent);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestResponse.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Category", new { area = "Admin" });
             }
 
             return View();
         }
-
-
+        void SetViewBagContent(string mainTitle, string homePageTitle, string title, string subTitle)
+        {
+            ViewBag.v0 = mainTitle;
+            ViewBag.v1 = homePageTitle;
+            ViewBag.v2 = title;
+            ViewBag.v3 = subTitle;
+        }
     }
 }

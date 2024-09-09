@@ -30,19 +30,10 @@ namespace MultiShop.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(CreateLoginDto createLoginDto)
+        public async Task<IActionResult> Index(SignInDto signUpDto)
         {
-            return View();
-        }
-
-        //[HttpPost]
-        public async Task<IActionResult> SignIn(SignInDto signUpDto)
-        {
-            signUpDto.Username = "admin";
-            signUpDto.Password = "123456Aa*";
 
             await _identityService.SignIn(signUpDto);
-
             return RedirectToAction("Index", "User");
         }
     }
