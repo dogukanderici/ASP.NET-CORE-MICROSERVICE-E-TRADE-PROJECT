@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.ServiceStandardDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
+using MultiShop.WebUI.Services.CatalogServices.ServiceStandardServices;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Text;
@@ -11,31 +12,25 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
     [Route("Admin/ServiceStandard")]
     public class ServiceStandardController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IServiceStandardService _serviceStandardService;
 
-        public ServiceStandardController(IHttpClientFactory httpClientFactory)
+        public ServiceStandardController(IServiceStandardService serviceStandardService)
         {
-            _httpClientFactory = httpClientFactory;
+            _serviceStandardService = serviceStandardService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-
-            var respopnseMessage = await client.GetAsync("https://localhost:7291/api/servicestandards");
+            SetViewBagContent("Servis Standartları İşlemleri", "Ana Sayfa", "Servis Standartları", "Servis Standartları Listesi");
 
             var model = new ServiceStandardListViewModel();
 
-            if (respopnseMessage.IsSuccessStatusCode)
+            var requestMessage = await _serviceStandardService.GetAllDataAsync();
+
+            if (requestMessage != null)
             {
-                var values = await respopnseMessage.Content.ReadAsStringAsync();
-
-                var jsonData = JsonConvert.DeserializeObject<List<ResultServiceStandardDto>>(values);
-
-                model.ResultServiceStandardDto = jsonData;
-
-                return View(model);
+                model.ResultServiceStandardDto = requestMessage;
             }
 
             return View(model);
@@ -45,10 +40,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public IActionResult CreateServiceStandard()
         {
-            ViewBag.v0 = "Servis Standartları İşlemleri";
-            ViewBag.v1 = "Ana Sayfa";
-            ViewBag.v2 = "Servis Standartları";
-            ViewBag.v3 = "Servis Standartları Listesi";
+            SetViewBagContent("Servis Standartları İşlemleri", "Ana Sayfa", "Servis Standartları", "Servis Standartları Listesi");
 
             return View();
         }
@@ -57,15 +49,10 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateServiceStandardAsync(CreateServiceStandardDto createServiceStandardDto)
         {
-            var client = _httpClientFactory.CreateClient();
 
-            var jsonData = JsonConvert.SerializeObject(createServiceStandardDto);
+            var requestMessage = await _serviceStandardService.CreateDataAsync(createServiceStandardDto);
 
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var responseMessage = await client.PostAsync("https://localhost:7291/api/servicestandards", stringContent);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "ServiceStandard", new { area = "Admin" });
             }
@@ -77,17 +64,11 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateServiceStandard(string id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var requestMessage = await _serviceStandardService.GetDataAsync(id);
 
-            var responseMessage = await client.GetAsync("https://localhost:7291/api/servicestandards/" + id);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage != null)
             {
-                var value = await responseMessage.Content.ReadAsStringAsync();
-
-                var jsonData = JsonConvert.DeserializeObject<UpdateServiceStandardDto>(value);
-
-                return View(jsonData);
+                return View(requestMessage);
             }
 
             return View();
@@ -97,15 +78,10 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateServiceStandard(UpdateServiceStandardDto updateServiceStandardDto)
         {
-            var client = _httpClientFactory.CreateClient();
 
-            var jsonData = JsonConvert.SerializeObject(updateServiceStandardDto);
+            var requestMessage = await _serviceStandardService.UpdateDataAsync(updateServiceStandardDto);
 
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var responseMessage = await client.PutAsync("https://localhost:7291/api/servicestandards", stringContent);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "ServiceStandard", new { area = "Admin" });
             }
@@ -116,16 +92,22 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteServiceStandard(string id)
         {
-            var client = _httpClientFactory.CreateClient();
 
-            var responseMessage = await client.DeleteAsync("https://localhost:7291/api/servicestandards?id=" + id);
+            var requestMessage = await _serviceStandardService.DeleteDataAsync(id);
 
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "ServiceStandard", new { area = "Admin" });
             }
 
             return View();
+        }
+        void SetViewBagContent(string mainTitle, string homePageTitle, string title, string subTitle)
+        {
+            ViewBag.v0 = mainTitle;
+            ViewBag.v1 = homePageTitle;
+            ViewBag.v2 = title;
+            ViewBag.v3 = subTitle;
         }
     }
 }

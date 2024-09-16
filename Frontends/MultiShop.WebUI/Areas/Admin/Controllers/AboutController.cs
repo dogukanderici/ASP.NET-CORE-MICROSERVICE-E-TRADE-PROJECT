@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.AboutDtos;
+using MultiShop.WebUI.Services.CatalogServices.AboutServices;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -9,27 +10,22 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
     [Route("Admin/About")]
     public class AboutController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-
-        public AboutController(IHttpClientFactory httpClientFactory)
+        private readonly IAboutService _aboutService;
+        public AboutController(IAboutService aboutService)
         {
-            _httpClientFactory = httpClientFactory;
+            _aboutService = aboutService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            SetViewBagContent("Hakkımızda İşlemleri", "Ana Sayfa", "Hakkımızda Bilgileri", "Hakkımızda Bilgi Listesi");
 
-            var reponseMessage = await client.GetAsync("https://localhost:7291/api/abouts");
+            var requestMessage = await _aboutService.GetAllDataAsync();
 
-            if (reponseMessage.IsSuccessStatusCode)
+            if (requestMessage != null)
             {
-                var values = await reponseMessage.Content.ReadAsStringAsync();
-
-                var jsonData = JsonConvert.DeserializeObject<List<ResultAboutDto>>(values);
-
-                return View(jsonData);
+                return View(requestMessage);
             }
 
             return View();
@@ -39,10 +35,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public IActionResult CreateAbout()
         {
-            ViewBag.v0 = "Hakkımızda İşlemleri";
-            ViewBag.v1 = "Ana Sayfa";
-            ViewBag.v2 = "Hakkımızda Bilgileri";
-            ViewBag.v3 = "Hakkımızda Bilgi Listesi";
+            SetViewBagContent("Hakkımızda İşlemleri", "Ana Sayfa", "Hakkımızda Bilgileri", "Hakkımızda Bilgi Ekleme");
 
             return View();
         }
@@ -51,15 +44,9 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateAbout(CreateAboutDto createAboutDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var requestMessage = await _aboutService.CreateDataAsync(createAboutDto);
 
-            var jsonData = JsonConvert.SerializeObject(createAboutDto);
-
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var responseMessage = await client.PostAsync("https://localhost:7291/api/abouts", stringContent);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "About", new { area = "Admin" });
             }
@@ -70,11 +57,9 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteAbout(string id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var requestMessage = await _aboutService.DeleteDataAsync(id);
 
-            var responseMessage = await client.DeleteAsync("https://localhost:7291/api/abouts?id=" + id);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "About", new { area = "Admin" });
             }
@@ -86,17 +71,12 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateAbout(string id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var requestMessage = await _aboutService.GetDataAsync(id);
 
-            var responseMessage = await client.GetAsync("https://localhost:7291/api/abouts/" + id);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage != null)
             {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
 
-                var value = JsonConvert.DeserializeObject<UpdateAboutDto>(jsonData);
-
-                return View(value);
+                return View(requestMessage);
             }
 
             return View();
@@ -106,20 +86,21 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateAbout(UpdateAboutDto updateAboutDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var requestMessage = await _aboutService.UpdateDataAsync(updateAboutDto);
 
-            var jsonData = JsonConvert.SerializeObject(updateAboutDto);
-
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var responseMessage = await client.PutAsync("https://localhost:7291/api/abouts", stringContent);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "About", new { area = "Admin" });
             }
 
             return View();
+        }
+        void SetViewBagContent(string mainTitle, string homePageTitle, string title, string subTitle)
+        {
+            ViewBag.v0 = mainTitle;
+            ViewBag.v1 = homePageTitle;
+            ViewBag.v2 = title;
+            ViewBag.v3 = subTitle;
         }
     }
 }

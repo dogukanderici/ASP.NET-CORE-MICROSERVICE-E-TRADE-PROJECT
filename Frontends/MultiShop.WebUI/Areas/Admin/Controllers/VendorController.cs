@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.VendorDtos;
+using MultiShop.WebUI.Services.CatalogServices.VendorServices;
 using MultiShop.WebUI.Utilities.FileOperations;
 using Newtonsoft.Json;
 using System.Text;
@@ -10,29 +11,25 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
     [Route("Admin/Vendor")]
     public class VendorController : Controller
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IVendorService _vendorService;
         private readonly IFileOperationHelper _fileOperationHelper;
 
-        public VendorController(IHttpClientFactory httpClientFactory, IFileOperationHelper fileOperationHelper)
+        public VendorController(IFileOperationHelper fileOperationHelper, IVendorService vendorService)
         {
-            _httpClientFactory = httpClientFactory;
             _fileOperationHelper = fileOperationHelper;
+            _vendorService = vendorService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            SetViewBagContent("Marka İşlemleri", "Ana Sayfa", "Markalar", "Marka Listesi");
 
-            var reponseMessage = await client.GetAsync("https://localhost:7291/api/vendors");
+            var requestMessage = await _vendorService.GetAllDataAsync();
 
-            if (reponseMessage.IsSuccessStatusCode)
+            if (requestMessage != null)
             {
-                var values = await reponseMessage.Content.ReadAsStringAsync();
-
-                var jsonData = JsonConvert.DeserializeObject<List<ResultVendorDto>>(values);
-
-                return View(jsonData);
+                return View(requestMessage);
             }
 
             return View();
@@ -42,10 +39,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public IActionResult CreateVendor()
         {
-            ViewBag.v0 = "Marka İşlemleri";
-            ViewBag.v1 = "Ana Sayfa";
-            ViewBag.v2 = "Markalar";
-            ViewBag.v3 = "Marka Listesi";
+            SetViewBagContent("Marka İşlemleri", "Ana Sayfa", "Markalar", "Marka Listesi");
 
             return View();
         }
@@ -54,7 +48,6 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateVendor(CreateVendorDto createVendorDto)
         {
-            var client = _httpClientFactory.CreateClient();
 
             var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
             {
@@ -64,13 +57,9 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 
             createVendorDto.VendorImageUrl = imageUrl;
 
-            var jsonData = JsonConvert.SerializeObject(createVendorDto);
+            var requestMessage = await _vendorService.CreateDataAsync(createVendorDto);
 
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var responseMessage = await client.PostAsync("https://localhost:7291/api/vendors", stringContent);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Vendor", new { area = "Admin" });
             }
@@ -81,11 +70,10 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteVendor(string id)
         {
-            var client = _httpClientFactory.CreateClient();
 
-            var responseMessage = await client.DeleteAsync("https://localhost:7291/api/vendors?id=" + id);
+            var requestMessage = await _vendorService.DeleteDataAsync(id);
 
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Vendor", new { area = "Admin" });
             }
@@ -97,17 +85,13 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateVendor(string id)
         {
-            var client = _httpClientFactory.CreateClient();
+            SetViewBagContent("Marka İşlemleri", "Ana Sayfa", "Markalar", "Marka Düzenleme");
 
-            var responseMessage = await client.GetAsync("https://localhost:7291/api/vendors/" + id);
+            var requestMessage = await _vendorService.GetDataAsync(id);
 
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage != null)
             {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-
-                var value = JsonConvert.DeserializeObject<UpdateVendorDto>(jsonData);
-
-                return View(value);
+                return View(requestMessage);
             }
 
             return View();
@@ -117,7 +101,6 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateVendor(UpdateVendorDto updateVendorDto)
         {
-            var client = _httpClientFactory.CreateClient();
 
             if (updateVendorDto.VendorImage != null)
             {
@@ -130,18 +113,22 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
                 updateVendorDto.VendorImageUrl = imageUrl;
             }
 
-            var jsonData = JsonConvert.SerializeObject(updateVendorDto);
+            var requestMessage = await _vendorService.UpdateDataAsync(updateVendorDto);
 
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var responseMessage = await client.PutAsync("https://localhost:7291/api/vendors", stringContent);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Vendor", new { area = "Admin" });
             }
 
             return View();
+        }
+
+        void SetViewBagContent(string mainTitle, string homePageTitle, string title, string subTitle)
+        {
+            ViewBag.v0 = mainTitle;
+            ViewBag.v1 = homePageTitle;
+            ViewBag.v2 = title;
+            ViewBag.v3 = subTitle;
         }
     }
 }

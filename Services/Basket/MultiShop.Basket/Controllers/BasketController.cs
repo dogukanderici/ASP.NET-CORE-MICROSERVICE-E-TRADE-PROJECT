@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiShop.Basket.Dtos;
 using MultiShop.Basket.LoginServices;
@@ -11,7 +12,7 @@ namespace MultiShop.Basket.Controllers
     public class BasketController : ControllerBase
     {
         private readonly IBasketService _basketService;
-        private readonly ILoginService _loginService;
+        private ILoginService _loginService;
 
         public BasketController(IBasketService basketService, ILoginService loginService)
         {
@@ -32,7 +33,6 @@ namespace MultiShop.Basket.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveMyBasket(BasketTotalDto basketTotalDto)
         {
-            basketTotalDto.UserId = _loginService.GetUserId;
 
             await _basketService.SaveBasket(basketTotalDto);
 

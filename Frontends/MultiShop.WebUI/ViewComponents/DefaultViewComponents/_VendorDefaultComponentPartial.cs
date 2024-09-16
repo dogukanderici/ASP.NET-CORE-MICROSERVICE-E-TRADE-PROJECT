@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.VendorDtos;
+using MultiShop.WebUI.Services.CatalogServices.VendorServices;
 using MultiShop.WebUI.Utilities.AuthTokenOperations;
 using Newtonsoft.Json;
 
@@ -7,29 +8,20 @@ namespace MultiShop.WebUI.ViewComponents.DefaultViewComponents
 {
     public class _VendorDefaultComponentPartial : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IVendorService _vendorService;
 
-        public _VendorDefaultComponentPartial(IHttpClientFactory httpClientFactory)
+        public _VendorDefaultComponentPartial(IVendorService vendorService)
         {
-            _httpClientFactory = httpClientFactory;
+            _vendorService = vendorService;
         }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var client = _httpClientFactory.CreateClient();
+            var requestMessage = await _vendorService.GetAllDataAsync();
 
-            // API erişimi için token alınır.
-            AuthTokenOperation authTokenOperation = new AuthTokenOperation();
-            await authTokenOperation.GetAuthTokenForAPI(_httpClientFactory, client);
-
-            var reponseMessage = await client.GetAsync("http://localhost:7291/api/vendors");
-
-            if (reponseMessage.IsSuccessStatusCode)
+            if (requestMessage != null)
             {
-                var values = await reponseMessage.Content.ReadAsStringAsync();
-
-                var jsonData = JsonConvert.DeserializeObject<List<ResultVendorDto>>(values);
-
-                return View(jsonData);
+                return View(requestMessage);
             }
 
             return View();

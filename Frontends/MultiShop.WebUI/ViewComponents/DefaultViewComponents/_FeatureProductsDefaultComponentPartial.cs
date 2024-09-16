@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.ProductDtos;
+using MultiShop.WebUI.Services.CatalogServices.ProductServices;
 using MultiShop.WebUI.Utilities.AuthTokenOperations;
 using Newtonsoft.Json;
 
@@ -7,30 +8,20 @@ namespace MultiShop.WebUI.ViewComponents.DefaultViewComponents
 {
     public class _FeatureProductsDefaultComponentPartial : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IProductService _productService;
 
-        public _FeatureProductsDefaultComponentPartial(IHttpClientFactory httpClientFactory)
+        public _FeatureProductsDefaultComponentPartial(IProductService productService)
         {
-            _httpClientFactory = httpClientFactory;
+            _productService = productService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var client = _httpClientFactory.CreateClient();
+            var requestMessage = await _productService.GetAllDataAsync();
 
-            // API erişimi için token alınır.
-            AuthTokenOperation authTokenOperation = new AuthTokenOperation();
-            await authTokenOperation.GetAuthTokenForAPI(_httpClientFactory, client);
-
-            var responseMessage = await client.GetAsync("http://localhost:7291/api/products");
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage != null)
             {
-                var values = await responseMessage.Content.ReadAsStringAsync();
-
-                var jsonData = JsonConvert.DeserializeObject<List<ResultProductDto>>(values);
-
-                return View(jsonData);
+                return View(requestMessage);
             }
 
             return View();

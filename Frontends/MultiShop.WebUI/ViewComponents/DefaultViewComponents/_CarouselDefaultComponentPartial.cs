@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.FeatureSliderDtos;
 using MultiShop.WebUI.Services;
+using MultiShop.WebUI.Services.CatalogServices.FeatureSliderServices;
 using MultiShop.WebUI.Utilities.AuthTokenOperations;
 using Newtonsoft.Json;
 
@@ -8,31 +9,20 @@ namespace MultiShop.WebUI.ViewComponents.DefaultViewComponents
 {
     public class _CarouselDefaultComponentPartial : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IFeatureSliderService _featureSliderService;
 
-        public _CarouselDefaultComponentPartial(IHttpClientFactory httpClientFactory)
+        public _CarouselDefaultComponentPartial(IFeatureSliderService featureSliderService)
         {
-            _httpClientFactory = httpClientFactory;
+            _featureSliderService = featureSliderService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            var requestMessage = await _featureSliderService.GetAllDataAsync();
 
-            var client = _httpClientFactory.CreateClient();
-
-            // API erişimi için token alınır.
-            AuthTokenOperation authTokenOperation = new AuthTokenOperation();
-            await authTokenOperation.GetAuthTokenForAPI(_httpClientFactory, client);
-
-            var responseMessage = await client.GetAsync("http://localhost:7291/api/featuresliders");
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage != null)
             {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-
-                var values = JsonConvert.DeserializeObject<List<ResultFeatureSliderDto>>(jsonData);
-
-                return View(values);
+                return View(requestMessage);
             }
 
             return View();

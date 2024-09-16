@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using MultiShop.Dtos.CatalogDtos.ServiceStandardDtos;
+using MultiShop.WebUI.Services.CatalogServices.ServiceStandardServices;
 using MultiShop.WebUI.Utilities.AuthTokenOperations;
 using Newtonsoft.Json;
 
@@ -8,30 +9,20 @@ namespace MultiShop.WebUI.ViewComponents.DefaultViewComponents
 {
     public class _FeatureDefaultComponentPartial : ViewComponent
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IServiceStandardService _serviceStandardService;
 
-        public _FeatureDefaultComponentPartial(IHttpClientFactory httpClientFactory)
+        public _FeatureDefaultComponentPartial(IServiceStandardService serviceStandardService)
         {
-            _httpClientFactory = httpClientFactory;
+            _serviceStandardService = serviceStandardService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var client = _httpClientFactory.CreateClient();
+            var requestMessage = await _serviceStandardService.GetAllDataAsync();
 
-            // API erişimi için token alınır.
-            AuthTokenOperation authTokenOperation = new AuthTokenOperation();
-            await authTokenOperation.GetAuthTokenForAPI(_httpClientFactory, client);
-
-            var responseMessage = await client.GetAsync("http://localhost:7291/api/servicestandards");
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (requestMessage != null)
             {
-                var values = await responseMessage.Content.ReadAsStringAsync();
-
-                var jsonData = JsonConvert.DeserializeObject<List<ResultServiceStandardDto>>(values);
-
-                return View(jsonData);
+                return View(requestMessage);
             }
 
             return View();

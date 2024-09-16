@@ -3,7 +3,6 @@
     Layout = "~/Views/UILayout/_UILayout.cshtml";
 }
 
-<!-- Breadcrumb Start -->
 <div class="container-fluid">
     <div class="row px-xl-5">
         <div class="col-12">
@@ -15,8 +14,6 @@
         </div>
     </div>
 </div>
-<!-- Breadcrumb End -->
-<!-- Cart Start -->
 <div class="container-fluid">
     <div class="row px-xl-5">
         @await Component.InvokeAsync("_ShoppingCartProductListComponentPartial")
@@ -25,4 +22,3 @@
 
     </div>
 </div>
-<!-- Cart End -->
