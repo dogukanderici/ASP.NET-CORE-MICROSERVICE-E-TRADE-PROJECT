@@ -34,7 +34,7 @@ namespace MultiShop.WebUI.Controllers
         {
 
             await _identityService.SignIn(signUpDto);
-            return RedirectToAction("Index", "User");
+            return RedirectToAction("Index", "Default");
         }
     }
 }
