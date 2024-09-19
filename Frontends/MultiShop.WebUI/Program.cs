@@ -18,6 +18,8 @@ using MultiShop.WebUI.Services.CatalogServices.VendorServices;
 using MultiShop.WebUI.Services.CommentServices;
 using MultiShop.WebUI.Services.Concrete;
 using MultiShop.WebUI.Services.DiscountServices;
+using MultiShop.WebUI.Services.OrderServices.OrderAddressServices;
+using MultiShop.WebUI.Services.OrderServices.OrderOrderingServices;
 using MultiShop.WebUI.Settings;
 using MultiShop.WebUI.Utilities.FileOperations;
 
@@ -65,6 +67,7 @@ builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTo
 
 var values = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
 
+#region
 builder.Services.AddHttpClient<IUserService, UserService>(opt =>
 {
     opt.BaseAddress = new Uri(values.IdentityServerUrl);
@@ -153,7 +156,20 @@ builder.Services.AddHttpClient<IDiscountService, DiscountService>(opt =>
 {
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Discount.Path}/");
 })
+.AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+builder.Services.AddHttpClient<IOrderAddressService, OrderAddressService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}/");
+})
     .AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+builder.Services.AddHttpClient<IOrderOrderingService, OrderOrderingService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}/");
+})
+    .AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+#endregion
 
 var app = builder.Build();
 
@@ -178,7 +194,7 @@ app.UseEndpoints(endpoints =>
 
     endpoints.MapControllerRoute(
       name: "areas",
-      pattern: "{area:exists}/{controller=Category}/{action=Index}/{id?}"
+      pattern: "{area:exists}/{controller}/{action=Index}/{id?}"
     );
 
     endpoints.MapControllerRoute(

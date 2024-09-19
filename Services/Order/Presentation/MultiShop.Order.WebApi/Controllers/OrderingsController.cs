@@ -35,6 +35,15 @@ namespace MultiShop.Order.WebApi.Controllers
             return Ok(value);
         }
 
+        [HttpGet]
+        [Route("GetOrderingByUserId")]
+        public async Task<IActionResult> GetOrderingByUserId(string userId)
+        {
+            var values = await _mediator.Send(new GetOrderingByUserIdQuery(userId));
+
+            return Ok(values);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateOrdering(CreateOrderingCommand createOrderingCommand)
         {
