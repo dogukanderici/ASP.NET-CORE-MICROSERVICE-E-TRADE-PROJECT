@@ -4,6 +4,7 @@ using MultiShop.WebUI.Handlers;
 using MultiShop.WebUI.Services;
 using MultiShop.WebUI.Services.Abstract;
 using MultiShop.WebUI.Services.BasketServices;
+using MultiShop.WebUI.Services.CargoServices.CargoCompanyServices;
 using MultiShop.WebUI.Services.CatalogServices.AboutServices;
 using MultiShop.WebUI.Services.CatalogServices.CategoryServices;
 using MultiShop.WebUI.Services.CatalogServices.ContactServices;
@@ -18,8 +19,10 @@ using MultiShop.WebUI.Services.CatalogServices.VendorServices;
 using MultiShop.WebUI.Services.CommentServices;
 using MultiShop.WebUI.Services.Concrete;
 using MultiShop.WebUI.Services.DiscountServices;
+using MultiShop.WebUI.Services.MessageServices;
 using MultiShop.WebUI.Services.OrderServices.OrderAddressServices;
 using MultiShop.WebUI.Services.OrderServices.OrderOrderingServices;
+using MultiShop.WebUI.Services.UserIdentityServices;
 using MultiShop.WebUI.Settings;
 using MultiShop.WebUI.Utilities.FileOperations;
 
@@ -167,6 +170,24 @@ builder.Services.AddHttpClient<IOrderAddressService, OrderAddressService>(opt =>
 builder.Services.AddHttpClient<IOrderOrderingService, OrderOrderingService>(opt =>
 {
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}/");
+})
+    .AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+builder.Services.AddHttpClient<IMessageService, MessageService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Message.Path}/");
+})
+    .AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+builder.Services.AddHttpClient<IUserIdentityService, UserIdentityService>(opt =>
+{
+    opt.BaseAddress = new Uri(values.IdentityServerUrl);
+})
+    .AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+builder.Services.AddHttpClient<ICargoCompanyService, CargoCompanyService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Cargo.Path}/");
 })
     .AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 #endregion

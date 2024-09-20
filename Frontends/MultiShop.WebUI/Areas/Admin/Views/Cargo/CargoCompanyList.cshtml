@@ -1,0 +1,47 @@
+﻿@model List<ResultCargoCompanyDto>
+
+@{
+    ViewData["Title"] = "CargoCompanyList";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Kargo Şirketleri Listesi</h4>
+                <div class="bs-example" data-example-id="simple-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Kargo Şirketi Adı</th>
+                                <th>Sil / Güncelle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                count++;
+                                <tr>
+                                    <th scope="row">@count</th>
+                                    <td>@item.CargoCompanyName</td>
+                                    <td>
+                                        <a class="btn btn-danger" asp-area="Admin" asp-controller="Cargo" asp-action="DeleteCargoCompany" asp-route-id="@item.CargoCompanyId">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn btn-info" asp-area="Admin" asp-controller="Cargo" asp-action="UpdateCargoCompany" asp-route-id="@item.CargoCompanyId">
+                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <a href="/admin/cargo/createcompany" class="btn btn-primary">Yeni Kargo Şirketi Ekle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
