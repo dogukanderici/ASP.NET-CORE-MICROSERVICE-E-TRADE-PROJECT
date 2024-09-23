@@ -9,7 +9,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Vendor")]
-    public class VendorController : Controller
+    public class VendorController : BaseController
     {
         private readonly IVendorService _vendorService;
         private readonly IFileOperationHelper _fileOperationHelper;

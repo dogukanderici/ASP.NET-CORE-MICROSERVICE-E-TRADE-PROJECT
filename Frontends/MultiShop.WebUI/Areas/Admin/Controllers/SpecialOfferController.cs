@@ -10,7 +10,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/SpecialOffer")]
-    public class SpecialOfferController : Controller
+    public class SpecialOfferController : BaseController
     {
         private readonly ISpecialOfferService _specialOfferService;
         private readonly IFileOperationHelper _fileOperationHelper;

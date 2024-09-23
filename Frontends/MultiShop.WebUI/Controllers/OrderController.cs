@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.OrderDtos.OrderAddressDtos;
 using MultiShop.WebUI.Services.Abstract;
 using MultiShop.WebUI.Services.OrderServices.OrderAddressServices;
 
 namespace MultiShop.WebUI.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly IOrderAddressService _orderAddressService;
@@ -17,26 +19,29 @@ namespace MultiShop.WebUI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewBag.Directory1 = "MultiShop";
             ViewBag.Directory2 = "Siparişler";
             ViewBag.Directory3 = "Sipariş İşlemleri";
 
-            return View();
+            var user = await _userService.GetUserInfo();
+            var value = await _orderAddressService.GetUserOrderAddressAsync(user.Id);
+
+            return View(value);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(CreateOrderAddressDto createOrderAddressDto)
+        public IActionResult Index(CreateOrderAddressDto createOrderAddressDto)
         {
             ViewBag.Directory1 = "MultiShop";
             ViewBag.Directory2 = "Siparişler";
             ViewBag.Directory3 = "Sipariş İşlemleri";
 
-            var values = await _userService.GetUserInfo();
-            createOrderAddressDto.UserId = values.Id;
+            //var values = await _userService.GetUserInfo();
+            //createOrderAddressDto.UserId = values.Id;
 
-            await _orderAddressService.CreateOrderAddressAsync(createOrderAddressDto);
+            //await _orderAddressService.CreateOrderAddressAsync(createOrderAddressDto);
 
             return RedirectToAction("Index", "Payment");
         }

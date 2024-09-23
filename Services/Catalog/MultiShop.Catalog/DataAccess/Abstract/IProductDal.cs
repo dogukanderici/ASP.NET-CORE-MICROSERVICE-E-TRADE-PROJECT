@@ -6,5 +6,6 @@ namespace MultiShop.Catalog.DataAccess.Abstract
 {
     public interface IProductDal : IRepositoryBase<Product, ResultProductDto, CreateProductDto, UpdateProductDto, GetByIdProductDto>
     {
+        Task<decimal> GetProductAvgPrice();
     }
 }

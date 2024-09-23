@@ -10,7 +10,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Comment")]
-    public class CommentController : Controller
+    public class CommentController : BaseController
     {
         private IHttpClientFactory _httpClientFactory;
 

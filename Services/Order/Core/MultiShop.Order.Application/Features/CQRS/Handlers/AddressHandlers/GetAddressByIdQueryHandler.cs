@@ -24,7 +24,7 @@ namespace MultiShop.Order.Application.Features.CQRS.Handlers.AddressHandlers
 
         public async Task<GetAddressByIdQueryResult> Handle(GetAddressByQuery query)
         {
-            var values = await _repository.GetByIdAsync(query.Id);
+            var values = await _repository.GetByFilterAsync(a => a.UserId == query.UserId);
 
             var dtoValues = _mapper.Map<GetAddressByIdQueryResult>(values);
 

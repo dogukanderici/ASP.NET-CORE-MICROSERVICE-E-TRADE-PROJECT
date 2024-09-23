@@ -6,7 +6,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Cargo")]
-    public class CargoController : Controller
+    public class CargoController : BaseController
     {
         private readonly ICargoCompanyService _cargoCompanyService;
 

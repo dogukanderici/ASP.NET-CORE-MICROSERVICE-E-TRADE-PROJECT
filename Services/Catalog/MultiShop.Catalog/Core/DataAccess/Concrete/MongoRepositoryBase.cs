@@ -15,7 +15,7 @@ namespace MultiShop.Catalog.Core.DataAccess.Concrete
         where TUpdate : class, new()
         where TGet : class, new()
     {
-        private readonly IMongoCollection<TEntity> _mongoCollection;
+        protected readonly IMongoCollection<TEntity> _mongoCollection;
         private readonly IMapper _mapper;
         private readonly IConfiguration Configuration;
         private CollectionNameSettings _collectionNameSettings;
@@ -65,6 +65,11 @@ namespace MultiShop.Catalog.Core.DataAccess.Concrete
             var values = _mapper.Map<TEntity>(entity);
 
             await _mongoCollection.FindOneAndReplaceAsync(filter, values);
+        }
+
+        public long GetCount()
+        {
+            return _mongoCollection.CountDocuments(FilterDefinition<TEntity>.Empty);
         }
     }
 }

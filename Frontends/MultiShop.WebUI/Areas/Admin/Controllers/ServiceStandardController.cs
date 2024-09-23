@@ -10,7 +10,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/ServiceStandard")]
-    public class ServiceStandardController : Controller
+    public class ServiceStandardController : BaseController
     {
         private readonly IServiceStandardService _serviceStandardService;
 

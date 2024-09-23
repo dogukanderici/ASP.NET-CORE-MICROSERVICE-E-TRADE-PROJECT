@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace MultiShop.Cargo.Business.Abstract
 {
     public interface ICargoCustomerService : IGenericService<CargoCustomer>
-    { 
+    {
+        CargoCustomer TGetByIdCargoCustomer(string userId);
     }
 }

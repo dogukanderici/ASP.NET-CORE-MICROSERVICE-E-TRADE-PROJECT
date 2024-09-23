@@ -40,6 +40,14 @@ namespace MultiShop.Cargo.WebApi.Controllers
             return Ok(valueToDto);
         }
 
+        [HttpGet("GetByIdCargoCustomer")]
+        public IActionResult GetByIdCargoCustomer(string id)
+        {
+            var value = _cargoCustomerService.TGetByIdCargoCustomer(id);
+
+            return Ok(value);
+        }
+
         [HttpPost]
         public IActionResult CreateCargoCustomer(CreateCargoCustomerDto createCargoCustomerDto)
         {

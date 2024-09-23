@@ -1,0 +1,26 @@
+﻿@model UpdateOrderAddressDto
+
+@{
+    ViewData["Title"] = "GetMyAddresses";
+    Layout = "~/Areas/User/Views/UserLayout/Index.cshtml";
+}
+<div class="content-wrapper">
+    <h4 class="card-title">Kayıtlı Adreslerim</h4></p>
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card bg-gradient-primary d-flex align-items-start" style="border-radius: 1.25rem !important;">
+            <div class="card-body">
+                <div class="d-flex flex-row align-items-center flex-wrap justify-content-md-center justify-content-xl-start">
+                    <a href="/user/profile/editaddress?userid=@Model.UserId"><i class="mdi mdi-navigation text-white icon-lg"></i></a>
+                    <div class="ml-3 ml-md-0 ml-xl-3">
+                        <h5 class="text-white font-weight-bold">@(Model.Name + ' ' + Model.Surname)</h5>
+                        <p class="mt-2 text-white card-text">@Model.City</p>
+                        <p class="mt-2 text-white card-text">@Model.Discrict</p>
+                        <p class="mt-2 text-white card-text">@Model.Detail1</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="/shoppingcart" class="btn btn-info"><i class="mdi mdi-shopping" aria-hidden="true"></i> Sepete Git</a>
+    <a href="/default" class="btn btn-warning"><i class="mdi mdi-home" aria-hidden="true"></i> Ana Sayfa</a>
+</div>

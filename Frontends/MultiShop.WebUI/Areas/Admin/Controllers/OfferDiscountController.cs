@@ -9,7 +9,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/OfferDiscount")]
-    public class OfferDiscountController : Controller
+    public class OfferDiscountController : BaseController
     {
         private readonly IOfferDiscountService _offerDiscountService;
         private readonly IFileOperationHelper _fileOperationHelper;

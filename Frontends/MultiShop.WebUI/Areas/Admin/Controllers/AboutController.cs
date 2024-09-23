@@ -8,7 +8,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/About")]
-    public class AboutController : Controller
+    public class AboutController : BaseController
     {
         private readonly IAboutService _aboutService;
         public AboutController(IAboutService aboutService)

@@ -1,0 +1,97 @@
+﻿@model CreateOrderAddressDto
+
+@{
+    ViewData["Title"] = "CreateOrderAddress";
+    Layout = "~/Areas/User/Views/UserLayout/Index.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Adres Ekleme</h4></p>
+                    <form id="EditUserAddressForm" class="forms-sample" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Adınız</label>
+                                    <input asp-for="Name" class="form-control" type="text" placeholder="Adınız">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Soyadınız</label>
+                                    <input asp-for="Surname" class="form-control" type="text" placeholder="Soyadınız">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>E-mail</label>
+                                    <input asp-for="Email" class="form-control" type="email" placeholder="mail@email.com">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Telefon</label>
+                                    <input asp-for="Phone" class="form-control" type="text" placeholder="+90 5xxx xxx xx xx">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Adres Detayı 1</label>
+                                    <input asp-for="Detail1" class="form-control" type="text" placeholder="Adres Detayı">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Adres Detay 2</label>
+                                    <input asp-for="Detail2" class="form-control" type="text" placeholder="Adres Detayı">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Ülke</label>
+                                    <input asp-for="Country" class="form-control" type="text" placeholder="Türkiye">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Şehir</label>
+                                    <input asp-for="City" class="form-control" type="text" placeholder="Şehir">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>İlçe</label>
+                                    <input asp-for="Discrict" class="form-control" type="text" placeholder="İlçe">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Posta Kodu</label>
+                                    <input asp-for="ZipCode" class="form-control" type="text" placeholder="Posta Kodu">
+                                </div>
+                            </div>
+                        </div><div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Açıklama</label>
+                                    <textarea asp-for="Description" class="form-control" type="text" rows="5" placeholder="Açıklama"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success mr-2">Kaydet</button>
+                        <a href="/user/profile/addresses" class="btn btn-outline-danger">İptal</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -42,5 +42,10 @@ namespace MultiShop.Cargo.Business.Concrete
         {
             _cargoCustomerDal.UpdateData(entity);
         }
+
+        public CargoCustomer TGetByIdCargoCustomer(string userId)
+        {
+            return _cargoCustomerDal.GetByFilter(cc => cc.UserCustomerId == userId);
+        }
     }
 }

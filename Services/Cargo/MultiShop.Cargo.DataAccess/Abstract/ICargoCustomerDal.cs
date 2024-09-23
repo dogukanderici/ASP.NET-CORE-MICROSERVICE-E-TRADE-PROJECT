@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MultiShop.Cargo.DataAccess.Abstract
 {
-    public interface ICargoCustomerDal  :IRepositoryBase<CargoCustomer>
+    public interface ICargoCustomerDal : IRepositoryBase<CargoCustomer>
     {
     }
 }

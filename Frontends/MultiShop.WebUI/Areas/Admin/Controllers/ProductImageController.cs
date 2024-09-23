@@ -8,7 +8,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/ProductImage")]
-    public class ProductImageController : Controller
+    public class ProductImageController : BaseController
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IFileOperationHelper _fileOperationHelper;

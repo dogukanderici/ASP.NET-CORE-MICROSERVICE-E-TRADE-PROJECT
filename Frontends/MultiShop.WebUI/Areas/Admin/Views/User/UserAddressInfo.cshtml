@@ -1,0 +1,44 @@
+﻿@model GetByIdCargoCustomerDto
+
+@{
+    ViewData["Title"] = "UserAddressInfo";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Adres Bilgileri</h4>
+                <div class="row">
+                    <form id="AddNewCategory" asp-area="Admin" asp-controller="Cargo" asp-action="CreateCargo" method="post" enctype="multipart/form-data">
+                        <div class="col-md-4">
+                            <div class="form-group has-feedback">
+                                <label asp-for="@Model.Name" class="control-label">Ad / Soyad</label>
+                                <input asp-for="@Model.Name" value="@(Model.Name+' '+Model.Surname)" type="text" class="form-control" readonly="true" placeholder="Ad / Soyad">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group has-feedback">
+                                <label asp-for="@Model.Email" class="control-label">E-Posta</label>
+                                <input asp-for="@Model.Email" type="text" class="form-control" readonly="true" placeholder="E-Posta">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group has-feedback">
+                                <label asp-for="@Model.City" class="control-label">İl-İlçe</label>
+                                <input asp-for="@Model.City" value="@(Model.City+' '+Model.Discrict)" type="text" class="form-control" readonly="true" placeholder="İl-İlçe">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group has-feedback">
+                                <label asp-for="@Model.Address" class="control-label">Adres</label>
+                                <textarea asp-for="@Model.Address" class="form-control" rows="6" readonly="true" placeholder="Adres"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -15,5 +15,7 @@ namespace MultiShop.Catalog.Core.DataAccess.Abstract
         Task CreateData(Tcreate entity);
         Task UpdateData(Expression<Func<T, bool>> filter, Tupdate entity);
         Task DeleteData(Expression<Func<T, bool>> filter = null);
+
+        long GetCount();
     }
 }

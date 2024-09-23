@@ -10,7 +10,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/FeatureSlider")]
-    public class FeatureSliderController : Controller
+    public class FeatureSliderController : BaseController
     {
         private readonly IFeatureSliderService _featureSliderService;
         private readonly IFileOperationHelper _fileOperationHelper;
