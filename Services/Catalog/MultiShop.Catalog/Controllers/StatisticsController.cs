@@ -16,8 +16,8 @@ namespace MultiShop.Catalog.Controllers
         }
 
         [HttpGet]
-        [Route("GetBrandCount")]
-        public IActionResult GetBrandCount()
+        [Route("GetVendorCount")]
+        public IActionResult GetVendorCount()
         {
             var value = _statisticsService.GetVendorCount();
 
@@ -47,6 +47,24 @@ namespace MultiShop.Catalog.Controllers
         public IActionResult GetProductAvgPrice()
         {
             var value = _statisticsService.GetProductAvgPrice();
+
+            return Ok(value);
+        }
+
+        [HttpGet]
+        [Route("GetMaxPriceProductName")]
+        public IActionResult GetMaxPriceProductName()
+        {
+            var value = _statisticsService.GetMaxPriceProductName();
+
+            return Ok(value);
+        }
+
+        [HttpGet]
+        [Route("GetMinPriceProductName")]
+        public IActionResult GetMinPriceProductName()
+        {
+            var value = _statisticsService.GetMinPriceProductName();
 
             return Ok(value);
         }

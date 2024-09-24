@@ -6,5 +6,7 @@
         long GetProductCount();
         long GetVendorCount();
         Task<decimal> GetProductAvgPrice();
+        string GetMaxPriceProductName();
+        string GetMinPriceProductName();
     }
 }

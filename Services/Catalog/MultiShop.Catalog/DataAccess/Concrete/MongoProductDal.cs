@@ -56,5 +56,33 @@ namespace MultiShop.Catalog.DataAccess.Concrete
 
             //return price;
         }
+
+        public string GetMaxPriceProductName()
+        {
+            var projection = Builders<Product>.Projection
+                .Include(y => y.ProductName)
+                .Exclude(y => y.ProductID);
+
+            var product = _mongoCollection.Find(Builders<Product>.Filter.Empty)
+                .Sort(Builders<Product>.Sort.Descending(x => x.ProductPrice))
+                .Project<Product>(projection)
+                .FirstOrDefault();
+
+            return product.ProductName;
+        }
+
+        public string GetMinPriceProductName()
+        {
+            var projection = Builders<Product>.Projection
+                .Include(y => y.ProductName)
+                .Exclude(y => y.ProductID);
+
+            var product = _mongoCollection.Find(Builders<Product>.Filter.Empty)
+                .Sort(Builders<Product>.Sort.Ascending(x => x.ProductPrice))
+                .Project<Product>(projection)
+                .FirstOrDefault();
+
+            return product.ProductName;
+        }
     }
 }

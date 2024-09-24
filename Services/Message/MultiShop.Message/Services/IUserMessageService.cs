@@ -11,5 +11,7 @@ namespace MultiShop.Message.Services
         void UpdateMessage(UpdateMessageDto updateMessageDto);
         Task DeleteMessageAsync(int userMessageId);
         Task<GetByIdMessageDto> GetByIdMessageAsync(int userMessageId);
+        Task<int> GetTotalMessageCount();
+        Task<int> GetTotalMessageCountByReceiverId(string id);
     }
 }

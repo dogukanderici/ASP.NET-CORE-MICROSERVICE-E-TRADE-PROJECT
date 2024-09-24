@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using MongoDB.Driver;
 using MultiShop.Catalog.DataAccess.Abstract;
+using MultiShop.Catalog.Entities;
+using MultiShop.Catalog.Settings.Concrete;
 
 namespace MultiShop.Catalog.Services.StatisticsServices
 {
@@ -36,6 +39,16 @@ namespace MultiShop.Catalog.Services.StatisticsServices
         public async Task<decimal> GetProductAvgPrice()
         {
             return await _productDal.GetProductAvgPrice();
+        }
+
+        public string GetMaxPriceProductName()
+        {
+            return _productDal.GetMaxPriceProductName();
+        }
+
+        public string GetMinPriceProductName()
+        {
+            return _productDal.GetMinPriceProductName();
         }
     }
 }
