@@ -1,16 +1,13 @@
-﻿<header class="main-header dark-bg">
+﻿<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-    <!-- Logo -->
+<header class="main-header dark-bg">
+
     <a href="../index.html" class="logo dark-bg">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><img src="~/images/logos/mulhtishop1.jpg" style="width: 50px !important; height: 50px !important;" alt="MultiShop"></span>
-        <!-- logo for regular state and mobile devices -->
         <span class="logo-lg"><img src="~/images/logos/mulhtishop1.jpg" style="width: 200px !important; height: 50px !important;" alt="MultiShop"></span>
     </a>
 
-    <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
-        <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button"> <span class="sr-only">Toggle navigation</span> </a>
         <div class="pull-left search-box">
             <form action="#" method="get" class="search-form">
@@ -21,18 +18,40 @@
                     </span>
                 </div>
             </form>
-            <!-- search form -->
         </div>
-        <!-- Navbar Right Menu -->
+
+        <script type="text/javascript">
+            $(document).ready(() => {
+                var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7130/SignalRHub").build();
+                $("#connstatus").text(connection.state);
+
+                connection.start()
+                    .then(() => {
+                        $("#connstatus").text(connection.state);
+                        connection.invoke("SendStatisticsCount");
+                    })
+                    .catch((err) => { console.error("HATA: ", err) });
+
+                connection.on("ReceiveCommentCount", (value) => {
+                    $("#commentCount").text(value);
+                });
+
+                connection.on("ReceiveMessageCount", (value) => {
+                    $("#messageCount").text(value);
+                });
+            });
+        </script>
+
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="icon-envelope"></i>
-                        <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                        <div class="notify"> <span class="hearbit"> </span> <span class="point"></span> </div>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">You have 4 messages</li>
+                        <li class="header"><strong id="commentCount"></strong> Yeni Yorum Var!</li>
+                         @* Son 5 Yorum *@
                         <li>
                             <ul class="menu">
                                 <li>
@@ -69,18 +88,17 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">Check all notifications</a></li>
+                        <li class="footer"><a href="#">Tümünü Okundu Yap</a></li>
                     </ul>
                 </li>
-                <!-- messages-menu -->
-                <!-- Notifications Menu -->
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="icon-megaphone"></i>
-                        <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
+                        <div class="notify"> <span class="heartbit"> </span> <span class="point"></span> </div>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">Bildirimler</li>
+                        <li class="header"><strong id="messageCount"></strong> Mesaj Var!</li>
+                        @* Son 5 Mesaj *@
                         <li>
                             <ul class="menu">
                                 <li><a href="#"><i class="icon-lightbulb"></i> Lorem ipsum dolor sit amet </a> </li>
@@ -89,26 +107,23 @@
                                 <li><a href="#"><i class="icon-map-pin blue"></i> Lorem ipsum dolor sit amet </a> </li>
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">View all</a></li>
+                        <li class="footer"><a href="#">Tümünü Görüntüle</a></li>
                     </ul>
                 </li>
-                <!-- Tasks Menu -->
-                <!-- User Account Menu -->
                 <li class="dropdown user user-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="~/images/logos/manlogo.jpg" class="user-image" alt="User Image"> <span class="hidden-xs">Doğukan Derici</span> </a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <img src="~/images/logos/manlogo.jpg" class="user-image" alt="User Image"> <span class="hidden-xs">@ViewBag.UserName</span> </a>
                     <ul class="dropdown-menu">
                         <li class="user-header">
                             <div class="pull-left user-img"><img src="~/images/logos/manlogo.jpg" class="img-responsive" alt="User"></div>
-                            <p class="text-left">Doğukan Derici <small>multishop.info@gmail.com</small> </p>
+                            <p class="text-left">@ViewBag.UserName <small>@ViewBag.Email</small> </p>
                             <div class="view-link text-left"><a href="#">Profili Görüntüle</a> </div>
                         </li>
-                        <li><a href="#"><i class="icon-profile-male"></i> My Profile</a></li>
-                        <li><a href="#"><i class="icon-wallet"></i> My Balance</a></li>
-                        <li><a href="#"><i class="icon-envelope"></i> Inbox</a></li>
+                        <li><a href="#"><i class="icon-profile-male"></i> Profilim</a></li>
+                        <li><a href="#"><i class="icon-envelope"></i> Gelen Mesajlar</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#"><i class="icon-gears"></i> Account Setting</a></li>
+                        <li><a href="#"><i class="icon-gears"></i> Şifre Değişikliği</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                        <li><a href="#"><i class="fa fa-power-off"></i> Çıkış Yap</a></li>
                     </ul>
                 </li>
             </ul>

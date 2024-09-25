@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<script src="~/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+@* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
+@* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+@* <script src="~/js/site.js" asp-append-version="true"></script> *@
+
+<div class="container">
+    <br /><br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <script type="text/javascript">
+                    $(document).ready(() => {
+                        var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7130/SignalRHub").build();
+                        $("#connstatus").text(connection.state);
+
+                        connection.start()
+                            .then(() => {
+                                $("#connstatus").text(connection.state);
+                                connection.invoke("SendStatisticsCount");
+                            })
+                            .catch((err) => { console.error("HATA: ", err) });
+
+                        connection.on("ReceiveCommentCount", (value) => {
+                            $("#commentCount").text(value);
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <div class="bs-example" data-example-id="simple-table">
+                    <div class="col-md-8 offset-2">
+                        <div class="alert alert-success">Bağlantı Durumu: <strong id="connstatus"></strong></div>
+                        <div class="alert alert-primary">Yorum Sayısı: <strong id="commentCount"></strong></div>
+                        <div class="alert alert-primary">Mesaj Sayısı: <strong id="messageCount"></strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -44,7 +44,7 @@ namespace MultiShop.WebUI.Services.CatalogServices.ProductServices
 
         public async Task<List<ResultProductWithCategoryDto>> GetProductsWithCategoryAsync()
         {
-            var response = await _httpClient.GetAsync("products/GetProductsWithCategoryAsync");
+            var response = await _httpClient.GetAsync("products/ProductListWithCategory");
             var values = await response.Content.ReadFromJsonAsync<List<ResultProductWithCategoryDto>>();
 
             return values.ToList();

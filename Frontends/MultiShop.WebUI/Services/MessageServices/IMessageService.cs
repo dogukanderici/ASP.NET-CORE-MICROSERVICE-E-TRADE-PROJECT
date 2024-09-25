@@ -6,7 +6,8 @@ namespace MultiShop.WebUI.Services.MessageServices
     {
         //Task<List<ResultMessageDto>> GetMessagesAsync();
         Task<List<ResultInboxMessageDto>> GetInboxMessageAsync(string receiverId);
-        Task<List<ResultSendboxMessageDto>> GetSendboxMessageAsync(string senderId);
+        Task<List<ResultSendboxMessageDto>> GetSendboxMessageAsync(string senderId); 
+        Task<int> GetTotalMessageCountByReceiverId(string id);
         //Task CreateMessageAsync(CreateMessageDto createMessageDto);
         //void UpdateMessage(UpdateMessageDto updateMessageDto);
         //Task DeleteMessageAsync(int userMessageId);
