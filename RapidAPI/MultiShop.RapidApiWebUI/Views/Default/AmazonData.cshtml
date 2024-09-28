@@ -1,0 +1,30 @@
+﻿@model AmazonDataViewModel
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.rtl.css" rel="stylesheet" />
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+@{
+    ViewData["Title"] = "AmazonData";
+}
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ürün</th>
+                <th>Fiyat</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.data.products)
+            {
+                <tr>
+                    <td>@item.product_title</td>
+                    <td>@item.product_price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

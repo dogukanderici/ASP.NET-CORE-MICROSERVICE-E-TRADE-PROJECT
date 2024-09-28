@@ -1,4 +1,6 @@
-﻿<div class="container-fluid">
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+<div class="container-fluid">
     <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
         <div class="col-lg-4">
             <a href="" class="text-decoration-none">
@@ -9,7 +11,7 @@
         <div class="col-lg-4 col-6 text-left">
             <form action="">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Aranacak Ürünü Giriniz">
+                    <input type="text" class="form-control" placeholder="@localizer["Aranacak Ürünü Giriniz"]">
                     <div class="input-group-append">
                         <span class="input-group-text bg-transparent text-primary">
                             <i class="fa fa-search"></i>
@@ -18,9 +20,23 @@
                 </div>
             </form>
         </div>
-        <div class="col-lg-4 col-6 text-right">
+        @* <div class="col-lg-4 col-6 text-right">
             <p class="m-0">Telefon Numaramız</p>
             <h5 class="m-0">+90 123 456 89 00</h5>
+        </div> *@
+        <div class="weather-exchange-navbar col-lg-4">
+            <div class="exchange-container">
+                <div class="weather-info">
+                    <div class="weather-city">USD/TL: @ViewBag.USDTRY</div>
+                    <div class="weather-city">EUR/TL: @ViewBag.EURTRY</div>
+                </div>
+            </div>
+            <div class="weather-container">
+                <div class="weather-info">
+                    <div class="weather-city">Eskişehir</div>
+                    <div class="weather-temp">@ViewBag.CityTemp °C</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

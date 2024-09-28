@@ -1,0 +1,47 @@
+﻿.weather-exchange-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    /*padding: .5rem;*/
+    color: white;
+}
+
+/* Hava durumu alanı stil */
+.weather-container {
+    position: relative;
+    width: 150px;
+    height: 50px;
+    background-image: url('https://images.theconversation.com/files/442675/original/file-20220126-17-1i0g402.jpg?ixlib=rb-4.1.0&q=45&auto=format&w=1356&h=668&fit=crop'); /* Buraya hava durumu görseli */
+    background-size: cover;
+    border-radius: 8px;
+    color: white;
+    font-family: "Roboto", sans-serif;
+}
+
+.exchange-container {
+    position: relative;
+    width: 150px;
+    height: 50px;
+    background-image: url('https://serbestiyet.com/wp-content/uploads/2023/12/borsa-istanbul-1024x576.jpg'); /* Buraya hava durumu görseli */
+    background-size: cover;
+    border-radius: 8px;
+    color: white;
+    font-family: "Roboto", sans-serif;
+}
+
+.weather-info {
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.weather-city {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.weather-temp {
+    font-size: 16px;
+}

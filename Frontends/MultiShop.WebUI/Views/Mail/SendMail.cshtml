@@ -1,0 +1,40 @@
+﻿@model MailRequestViewModel
+
+@{
+    Layout = null;
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container">
+    <br /><br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <form id="SendMailForm" asp-controller="Mail" asp-action="SendMail" method="post">
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-success">Gönder</button>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="@Model.ReceiverMail">Alıcı E-Posta Adresi</label>
+                            <input asp-for="@Model.ReceiverMail" type="text" class="form-control" placeholder="Alıcı E-Posta Adresi">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Subject">Mail Konusu</label>
+                            <input asp-for="@Model.Subject" type="text" class="form-control" placeholder="Mail Konusu">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Content">Mail İçeriği</label>
+                            <textarea asp-for="@Model.Content" rows="6" class="form-control" placeholder="Mail İçeriği"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

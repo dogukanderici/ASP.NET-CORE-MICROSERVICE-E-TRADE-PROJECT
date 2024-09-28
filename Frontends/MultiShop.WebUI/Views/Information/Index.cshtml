@@ -1,0 +1,9 @@
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/_UILayout.cshtml";
+}
+
+<h1>@localizer["Merhaba"] @localizer["bugün"] @localizer["hava"] @localizer["çok"] @localizer["sıcak"]. Sıcaklıklar daha da artacağı söyleniyor.</h1>
+
