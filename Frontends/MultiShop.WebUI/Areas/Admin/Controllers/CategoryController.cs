@@ -3,6 +3,7 @@ using MultiShop.Dtos.CatalogDtos.CategoryDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
 using MultiShop.WebUI.Services.CatalogServices.CategoryServices;
 using MultiShop.WebUI.Utilities.FileOperations;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.CategoryValidation;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -50,19 +51,25 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateCategory(CreateCategoryDto createCategoryDto)
         {
-            var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+            var createCategoryValidator = new CreateCategoryValidator();
+            var validator = createCategoryValidator.Validate(createCategoryDto);
+
+            if (validator.IsValid)
             {
-                LoadedFile = createCategoryDto.CategoryImage,
-                FilePath = "/wwwroot/userfiles/"
-            });
+                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                {
+                    LoadedFile = createCategoryDto.CategoryImage,
+                    FilePath = "/wwwroot/userfiles/"
+                });
 
-            createCategoryDto.CategoryImageUrl = imageUrl;
+                createCategoryDto.CategoryImageUrl = imageUrl;
 
-            var requestResponse = await _categoryService.CreateDataAsync(createCategoryDto);
+                var requestResponse = await _categoryService.CreateDataAsync(createCategoryDto);
 
-            if (requestResponse.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "Category", new { area = "Admin" });
+                if (requestResponse.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Category", new { area = "Admin" });
+                }
             }
 
             return View();
@@ -96,25 +103,33 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryDto updateCategoryDto)
         {
-            if (updateCategoryDto.CategoryImage != null)
+            var updateCategoryValidator = new UpdateCategoryValidator();
+            var validator = updateCategoryValidator.Validate(updateCategoryDto);
+
+            if (validator.IsValid)
             {
-                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                if (updateCategoryDto.CategoryImage != null)
                 {
-                    LoadedFile = updateCategoryDto.CategoryImage,
-                    FilePath = "/wwwroot/userfiles/"
-                });
+                    var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                    {
+                        LoadedFile = updateCategoryDto.CategoryImage,
+                        FilePath = "/wwwroot/userfiles/"
+                    });
 
-                updateCategoryDto.CategoryImageUrl = imageUrl;
+                    updateCategoryDto.CategoryImageUrl = imageUrl;
+                }
+
+                var requestResponse = await _categoryService.UpdateDataAsync(updateCategoryDto);
+
+                if (requestResponse.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Category", new { area = "Admin" });
+                }
             }
 
-            var requestResponse = await _categoryService.UpdateDataAsync(updateCategoryDto);
+            var value = await _categoryService.GetDataAsync(updateCategoryDto.CategoryID);
 
-            if (requestResponse.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "Category", new { area = "Admin" });
-            }
-
-            return View();
+            return View(value);
         }
         void SetViewBagContent(string mainTitle, string homePageTitle, string title, string subTitle)
         {

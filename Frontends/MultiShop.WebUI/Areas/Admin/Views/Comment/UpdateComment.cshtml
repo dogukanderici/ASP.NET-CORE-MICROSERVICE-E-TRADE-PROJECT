@@ -19,30 +19,35 @@
                             <div class="form-group has-feedback">
                                 <label asp-for="NameSurname" class="control-label">Kullanıcı</label>
                                 <input asp-for="NameSurname" type="text" class="form-control" style="user-select: none !important;" placeholder="Kullanıcı">
+                                <span asp-validation-for="NameSurname" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="Email" class="control-label">E-Posta</label>
                                 <input asp-for="Email" type="text" class="form-control" placeholder="E-Posta">
+                                <span asp-validation-for="Email" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="Rating" class="control-label">Puan</label>
                                 <input asp-for="Rating" type="number" class="form-control" placeholder="Puan">
+                                <span asp-validation-for="Rating" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="CreatedDate" class="control-label">Tarih</label>
                                 <input asp-for="CreatedDate" type="date" class="form-control" placeholder="Tarih">
+                                <span asp-validation-for="CreatedDate" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="CommentDetail" class="control-label">Tarih</label>
                                 <textarea asp-for="CommentDetail" type="text" class="form-control" placeholder="Tarih"></textarea>
+                                <span asp-validation-for="CommentDetail" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">

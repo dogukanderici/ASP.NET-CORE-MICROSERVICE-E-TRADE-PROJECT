@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CommentDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
+using MultiShop.WebUI.Services.CommentServices;
 using MultiShop.WebUI.Utilities.FileOperations;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.CommentValidation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net;
 using System.Text;
 
 namespace MultiShop.WebUI.Areas.Admin.Controllers
@@ -12,42 +16,38 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
     [Route("Admin/Comment")]
     public class CommentController : BaseController
     {
-        private IHttpClientFactory _httpClientFactory;
+        private readonly ICommentService _commentService;
 
-        public CommentController(IHttpClientFactory httpClientFactory)
+        public CommentController(ICommentService commentService)
         {
-            _httpClientFactory = httpClientFactory;
+            _commentService = commentService;
         }
 
-
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? statusCode)
         {
-            ViewBag.v0 = "Yorum İşlemleri";
-            ViewBag.v1 = "Ana Sayfa";
-            ViewBag.v2 = "Yorumlar";
-            ViewBag.v3 = "Yorum Listesi";
-            var client = _httpClientFactory.CreateClient();
+            SetViewBagContent("Yorum İşlemleri", "Ana Sayfa", "Yorumlar", "Yorum Listesi");
 
-            var responseMessage = await client.GetAsync("https://localhost:7296/api/comments");
+            var responseMessage = await _commentService.GetAllDataAsync();
 
-            if (responseMessage.IsSuccessStatusCode)
+            if (statusCode != null)
             {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-
-                var values = JsonConvert.DeserializeObject<List<ResultCommentDto>>(jsonData);
-
-                return View(values);
+                HttpStatusCode statusCodeStr = (HttpStatusCode)statusCode;
+                //SetViewBagStatusInfo(statusCode, statusCodeStr.ToString());
+                SetViewBagStatusInfo(statusCode, "Aradığınız Veri Bulunamadı!");
             }
 
-            return View();
+            if (responseMessage.Count() > 0)
+            {
+                return View(responseMessage);
+            }
+
+            return View(new List<ResultCommentDto>());
         }
 
         [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteComment(string id)
         {
-            var client = _httpClientFactory.CreateClient();
-
-            var responseMessage = await client.DeleteAsync("https://localhost:7296/api/comments?id=" + id);
+            var responseMessage = await _commentService.DeleteDataAsync(id);
 
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -61,40 +61,53 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateComment(string id)
         {
-            var client = _httpClientFactory.CreateClient();
 
-            var responseMessage = await client.GetAsync("https://localhost:7296/api/comments/" + id);
+            var responseMessage = await _commentService.GetDataAsync(id);
 
-            if (responseMessage.IsSuccessStatusCode)
+            if (responseMessage == null)
             {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-
-                var value = JsonConvert.DeserializeObject<UpdateCommentDto>(jsonData);
-
-                return View(value);
+                return View(responseMessage);
             }
 
-            return View();
+            return RedirectToAction("Index", "Comment", new { area = "Admin", statusCode = 404 });
         }
 
         [HttpPost]
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateComment(UpdateCommentDto updateCommentDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var updateCommentValidator = new UpdateCommentValidator();
+            var validator = updateCommentValidator.Validate(updateCommentDto);
 
-            var jsonData = JsonConvert.SerializeObject(updateCommentDto);
-
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var responseMessage = await client.PutAsync("https://localhost:7296/api/comments", stringContent);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (validator.IsValid)
             {
-                return RedirectToAction("Index", "Comment", new { area = "Admin" });
+                var responseMessage = await _commentService.UpdateDataAsync(updateCommentDto);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Comment", new { area = "Admin" });
+                }
+
+                SetViewBagStatusInfo(404, "Bir Sorun Oluştu. Lütfen Tekrar Deneyiniz!");
+
+                return View("Index");
             }
 
-            return View();
+            return await UpdateComment(updateCommentDto.UserCommentId.ToString());
+        }
+
+        void SetViewBagContent(string mainTitle, string homePageTitle, string title, string subTitle)
+        {
+            ViewBag.v0 = mainTitle;
+            ViewBag.v1 = homePageTitle;
+            ViewBag.v2 = title;
+            ViewBag.v3 = subTitle;
+        }
+
+        void SetViewBagStatusInfo(int? statusCode, string statsuMessage)
+        {
+            ViewBag.StatusCode = statusCode;
+            ViewBag.StatusMessage = statsuMessage;
         }
     }
 }

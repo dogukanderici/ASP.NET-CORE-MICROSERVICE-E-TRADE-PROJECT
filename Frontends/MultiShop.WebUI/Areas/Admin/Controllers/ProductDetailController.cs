@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.ProductDetailDtos;
+using MultiShop.WebUI.Services.CatalogServices.ProductDetailServices;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.ProductDetailValidation;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -9,21 +11,18 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
     [Route("Admin/ProductDetail")]
     public class ProductDetailController : BaseController
     {
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IProductDetailService _productDetailService;
 
-        public ProductDetailController(IHttpClientFactory httpClientFactory)
+        public ProductDetailController(IProductDetailService productDetailService)
         {
-            _httpClientFactory = httpClientFactory;
+            _productDetailService = productDetailService;
         }
 
         [HttpGet]
         [Route("Create")]
         public IActionResult CreateProductDetail()
         {
-            ViewBag.v0 = "Ürün İşlemleri";
-            ViewBag.v1 = "Ana Sayfa";
-            ViewBag.v2 = "Ürün Bilgileri";
-            ViewBag.v3 = "Ürün Açıklama ve Bilgi Ekleme Sayfası";
+            SetViewBagContent("Ürün İşlemleri", "Ana Sayfa", "Ürün Bilgileri", "Ürün Açıklama ve Bilgi Ekleme Sayfası");
 
             return View();
         }
@@ -32,17 +31,17 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateProductDetail(CreateProductDetailDto createProductDetailDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var productDetailValidator = new CreateProductDetailValidator();
+            var validator = productDetailValidator.Validate(createProductDetailDto);
 
-            var jsonData = JsonConvert.SerializeObject(createProductDetailDto);
-
-            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var responseMessage = await client.PostAsync("https://localhost:7291/api/productdetails", content);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (validator.IsValid)
             {
-                return RedirectToAction("ProductListWithCategory", "Product", new { area = "Admin" });
+                var responseMessage = await _productDetailService.CreateDataAsync(createProductDetailDto);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("ProductListWithCategory", "Product", new { area = "Admin" });
+                }
             }
 
             return View();
@@ -52,23 +51,20 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateProductDetail(string id)
         {
-            ViewBag.v0 = "Ürün İşlemleri";
-            ViewBag.v1 = "Ana Sayfa";
-            ViewBag.v2 = "Ürün Bilgileri";
-            ViewBag.v3 = "Ürün Açıklama ve Bilgi Güncelleme Sayfası";
 
-            var client = _httpClientFactory.CreateClient();
+            SetViewBagContent("Ürün İşlemleri", "Ana Sayfa", "Ürün Bilgileri", "Ürün Açıklama ve Bilgi Güncelleme Sayfası");
 
-            var responseMessage = await client.GetAsync("https://localhost:7291/api/productdetails/getproductdetailswithproductid?id=" + id);
+            var responseMessage = await _productDetailService.GetProductDetailsWithProductIdAsync(id);
 
-            if (responseMessage.IsSuccessStatusCode)
+            var model = new GetByIdProductDetailDto();
+
+            if (responseMessage != null)
             {
-                var value = await responseMessage.Content.ReadAsStringAsync();
-
-                var jsonData = JsonConvert.DeserializeObject<UpdateProductDetailDto>(value);
-                if (jsonData != null)
+                if (responseMessage.ProductID != null)
                 {
-                    return View(jsonData);
+                    model = responseMessage;
+
+                    return View(model);
                 }
                 else
                 {
@@ -84,20 +80,28 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateProductDetail(UpdateProductDetailDto updateProductDetailDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var updateProductDetailValidator = new UpdateProductDetailValidator();
+            var validator = updateProductDetailValidator.Validate(updateProductDetailDto);
 
-            var jsonData = JsonConvert.SerializeObject(updateProductDetailDto);
-
-            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var reponseMessage = await client.PutAsync("https://localhost:7291/api/productdetails", content);
-
-            if (reponseMessage.IsSuccessStatusCode)
+            if (validator.IsValid)
             {
-                return RedirectToAction("ProductListWithCategory", "Product", new { area = "Admin" });
+                var reponseMessage = await _productDetailService.UpdateDataAsync(updateProductDetailDto);
+
+                if (reponseMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("ProductListWithCategory", "Product", new { area = "Admin" });
+                }
             }
 
-            return View();
+            return await UpdateProductDetail(updateProductDetailDto.ProductID);
+        }
+
+        void SetViewBagContent(string mainTitle, string homePageTitle, string title, string subTitle)
+        {
+            ViewBag.v0 = mainTitle;
+            ViewBag.v1 = homePageTitle;
+            ViewBag.v2 = title;
+            ViewBag.v3 = subTitle;
         }
     }
 }

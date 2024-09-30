@@ -2,6 +2,7 @@
 using MultiShop.Dtos.CatalogDtos.VendorDtos;
 using MultiShop.WebUI.Services.CatalogServices.VendorServices;
 using MultiShop.WebUI.Utilities.FileOperations;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.VendorValidation;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -48,20 +49,26 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateVendor(CreateVendorDto createVendorDto)
         {
+            var createVendorValidatior = new CreateVendorValidation();
+            var validator = createVendorValidatior.Validate(createVendorDto);
 
-            var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+            if (validator.IsValid)
             {
-                LoadedFile = createVendorDto.VendorImage,
-                FilePath = "/wwwroot/userfiles/"
-            });
 
-            createVendorDto.VendorImageUrl = imageUrl;
+                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                {
+                    LoadedFile = createVendorDto.VendorImage,
+                    FilePath = "/wwwroot/userfiles/"
+                });
 
-            var requestMessage = await _vendorService.CreateDataAsync(createVendorDto);
+                createVendorDto.VendorImageUrl = imageUrl;
 
-            if (requestMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "Vendor", new { area = "Admin" });
+                var requestMessage = await _vendorService.CreateDataAsync(createVendorDto);
+
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Vendor", new { area = "Admin" });
+                }
             }
 
             return View();
@@ -101,26 +108,32 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateVendor(UpdateVendorDto updateVendorDto)
         {
+            var updateVendorValidator = new UpdateVendorValidation();
+            var validator = updateVendorValidator.Validate(updateVendorDto);
 
-            if (updateVendorDto.VendorImage != null)
+            if (validator.IsValid)
             {
-                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+
+                if (updateVendorDto.VendorImage != null)
                 {
-                    LoadedFile = updateVendorDto.VendorImage,
-                    FilePath = "/wwwroot/userfiles/"
-                });
+                    var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                    {
+                        LoadedFile = updateVendorDto.VendorImage,
+                        FilePath = "/wwwroot/userfiles/"
+                    });
 
-                updateVendorDto.VendorImageUrl = imageUrl;
+                    updateVendorDto.VendorImageUrl = imageUrl;
+                }
+
+                var requestMessage = await _vendorService.UpdateDataAsync(updateVendorDto);
+
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Vendor", new { area = "Admin" });
+                }
             }
 
-            var requestMessage = await _vendorService.UpdateDataAsync(updateVendorDto);
-
-            if (requestMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "Vendor", new { area = "Admin" });
-            }
-
-            return View();
+            return await UpdateVendor(updateVendorDto.VendorId);
         }
 
         void SetViewBagContent(string mainTitle, string homePageTitle, string title, string subTitle)

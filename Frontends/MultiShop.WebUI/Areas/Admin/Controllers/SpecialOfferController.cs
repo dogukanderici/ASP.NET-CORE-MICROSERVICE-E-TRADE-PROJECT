@@ -3,6 +3,7 @@ using MultiShop.Dtos.CatalogDtos.SpecialOfferDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
 using MultiShop.WebUI.Services.CatalogServices.SpecailOfferServies;
 using MultiShop.WebUI.Utilities.FileOperations;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.SpecailOfferValidation;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -52,19 +53,25 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateSpecialOffer(CreateSpecialOfferDto createSpecialOfferDto)
         {
-            var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+            var createSpecialOfferValidator = new CreateSpecialOfferValidator();
+            var validator = createSpecialOfferValidator.Validate(createSpecialOfferDto);
+
+            if (validator.IsValid)
             {
-                LoadedFile = createSpecialOfferDto.Image,
-                FilePath = "/wwwroot/userfiles/"
-            });
+                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                {
+                    LoadedFile = createSpecialOfferDto.Image,
+                    FilePath = "/wwwroot/userfiles/"
+                });
 
-            createSpecialOfferDto.ImageUrl = imageUrl;
+                createSpecialOfferDto.ImageUrl = imageUrl;
 
-            var requestMessage = await _specialOfferService.CreateDataAsync(createSpecialOfferDto);
+                var requestMessage = await _specialOfferService.CreateDataAsync(createSpecialOfferDto);
 
-            if (requestMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "SpecialOffer", new { area = "Admin" });
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "SpecialOffer", new { area = "Admin" });
+                }
             }
 
             return View();
@@ -88,26 +95,32 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateSpecialOffer(UpdateSpecialOfferDto updateSpecialOfferDto)
         {
+            var updateSpecialOfferValidator = new UpdateSpecialOfferValidator();
+            var validator = updateSpecialOfferValidator.Validate(updateSpecialOfferDto);
 
-            if (updateSpecialOfferDto.Image != null)
+            if (validator.IsValid)
             {
-                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+
+                if (updateSpecialOfferDto.Image != null)
                 {
-                    LoadedFile = updateSpecialOfferDto.Image,
-                    FilePath = "/wwwroot/userfiles/"
-                });
+                    var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                    {
+                        LoadedFile = updateSpecialOfferDto.Image,
+                        FilePath = "/wwwroot/userfiles/"
+                    });
 
-                updateSpecialOfferDto.ImageUrl = imageUrl;
+                    updateSpecialOfferDto.ImageUrl = imageUrl;
+                }
+
+                var requestMessage = await _specialOfferService.UpdateDataAsync(updateSpecialOfferDto);
+
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "SpecialOffer", new { arera = "Admin" });
+                }
             }
 
-            var requestMessage = await _specialOfferService.UpdateDataAsync(updateSpecialOfferDto);
-
-            if (requestMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "SpecialOffer", new { arera = "Admin" });
-            }
-
-            return View();
+            return await UpdateSpecialOffer(updateSpecialOfferDto.SpecailOfferId);
         }
 
         [Route("Delete")]

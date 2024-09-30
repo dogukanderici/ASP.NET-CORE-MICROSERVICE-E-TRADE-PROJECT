@@ -3,6 +3,7 @@ using MultiShop.Dtos.CatalogDtos.FeatureSliderDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
 using MultiShop.WebUI.Services.CatalogServices.FeatureSliderServices;
 using MultiShop.WebUI.Utilities.FileOperations;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.FeatureSliderValidation;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -51,24 +52,29 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateFeatureSlider(CreateFeatureSliderDto createFeatureSliderDto)
         {
+            var createFeatureSliderValidator = new CreateFeatureSliderValidator();
+            var validator = createFeatureSliderValidator.Validate(createFeatureSliderDto);
 
-            if (createFeatureSliderDto.Image != null)
+            if (validator.IsValid)
             {
-
-                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                if (createFeatureSliderDto.Image != null)
                 {
-                    LoadedFile = createFeatureSliderDto.Image,
-                    FilePath = "/wwwroot/userfiles/"
-                });
 
-                createFeatureSliderDto.ImageUrl = imageUrl;
-            }
+                    var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                    {
+                        LoadedFile = createFeatureSliderDto.Image,
+                        FilePath = "/wwwroot/userfiles/"
+                    });
 
-            var requestMessage = await _featureSliderService.CreateDataAsync(createFeatureSliderDto);
+                    createFeatureSliderDto.ImageUrl = imageUrl;
+                }
 
-            if (requestMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "FeatureSlider", new { area = "Admin" });
+                var requestMessage = await _featureSliderService.CreateDataAsync(createFeatureSliderDto);
+
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "FeatureSlider", new { area = "Admin" });
+                }
             }
 
             return View();
@@ -95,27 +101,33 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateFeatureSlider(UpdateFeatureSliderDto updateFeatureSliderDto)
         {
+            var updateFeatureSliderValidator = new UpdateFeatureSliderValidator();
+            var validator = updateFeatureSliderValidator.Validate(updateFeatureSliderDto);
 
-            if (updateFeatureSliderDto.Image != null)
+            if (validator.IsValid)
             {
 
-                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                if (updateFeatureSliderDto.Image != null)
                 {
-                    LoadedFile = updateFeatureSliderDto.Image,
-                    FilePath = "/wwwroot/userfiles/"
-                });
 
-                updateFeatureSliderDto.ImageUrl = imageUrl;
+                    var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                    {
+                        LoadedFile = updateFeatureSliderDto.Image,
+                        FilePath = "/wwwroot/userfiles/"
+                    });
+
+                    updateFeatureSliderDto.ImageUrl = imageUrl;
+                }
+
+                var requestMessage = await _featureSliderService.UpdateDataAsync(updateFeatureSliderDto);
+
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "FeatureSlider", new { area = "Admin" });
+                }
             }
 
-            var requestMessage = await _featureSliderService.UpdateDataAsync(updateFeatureSliderDto);
-
-            if (requestMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "FeatureSlider", new { area = "Admin" });
-            }
-
-            return View();
+            return await UpdateFeatureSlider(updateFeatureSliderDto.FeatureSliderId);
         }
 
         [Route("Delete/{id}")]

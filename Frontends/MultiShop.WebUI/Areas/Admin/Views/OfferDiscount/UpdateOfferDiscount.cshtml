@@ -18,18 +18,21 @@
                             <div class="form-group has-feedback">
                                 <label asp-for="OfferDiscountTitle" class="control-label">Özel İndirim Başlığı</label>
                                 <input asp-for="OfferDiscountTitle" type="text" class="form-control" placeholder="Özel İndirim Başlığı">
+                                <span asp-validation-for="OfferDiscountTitle" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="OfferDiscountSubTitle" class="control-label">Özel İndirim Alt Başlığı</label>
                                 <input asp-for="OfferDiscountSubTitle" type="text" class="form-control" placeholder="Özel İndirim Alt Başlığı">
+                                <span asp-validation-for="OfferDiscountSubTitle" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="OfferDiscountSubImage" class="control-label">Özel İndirim Görseli</label>
                                 <input asp-for="OfferDiscountSubImage" type="file" class="form-control">
+                                <span asp-validation-for="OfferDiscountSubImage" class="text text-danger"></span>
                             </div>
                         </div>
                         @Html.HiddenFor(c => c.OfferDiscountSubImageUrl)

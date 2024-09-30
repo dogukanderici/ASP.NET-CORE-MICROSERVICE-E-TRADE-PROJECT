@@ -1,4 +1,5 @@
 ﻿using MultiShop.Dtos.CatalogDtos.ProductDetailDtos;
+using System.Net;
 
 namespace MultiShop.WebUI.Services.CatalogServices.ProductDetailServices
 {
@@ -36,7 +37,13 @@ namespace MultiShop.WebUI.Services.CatalogServices.ProductDetailServices
         public async Task<UpdateProductDetailDto> GetDataAsync(string id)
         {
             var response = await _httpClient.GetAsync("productdetails/" + id);
-            var values = await response.Content.ReadFromJsonAsync<UpdateProductDetailDto>();
+
+            UpdateProductDetailDto values = new UpdateProductDetailDto();
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                values = await response.Content.ReadFromJsonAsync<UpdateProductDetailDto>();
+            }
 
             return values;
         }

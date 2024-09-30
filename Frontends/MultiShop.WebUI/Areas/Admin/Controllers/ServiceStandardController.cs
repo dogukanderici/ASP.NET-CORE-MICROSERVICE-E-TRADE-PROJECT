@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.ServiceStandardDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
 using MultiShop.WebUI.Services.CatalogServices.ServiceStandardServices;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.ServiceStandardValidation;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Text;
@@ -49,12 +51,18 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateServiceStandardAsync(CreateServiceStandardDto createServiceStandardDto)
         {
+            var createServiceStandardValidator = new CreateServiceStandardValidator();
+            var validator = createServiceStandardValidator.Validate(createServiceStandardDto);
 
-            var requestMessage = await _serviceStandardService.CreateDataAsync(createServiceStandardDto);
-
-            if (requestMessage.IsSuccessStatusCode)
+            if (validator.IsValid)
             {
-                return RedirectToAction("Index", "ServiceStandard", new { area = "Admin" });
+
+                var requestMessage = await _serviceStandardService.CreateDataAsync(createServiceStandardDto);
+
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "ServiceStandard", new { area = "Admin" });
+                }
             }
 
             return View();
@@ -78,15 +86,21 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateServiceStandard(UpdateServiceStandardDto updateServiceStandardDto)
         {
+            var updateServiceStandardValidator = new UpdateServiceStandardValidator();
+            var validator = updateServiceStandardValidator.Validate(updateServiceStandardDto);
 
-            var requestMessage = await _serviceStandardService.UpdateDataAsync(updateServiceStandardDto);
-
-            if (requestMessage.IsSuccessStatusCode)
+            if (validator.IsValid)
             {
-                return RedirectToAction("Index", "ServiceStandard", new { area = "Admin" });
+
+                var requestMessage = await _serviceStandardService.UpdateDataAsync(updateServiceStandardDto);
+
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "ServiceStandard", new { area = "Admin" });
+                }
             }
 
-            return View();
+            return await UpdateServiceStandard(updateServiceStandardDto.ServiceStandardId);
         }
 
         [Route("Delete/{id}")]

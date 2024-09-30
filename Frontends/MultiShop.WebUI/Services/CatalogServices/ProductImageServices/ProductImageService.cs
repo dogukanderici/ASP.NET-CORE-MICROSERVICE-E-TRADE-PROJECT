@@ -1,4 +1,5 @@
 ﻿using MultiShop.Dtos.CatalogDtos.ProductImageDtos;
+using System.Net;
 
 namespace MultiShop.WebUI.Services.CatalogServices.ProductImageServices
 {
@@ -36,7 +37,12 @@ namespace MultiShop.WebUI.Services.CatalogServices.ProductImageServices
         public async Task<GetByIdProductImageDto> GetByProductIdProductImagesAsync(string id)
         {
             var response = await _httpClient.GetAsync("productimages/productimagesbyproductid?id=" + id);
-            var values = await response.Content.ReadFromJsonAsync<GetByIdProductImageDto>();
+            var values = new GetByIdProductImageDto();
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                values = await response.Content.ReadFromJsonAsync<GetByIdProductImageDto>();
+            }
 
             return values;
         }

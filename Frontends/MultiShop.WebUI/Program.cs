@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -34,6 +35,7 @@ using MultiShop.WebUI.Services.StatisticsServices.UserStatisticsServices;
 using MultiShop.WebUI.Services.UserIdentityServices;
 using MultiShop.WebUI.Settings;
 using MultiShop.WebUI.Utilities.FileOperations;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,7 +65,12 @@ builder.Services.AddAccessTokenManagement();
 builder.Services.AddHttpContextAccessor();
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+   .AddFluentValidation(option =>
+   {
+       option.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+       option.DisableDataAnnotationsValidation = true;
+   });
 
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IIdentityService, IdentityService>();

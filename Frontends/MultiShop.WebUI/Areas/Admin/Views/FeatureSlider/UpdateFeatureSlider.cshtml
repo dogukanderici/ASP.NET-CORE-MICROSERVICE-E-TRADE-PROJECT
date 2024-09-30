@@ -18,12 +18,14 @@
                             <div class="form-group has-feedback">
                                 <label asp-for="Title" class="control-label">Öne Çıkan Başlığı</label>
                                 <input asp-for="Title" type="text" class="form-control" placeholder="Öne Çıkan Başlığı" />
+                                <span asp-validation-for="Title" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="Description" class="control-label">Öne Çıkan Açıklama</label>
                                 <input asp-for="Description" type="text" class="form-control" placeholder="Öne Çıkan Açıklama" />
+                                <span asp-validation-for="Description" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">

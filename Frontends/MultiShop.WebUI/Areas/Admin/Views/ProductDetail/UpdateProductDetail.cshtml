@@ -1,4 +1,4 @@
-﻿@model UpdateProductDetailDto
+﻿@model GetByIdProductDetailDto
 
 @{
     ViewData["Title"] = "UpdateProductDetail";
@@ -19,12 +19,14 @@
                             <div class="form-group has-feedback">
                                 <label asp-for="ProductDescription" class="control-label">Ürün Açıklaması</label>
                                 <textarea asp-for="ProductDescription" rows="6" type="text" class="form-control" placeholder="Ürün Açıklaması"></textarea>
+                                <span asp-validation-for="ProductDescription" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="ProductInfo" class="control-label">Ürün Bilgisi</label>
                                 <textarea asp-for="ProductInfo" rows="6" type="text" class="form-control" placeholder="Ürün Bilgisi"></textarea>
+                                <span asp-validation-for="ProductInfo" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-12">

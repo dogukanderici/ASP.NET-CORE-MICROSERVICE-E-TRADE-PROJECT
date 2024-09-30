@@ -17,12 +17,14 @@
                             <div class="form-group has-feedback">
                                 <label asp-for="VendorName" class="control-label">Marka Adı</label>
                                 <input asp-for="VendorName" type="text" class="form-control" placeholder="Marka Adı">
+                                <span asp-validation-for="VendorName" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="VendorImage" class="control-label">Marka Adı Görseli</label>
                                 <input asp-for="VendorImage" type="file" class="form-control">
+                                <span asp-validation-for="VendorImage" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-12">

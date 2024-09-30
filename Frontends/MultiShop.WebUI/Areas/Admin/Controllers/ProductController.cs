@@ -6,6 +6,7 @@ using MultiShop.WebUI.Areas.Admin.Models;
 using MultiShop.WebUI.Services.CatalogServices.CategoryServices;
 using MultiShop.WebUI.Services.CatalogServices.ProductServices;
 using MultiShop.WebUI.Utilities.FileOperations;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.ProductValidation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
@@ -57,22 +58,28 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateProduct(CreateProductDto createProductDto)
         {
-            var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+            var createProductValidator = new CreateProductValidator();
+            var validator = createProductValidator.Validate(createProductDto);
+
+            if (validator.IsValid)
             {
-                LoadedFile = createProductDto.ProductImage,
-                FilePath = "/wwwroot/userfiles/"
-            });
+                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                {
+                    LoadedFile = createProductDto.ProductImage,
+                    FilePath = "/wwwroot/userfiles/"
+                });
 
-            createProductDto.ProductImageUrl = imageUrl;
+                createProductDto.ProductImageUrl = imageUrl;
 
-            var requestMessage = await _productService.CreateDataAsync(createProductDto);
+                var requestMessage = await _productService.CreateDataAsync(createProductDto);
 
-            if (requestMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "Product", new { area = "Admin" });
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Product", new { area = "Admin" });
+                }
             }
 
-            return View();
+            return await CreateProduct();
         }
 
         [HttpGet]
@@ -102,26 +109,32 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateProduct(UpdateProductDto updateProductDto)
         {
+            var updateProductValidator = new UpdateProductValidator();
+            var validator = updateProductValidator.Validate(updateProductDto);
 
-            if (updateProductDto.ProductImage != null)
+            if (validator.IsValid)
             {
-                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                if (updateProductDto.ProductImage != null)
                 {
-                    LoadedFile = updateProductDto.ProductImage,
-                    FilePath = "/wwwroot/userfiles/"
-                });
+                    var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                    {
+                        LoadedFile = updateProductDto.ProductImage,
+                        FilePath = "/wwwroot/userfiles/"
+                    });
 
-                updateProductDto.ProductImageUrl = imageUrl;
+                    updateProductDto.ProductImageUrl = imageUrl;
+                }
+
+                var requestMessage = await _productService.UpdateDataAsync(updateProductDto);
+
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Product", new { area = "Admin" });
+                }
             }
 
-            var requestMessage = await _productService.UpdateDataAsync(updateProductDto);
-
-            if (requestMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "Product", new { area = "Admin" });
-            }
-
-            return View();
+            //return View();
+            return await UpdateProduct(updateProductDto.ProductID);
         }
 
         [Route("Delete/{id}")]
@@ -152,7 +165,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
 
         private async Task<List<SelectListItem>> GetCategoryForDropDown()
         {
-            var values = await _categoryService.GetAllDataAsync();            
+            var values = await _categoryService.GetAllDataAsync();
 
             List<SelectListItem> categoryValues = (from x in values
                                                    select new SelectListItem

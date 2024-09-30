@@ -2,6 +2,7 @@
 using MultiShop.Dtos.CatalogDtos.OfferDiscountDtos;
 using MultiShop.WebUI.Services.CatalogServices.OfferDiscountServices;
 using MultiShop.WebUI.Utilities.FileOperations;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.OfferDiscountValidation;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -48,20 +49,26 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateOfferDiscount(CreateOfferDiscountDto createOfferDiscountDto)
         {
+            var cerateOfferDiscountValidator = new CreateOfferDiscountValidator();
+            var validator = cerateOfferDiscountValidator.Validate(createOfferDiscountDto);
 
-            var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+            if (validator.IsValid)
             {
-                LoadedFile = createOfferDiscountDto.OfferDiscountSubImage,
-                FilePath = "/wwwroot/userfiles/"
-            });
 
-            createOfferDiscountDto.OfferDiscountSubImageUrl = imageUrl;
+                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                {
+                    LoadedFile = createOfferDiscountDto.OfferDiscountSubImage,
+                    FilePath = "/wwwroot/userfiles/"
+                });
 
-            var requestMessage = await _offerDiscountService.CreateDataAsync(createOfferDiscountDto);
+                createOfferDiscountDto.OfferDiscountSubImageUrl = imageUrl;
 
-            if (requestMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "OfferDiscount", new { area = "Admin" });
+                var requestMessage = await _offerDiscountService.CreateDataAsync(createOfferDiscountDto);
+
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "OfferDiscount", new { area = "Admin" });
+                }
             }
 
             return View();
@@ -100,26 +107,32 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateOfferDiscount(UpdateOfferDiscountDto updateOfferDiscountDto)
         {
+            var updateOfferDiscountValidator = new UpdateOfferDiscountValidator();
+            var validator = updateOfferDiscountValidator.Validate(updateOfferDiscountDto);
 
-            if (updateOfferDiscountDto.OfferDiscountSubImage != null)
+            if (validator.IsValid)
             {
-                var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+
+                if (updateOfferDiscountDto.OfferDiscountSubImage != null)
                 {
-                    LoadedFile = updateOfferDiscountDto.OfferDiscountSubImage,
-                    FilePath = "/wwwroot/userfiles/"
-                });
+                    var imageUrl = await _fileOperationHelper.CopyFileToFoler(new FileProperty
+                    {
+                        LoadedFile = updateOfferDiscountDto.OfferDiscountSubImage,
+                        FilePath = "/wwwroot/userfiles/"
+                    });
 
-                updateOfferDiscountDto.OfferDiscountSubImageUrl = imageUrl;
+                    updateOfferDiscountDto.OfferDiscountSubImageUrl = imageUrl;
+                }
+
+                var requestMessage = await _offerDiscountService.UpdateDataAsync(updateOfferDiscountDto);
+
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "OfferDiscount", new { area = "Admin" });
+                }
             }
 
-            var requestMessage = await _offerDiscountService.UpdateDataAsync(updateOfferDiscountDto);
-
-            if (requestMessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "OfferDiscount", new { area = "Admin" });
-            }
-
-            return View();
+            return await UpdateOfferDiscount(updateOfferDiscountDto.OfferDiscountId);
         }
 
         void SetViewBagContent(string mainTitle, string homePageTitle, string title, string subTitle)

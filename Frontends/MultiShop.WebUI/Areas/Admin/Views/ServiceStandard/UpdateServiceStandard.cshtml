@@ -18,12 +18,14 @@
                             <div class="form-group has-feedback">
                                 <label asp-for="ServiceStandardName" class="control-label">Servis Standardı Adı</label>
                                 <input asp-for="ServiceStandardName" type="text" class="form-control" placeholder="Servis Standardı Adı">
+                                <span asp-validation-for="ServiceStandardName" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="ServiceStandardIcon" class="control-label">Servis Standardı İkonu</label>
                                 <input asp-for="ServiceStandardIcon" type="text" class="form-control" placeholder="Servis Standardı İkonu">
+                                <span asp-validation-for="ServiceStandardIcon" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
