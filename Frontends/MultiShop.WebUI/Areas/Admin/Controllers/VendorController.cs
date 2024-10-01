@@ -85,7 +85,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Vendor", new { area = "Admin" });
             }
 
-            return View();
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]

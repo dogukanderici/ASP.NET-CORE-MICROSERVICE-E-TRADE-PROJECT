@@ -8,9 +8,18 @@
 <section class="content container-fluid">
     <div class="row">
         <div class="col-md-12">
+            @if (ViewBag.StatusCode != null)
+            {
+                if (ViewBag.StatusCode == 404)
+                {
+                    <div class="data-NotFound">
+                        <div class="alert alert-danger text-center">@ViewBag.StatusMessage</div>
+                    </div>
+                }
+            }
             <div class="chart-box">
                 <h4>Hakkımızda Bilgi Listesi</h4>
-                <p>Hakkımızda ilgili işlemlerinizi aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
+                <p class="alert alert-info">Hakkımızda ilgili işlemlerinizi aşağıdaki tablo üzerinden gerçekleştirebilirsiniz.</p>
                 <div class="bs-example" data-example-id="simple-table">
                     <table class="table">
                         <thead>
@@ -42,9 +51,22 @@
                             }
                         </tbody>
                     </table>
-                    <a href="/admin/about/create" class="btn btn-primary">Yeni Hakkımızda Bilgisi Ekle</a>
+                    @if (Model.Count() < 1)
+                    {
+                        <a href="/admin/about/create" class="btn btn-primary">Yeni Hakkımızda Bilgisi Ekle</a>
+                    }
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    $(function () {
+        setTimeout(function () {
+            $(".data-NotFound").fadeOut(400, function () {
+                $(this).remove();
+            });
+        }, 5000);
+    });
+</script>

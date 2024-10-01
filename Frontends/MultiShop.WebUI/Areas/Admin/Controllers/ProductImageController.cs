@@ -175,7 +175,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
                 return RedirectToAction("Index", "ProductImage", new { area = "Admin" });
             }
 
-            return View();
+            return RedirectToAction("NotFound404", "Error");
         }
 
         private async Task<string> SetProductImageFile(IFormFile image)

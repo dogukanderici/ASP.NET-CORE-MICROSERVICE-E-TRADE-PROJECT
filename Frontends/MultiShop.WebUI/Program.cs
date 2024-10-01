@@ -43,8 +43,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddCookie(JwtBearerDefaults.AuthenticationScheme, opt =>
     {
         opt.LoginPath = "/Login/Index/";
-        opt.LogoutPath = "/Login/Logout/";
-        opt.AccessDeniedPath = "/Pages/AccessDenied/";
+        opt.LogoutPath = "/Logout/Index/";
+        opt.AccessDeniedPath = "/Error/Unauthorized401";
 
         opt.Cookie.HttpOnly = true;
         opt.Cookie.SameSite = SameSiteMode.Strict;
@@ -56,6 +56,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
     {
         opt.LoginPath = "/Login/Index/";
+        opt.LogoutPath = "/Logout/Index/";
+        opt.AccessDeniedPath = "/Error/Unauthorized401";
         opt.ExpireTimeSpan = TimeSpan.FromDays(1);
         opt.Cookie.Name = "MultiShopCookie";
         opt.SlidingExpiration = true;
@@ -263,6 +265,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseStatusCodePagesWithRedirects("/Error/InvalidPage");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -114,7 +114,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
                 return RedirectToAction("Index", "ServiceStandard", new { area = "Admin" });
             }
 
-            return View();
+            return RedirectToAction("NotFound404", "Error");
         }
         void SetViewBagContent(string mainTitle, string homePageTitle, string title, string subTitle)
         {

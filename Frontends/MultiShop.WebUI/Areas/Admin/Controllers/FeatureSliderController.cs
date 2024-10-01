@@ -36,7 +36,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
                 model.ResultFeatureSliderDto = requestMessage;
             }
 
-            return View(model);
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
@@ -94,7 +94,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
                 return View(requestMessage);
             }
 
-            return View();
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpPost]
@@ -141,7 +141,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
                 return RedirectToAction("Index", "FeatureSlider", new { area = "Admin" });
             }
 
-            return View();
+            return RedirectToAction("NotFound404", "Error");
         }
 
         void SetViewBagContent(string mainTitle, string homePageTitle, string title, string subTitle)

@@ -64,7 +64,7 @@ namespace MultiShop.WebUI.Controllers
                 return RedirectToAction("Index", "Default");
             }
 
-            return View();
+            return RedirectToAction("NotFound404", "Error");
         }
 
     }

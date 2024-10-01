@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.AboutDtos;
 using MultiShop.WebUI.Services.CatalogServices.AboutServices;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AboutValidation;
 using Newtonsoft.Json;
+using System.Net;
 using System.Text;
 
 namespace MultiShop.WebUI.Areas.Admin.Controllers
@@ -17,9 +19,16 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? statusCode)
         {
             SetViewBagContent("Hakkımızda İşlemleri", "Ana Sayfa", "Hakkımızda Bilgileri", "Hakkımızda Bilgi Listesi");
+
+            if (statusCode != null)
+            {
+                HttpStatusCode statusCodeStr = (HttpStatusCode)statusCode;
+                //SetViewBagStatusInfo(statusCode, statusCodeStr.ToString());
+                SetViewBagStatusInfo(statusCode, "Aradığınız Veri Bulunamadı!");
+            }
 
             var requestMessage = await _aboutService.GetAllDataAsync();
 
@@ -28,7 +37,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
                 return View(requestMessage);
             }
 
-            return View();
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
@@ -44,11 +53,17 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateAbout(CreateAboutDto createAboutDto)
         {
-            var requestMessage = await _aboutService.CreateDataAsync(createAboutDto);
+            var createAboutValidator = new CreateAboutValidator();
+            var validator = createAboutValidator.Validate(createAboutDto);
 
-            if (requestMessage.IsSuccessStatusCode)
+            if (validator.IsValid)
             {
-                return RedirectToAction("Index", "About", new { area = "Admin" });
+                var requestMessage = await _aboutService.CreateDataAsync(createAboutDto);
+
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "About", new { area = "Admin" });
+                }
             }
 
             return View();
@@ -64,13 +79,15 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
                 return RedirectToAction("Index", "About", new { area = "Admin" });
             }
 
-            return View();
+            return RedirectToAction("NotFound404", "Error");
         }
 
         [HttpGet]
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateAbout(string id)
         {
+            SetViewBagContent("Hakkımızda İşlemleri", "Ana Sayfa", "Hakkımızda Bilgileri", "Hakkımızda Bilgi Güncelleme");
+
             var requestMessage = await _aboutService.GetDataAsync(id);
 
             if (requestMessage != null)
@@ -79,21 +96,27 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
                 return View(requestMessage);
             }
 
-            return View();
+            return RedirectToAction("Index", "About", new { area = "Admin", statusCode = 404 });
         }
 
         [HttpPost]
         [Route("Update/{id}")]
         public async Task<IActionResult> UpdateAbout(UpdateAboutDto updateAboutDto)
         {
-            var requestMessage = await _aboutService.UpdateDataAsync(updateAboutDto);
+            var updateAboutValidator = new UpdateAboutValidator();
+            var validator = updateAboutValidator.Validate(updateAboutDto);
 
-            if (requestMessage.IsSuccessStatusCode)
+            if (validator.IsValid)
             {
-                return RedirectToAction("Index", "About", new { area = "Admin" });
+                var requestMessage = await _aboutService.UpdateDataAsync(updateAboutDto);
+
+                if (requestMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "About", new { area = "Admin" });
+                }
             }
 
-            return View();
+            return await UpdateAbout(updateAboutDto.AboutId);
         }
         void SetViewBagContent(string mainTitle, string homePageTitle, string title, string subTitle)
         {
@@ -101,6 +124,12 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
             ViewBag.v1 = homePageTitle;
             ViewBag.v2 = title;
             ViewBag.v3 = subTitle;
+        }
+
+        void SetViewBagStatusInfo(int? statusCode, string statsuMessage)
+        {
+            ViewBag.StatusCode = statusCode;
+            ViewBag.StatusMessage = statsuMessage;
         }
     }
 }

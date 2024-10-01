@@ -17,24 +17,28 @@
                             <div class="form-group has-feedback">
                                 <label asp-for="Description" class="control-label">Açıklama</label>
                                 <input asp-for="Description" type="text" class="form-control" placeholder="Açıklama">
+                                <span asp-validation-for="Description" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="Address" class="control-label">Adres</label>
                                 <input asp-for="Address" type="text" class="form-control" placeholder="Adres">
+                                <span asp-validation-for="Address" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="Mail" class="control-label">E-Posta</label>
                                 <input asp-for="Mail" type="text" class="form-control" placeholder="E-Posta">
+                                <span asp-validation-for="Mail" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <label asp-for="Telefon" class="control-label">Telefon</label>
-                                <input asp-for="Telefon" type="text" class="form-control" placeholder="Telefon">
+                                <input asp-for="Telefon" type="text" maxlength="17" class="form-control" placeholder="Telefon">
+                                <span asp-validation-for="Telefon" class="text text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-12">

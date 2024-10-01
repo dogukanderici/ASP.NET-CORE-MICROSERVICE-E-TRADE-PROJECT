@@ -86,6 +86,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\IdentityServer\MultiShop.IdentityServer\MultiShop.IdentityServer.csproj" />
     <ProjectReference Include="..\..\MultiShop.Dtos\MultiShop.Dtos.csproj" />
   </ItemGroup>
 
