@@ -8,7 +8,7 @@ namespace MultiShop.Dtos.OrderDtos.OrderAddressDtos
 {
     public class UpdateOrderAddressDto
     {
-        public int AddressId { get; set; }
+        public Guid AddressId { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }

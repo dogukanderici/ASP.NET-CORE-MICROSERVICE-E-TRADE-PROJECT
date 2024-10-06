@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Kargo Detayları</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group has-feedback">
+                            <label for="BarcodeNumber" class="control-label">Barkod No</label>
+                            <input id="BarcodeNumber" type="text" class="form-control" placeholder="Barkod No">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <button id="CargoDetailQuery" type="button" class="btn btn-success">Ara</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <div id="CargoDetailList" class="bs-example" data-example-id="simple-table">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function getCargoDetail() {
+            let barcode = $("#BarcodeNumber").val();
+
+            console.log("Barcode: ", barcode);
+
+            $.ajax({
+                type: "Post",
+                url: "/admin/cargodetail",
+                data: { barcode: barcode },
+                success: function (funcSuccess) {
+                    console.log("funcSuccess: ", funcSuccess);
+                    let htmlstr = '';
+                    if (funcSuccess != null) {
+
+                        if (funcSuccess.length > 0) {
+
+                            htmlstr = '<div class="table-responsive">' +
+                                '<table class="table">' +
+                                '<thead>' +
+                                '<tr>' +
+                                '<th>Alıcı</th>' +
+                                '<th>Gönderici</th>' +
+                                '<th>Barkod</th>' +
+                                '<th>Kargo Şirketi</th>' +
+                                '</tr>' +
+                                '</thead>' +
+                                '<tbody>';
+
+                            funcSuccess.forEach(function (data) {
+                                htmlstr += '<tr>' +
+                                    '<td>' + data.senderCustomer + '</td>' +
+                                    '<td>' + data.recieverCustomer + '</td>' +
+                                    '<td><a href="/admin/cargooperation/detail/' + data.barcode + '" target="_self" class="btn btn-success">Kargo Hareketleri</a></td>' +
+                                    '<td>' + data.cargoCompanyId + '</td>' +
+                                    '</tr>';
+                            });
+
+                            htmlstr += '</tbody>' +
+                                '</table>' +
+                                '</div>';
+                        }
+                        else {
+                            htmlstr = '<div class="alert alert-danger><span><strong>' + barcode + '</strong> Barkodlu Kargo Buluanamdı</span></div>';
+                        }
+
+                        $("#CargoDetailList").html(htmlstr);
+                    }
+                    else {
+                        alert("Veri Bulunamadı!");
+                    }
+                }
+            });
+        }
+
+        $("#CargoDetailQuery").click(getCargoDetail);
+    </script>
+}

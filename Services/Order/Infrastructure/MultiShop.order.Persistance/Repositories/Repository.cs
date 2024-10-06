@@ -49,7 +49,7 @@ namespace MultiShop.Order.Persistence.Repositories
             }
         }
 
-        public async Task<TEntity> GetByIdAsync(int id)
+        public async Task<TEntity> GetByIdAsync(Guid id)
         {
             using (var context = new OrderContext())
             {

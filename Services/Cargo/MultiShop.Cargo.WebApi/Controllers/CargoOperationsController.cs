@@ -23,9 +23,10 @@ namespace MultiShop.Cargo.WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult CargoOperationList()
+        [Route("CargoOperationList/{barcode}")]
+        public IActionResult CargoOperationList(Guid barcode)
         {
-            var values = _cargoOperationService.TGetAll();
+            var values = _cargoOperationService.TGetAll(barcode);
 
             return Ok(values.Select(x => _mapper.Map<GetCargoOperationDto>(x)).ToList());
         }

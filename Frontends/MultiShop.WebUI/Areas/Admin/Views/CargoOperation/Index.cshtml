@@ -1,0 +1,66 @@
+﻿@model List<ResultcargoOperationDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <h4>Kargo Hareketleri</h4>
+                @if (Model != null)
+                {
+                    if (Model.Count() > 0)
+                    {
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    @if (Model[Model.Count() - 1].Description != "Teslim Edildi")
+                                    {
+                                        <a href="/admin/cargooperation/completecargo/@ViewBag.Barcode" class="btn btn-success">Siparişi Tamamla</a>
+                                    }
+                                    @if ((Model[Model.Count() - 1].Description != "Dağıtıma Çıktı") && (Model[Model.Count() - 1].Description != "Teslim Edildi"))
+                                    {
+                                        <a href="/admin/cargooperation/addcargooperation/@ViewBag.Barcode" class="btn btn-primary">Siparişi Güncelle</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bs-example" data-example-id="simple-table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Barkod</th>
+                                        <th>Açıklama</th>
+                                        <th>İşlem Tarihi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <th scope="row">@item.Barcode</th>
+                                            <td>@item.Description</td>
+                                            <td>@item.OperationDate</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info text-center">Kargo Hareketi Bulunamadı!</div>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-danger text-center">Listelenecek Kayıt Bulunamadı!</div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>

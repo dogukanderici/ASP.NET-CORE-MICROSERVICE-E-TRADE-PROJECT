@@ -10,6 +10,8 @@ using MultiShop.WebUI.Services.Abstract;
 using MultiShop.WebUI.Services.BasketServices;
 using MultiShop.WebUI.Services.CargoServices.CargoCompanyServices;
 using MultiShop.WebUI.Services.CargoServices.CargoCustomerServices;
+using MultiShop.WebUI.Services.CargoServices.CargoDetailServices;
+using MultiShop.WebUI.Services.CargoServices.CargoOperationsServices;
 using MultiShop.WebUI.Services.CatalogServices.AboutServices;
 using MultiShop.WebUI.Services.CatalogServices.CategoryServices;
 using MultiShop.WebUI.Services.CatalogServices.ContactServices;
@@ -26,6 +28,7 @@ using MultiShop.WebUI.Services.Concrete;
 using MultiShop.WebUI.Services.DiscountServices;
 using MultiShop.WebUI.Services.MessageServices;
 using MultiShop.WebUI.Services.OrderServices.OrderAddressServices;
+using MultiShop.WebUI.Services.OrderServices.OrderOrderDetailService;
 using MultiShop.WebUI.Services.OrderServices.OrderOrderingServices;
 using MultiShop.WebUI.Services.StatisticsServices.CatalogStatisticsServices;
 using MultiShop.WebUI.Services.StatisticsServices.CommentStatisticsServices;
@@ -192,6 +195,12 @@ builder.Services.AddHttpClient<IOrderOrderingService, OrderOrderingService>(opt 
 })
     .AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
+builder.Services.AddHttpClient<IOrderDetailService, OrderDetailService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Order.Path}/");
+})
+    .AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
 builder.Services.AddHttpClient<IMessageService, MessageService>(opt =>
 {
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Message.Path}/");
@@ -211,6 +220,18 @@ builder.Services.AddHttpClient<ICargoCompanyService, CargoCompanyService>(opt =>
     .AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
 builder.Services.AddHttpClient<ICargoCustomerService, CargoCustomerService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Cargo.Path}/");
+})
+    .AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+builder.Services.AddHttpClient<ICargoDetailService, CargoDetailService>(opt =>
+{
+    opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Cargo.Path}/");
+})
+    .AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+builder.Services.AddHttpClient<ICargoOperationService, CargoOperationService>(opt =>
 {
     opt.BaseAddress = new Uri($"{values.OcelotUrl}/{values.Cargo.Path}/");
 })
@@ -255,6 +276,8 @@ builder.Services.AddLocalization(opt =>
 builder.Services.AddMvc()
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

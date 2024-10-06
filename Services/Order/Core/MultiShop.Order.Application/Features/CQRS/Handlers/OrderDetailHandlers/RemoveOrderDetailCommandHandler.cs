@@ -20,7 +20,7 @@ namespace MultiShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers
 
         public async Task Handle(RemoveOrderDetailCommand removeOrderDetailCommand)
         {
-            var value = await _repository.GetByIdAsync(removeOrderDetailCommand.Id);
+            var value = await _repository.GetByFilterAsync(od => od.OrderDetailId == removeOrderDetailCommand.Id);
 
             if (value != null)
             {

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MultiShop.Order.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class mig1 : Migration
+    public partial class mig_04102024_1441 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,12 +15,19 @@ namespace MultiShop.Order.Persistence.Migrations
                 name: "Addresses",
                 columns: table => new
                 {
-                    AddressId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AddressId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Discrict = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Detail = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Detail1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Detail2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,8 +38,7 @@ namespace MultiShop.Order.Persistence.Migrations
                 name: "Orderings",
                 columns: table => new
                 {
-                    OrderingId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     OrderDat = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -53,7 +59,7 @@ namespace MultiShop.Order.Persistence.Migrations
                     ProductPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ProductAmount = table.Column<int>(type: "int", nullable: false),
                     ProductTotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OrderingId = table.Column<int>(type: "int", nullable: false)
+                    OrderingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -44,9 +44,12 @@ namespace MultiShop.Order.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrderDetail(CreateOrderDetailCommand createOrderDetailCommand)
+        public async Task<IActionResult> CreateOrderDetail(List<CreateOrderDetailCommand> createOrderDetailCommand)
         {
-            await _createOrderDetailCommandHandler.Handle(createOrderDetailCommand);
+            foreach (var orderDetail in createOrderDetailCommand)
+            {
+                await _createOrderDetailCommandHandler.Handle(orderDetail);
+            }
 
             return Ok("Sipariş Detayı Başarıyla Eklendi.");
         }

@@ -27,6 +27,7 @@
   <ItemGroup>
     <Folder Include="DataAccess\Abstract\" />
     <Folder Include="DataAccess\Concrete\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

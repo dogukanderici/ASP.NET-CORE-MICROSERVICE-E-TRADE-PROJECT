@@ -1,4 +1,5 @@
-﻿@model List<ResultProductDto>
+﻿@using System.Globalization
+@model List<ResultProductDto>
 
 <div class="container-fluid pt-5 pb-3">
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Öne Çıkan Ürünler</span></h2>
@@ -21,7 +22,7 @@
                     <div class="text-center py-4">
                         <a class="h6 text-decoration-none text-truncate" href="/productlist/productdetail/@item.ProductID">@item.ProductName</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>@newPrice.ToString("C")</h5><h6 class="text-muted ml-2"><del>@item.ProductPrice.ToString("C")</del></h6>
+                            <h5>@newPrice.ToString("C", new CultureInfo("tr-TR"))</h5><h6 class="text-muted ml-2"><del>@item.ProductPrice.ToString("C", new CultureInfo("tr-TR"))</del></h6>
                         </div>
                         <div class="d-flex align-items-center justify-content-center mb-1">
                             <small class="fa fa-star text-primary mr-1"></small>

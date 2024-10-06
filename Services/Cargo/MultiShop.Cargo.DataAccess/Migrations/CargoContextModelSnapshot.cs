@@ -36,7 +36,7 @@ namespace MultiShop.Cargo.DataAccess.Migrations
 
                     b.HasKey("CargoCompanyId");
 
-                    b.ToTable("CargoCompanies");
+                    b.ToTable("CargoCompanies", (string)null);
                 });
 
             modelBuilder.Entity("MultiShop.Cargo.Entities.Concrete.CargoCustomer", b =>
@@ -80,7 +80,7 @@ namespace MultiShop.Cargo.DataAccess.Migrations
 
                     b.HasKey("CargoCustomerId");
 
-                    b.ToTable("CargoCustomers");
+                    b.ToTable("CargoCustomers", (string)null);
                 });
 
             modelBuilder.Entity("MultiShop.Cargo.Entities.Concrete.CargoDetail", b =>
@@ -91,8 +91,8 @@ namespace MultiShop.Cargo.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CargoDetailId"));
 
-                    b.Property<int>("Barcode")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Barcode")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("CargoCompanyId")
                         .HasColumnType("int");
@@ -109,7 +109,7 @@ namespace MultiShop.Cargo.DataAccess.Migrations
 
                     b.HasIndex("CargoCompanyId");
 
-                    b.ToTable("CargoDetails");
+                    b.ToTable("CargoDetails", (string)null);
                 });
 
             modelBuilder.Entity("MultiShop.Cargo.Entities.Concrete.CargoOperation", b =>
@@ -120,20 +120,22 @@ namespace MultiShop.Cargo.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CargoOperationId"));
 
-                    b.Property<string>("Barcode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("Barcode")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelivered")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("OperationDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("CargoOperationId");
 
-                    b.ToTable("CargoOperations");
+                    b.ToTable("CargoOperations", (string)null);
                 });
 
             modelBuilder.Entity("MultiShop.Cargo.Entities.Concrete.CargoDetail", b =>

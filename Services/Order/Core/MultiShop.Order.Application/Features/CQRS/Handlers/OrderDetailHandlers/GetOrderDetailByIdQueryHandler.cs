@@ -24,7 +24,7 @@ namespace MultiShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers
 
         public async Task<GetByIdOrderDetailQueryResult> Handle(GetOrderDetailByIdQuery query)
         {
-            var value = await _repository.GetByIdAsync(query.Id);
+            var value = await _repository.GetByFilterAsync(od => od.OrderDetailId == query.Id);
 
             var valueToDto = _mapper.Map<GetByIdOrderDetailQueryResult>(value);
 

@@ -18,7 +18,8 @@
                                     <th>#</th>
                                     <th>Toplam Fiyat</th>
                                     <th>Sipariş Tarihi</th>
-                                    <th>Sipariş Detayı</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -28,7 +29,8 @@
                                         <td>@item.OrderingId</td>
                                         <td>@item.TotalPrice</td>
                                         <td>@item.OrderDat</td>
-                                        <td><a href="#" class="btn btn-primary">Sipariş Detayı</a></td>
+                                        <td><a href="/user/myorder/getorderdetail/@item.OrderingId" class="btn btn-primary">Sipariş Detayı</a></td>
+                                        <td><a href="/user/myorder/getcargooperation/@item.OrderingId" class="btn btn-info">Kargo Hareketleri</a></td>
                                     </tr>
                                 }
                             </tbody>

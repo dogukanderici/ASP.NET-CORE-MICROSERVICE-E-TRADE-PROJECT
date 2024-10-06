@@ -24,7 +24,6 @@ namespace MultiShop.Basket.Services
 
             if (existBasket.HasValue)
             {
-
                 return JsonSerializer.Deserialize<BasketTotalDto>(existBasket);
             }
 

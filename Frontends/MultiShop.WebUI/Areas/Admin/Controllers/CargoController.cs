@@ -19,7 +19,7 @@ namespace MultiShop.WebUI.Areas.Admin.Controllers
         [Route("CargoCompanyList")]
         public async Task<IActionResult> CargoCompanyList()
         {
-            var values = await _cargoCompanyService.TGetAllAsync();
+            var values = await _cargoCompanyService.TGetAllAsync(null);
 
             return View(values);
         }

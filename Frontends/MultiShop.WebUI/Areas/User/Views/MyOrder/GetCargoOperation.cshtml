@@ -1,0 +1,48 @@
+﻿@model List<ResultcargoOperationDto>
+
+@{
+    ViewData["Title"] = "GetCargoOperation";
+    Layout = "~/Areas/User/Views/UserLayout/Index.cshtml";
+}
+
+@{
+    ViewData["Title"] = "Kargo Takip";
+    decimal maxValue = 6;
+    decimal progressValue = Model.Count() / maxValue * 100;
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    Kargo Durumu
+                </div>
+                <div class="card-body">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: @(Math.Round(progressValue))%" aria-valuenow="@(Model.Count())" aria-valuemin="0" aria-valuemax="@maxValue"></div>
+                    </div>
+                    <table class="table mt-4" id="trackingTable">
+                        <thead>
+                            <tr>
+                                <th>Durum</th>
+                                <th>Tarih</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Description</td>
+                                    <td>@item.OperationDate</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

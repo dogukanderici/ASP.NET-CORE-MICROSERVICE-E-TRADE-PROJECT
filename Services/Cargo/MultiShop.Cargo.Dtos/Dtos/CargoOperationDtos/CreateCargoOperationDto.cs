@@ -8,8 +8,9 @@ namespace MultiShop.Cargo.Dtos.Dtos.CargoOperationDtos
 {
     public class CreateCargoOperationDto
     {
-        public string Barcode { get; set; }
+        public Guid Barcode { get; set; }
         public string Description { get; set; }
+        public bool IsDelivered { get; set; }
         public DateTime OperationDate { get; set; }
     }
 }

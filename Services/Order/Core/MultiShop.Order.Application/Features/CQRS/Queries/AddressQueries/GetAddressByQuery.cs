@@ -8,7 +8,7 @@ namespace MultiShop.Order.Application.Features.CQRS.Queries.AddressQueries
 {
     public class GetAddressByQuery
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string UserId { get; set; }
 
         public GetAddressByQuery(string userId)
@@ -16,7 +16,7 @@ namespace MultiShop.Order.Application.Features.CQRS.Queries.AddressQueries
             UserId = userId;
         }
 
-        public GetAddressByQuery(int id)
+        public GetAddressByQuery(Guid id)
         {
             Id = id;
         }

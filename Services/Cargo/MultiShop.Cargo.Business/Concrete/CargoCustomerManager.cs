@@ -4,6 +4,7 @@ using MultiShop.Cargo.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace MultiShop.Cargo.Business.Concrete
             _cargoCustomerDal = cargocustomerDal;
         }
 
-        public List<CargoCustomer> TGetAll()
+        public List<CargoCustomer> TGetAll(Guid? barcode)
         {
             return _cargoCustomerDal.GetAll();
         }

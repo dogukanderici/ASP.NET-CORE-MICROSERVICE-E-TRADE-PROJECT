@@ -4,6 +4,7 @@ using MultiShop.Cargo.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,9 +19,9 @@ namespace MultiShop.Cargo.Business.Concrete
             _cargoDetailDal = cargoDetailDal;
         }
 
-        public List<CargoDetail> TGetAll()
+        public List<CargoDetail> TGetAll(Guid? barcode)
         {
-            return _cargoDetailDal.GetAll();
+            return _cargoDetailDal.GetAll(cd => cd.Barcode == barcode);
         }
 
         public CargoDetail TGetByFilter(int id)

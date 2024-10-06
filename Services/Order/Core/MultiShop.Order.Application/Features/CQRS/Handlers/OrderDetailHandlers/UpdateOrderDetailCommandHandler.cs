@@ -23,7 +23,7 @@ namespace MultiShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers
 
         public async Task Handle(UpdateOrderDetailCommand updateOrderDetailCommand)
         {
-            var checkToData = await _repository.GetByIdAsync(updateOrderDetailCommand.OrderDetailId);
+            var checkToData = await _repository.GetByFilterAsync(od => od.OrderDetailId == updateOrderDetailCommand.OrderDetailId);
 
             if (checkToData != null)
             {

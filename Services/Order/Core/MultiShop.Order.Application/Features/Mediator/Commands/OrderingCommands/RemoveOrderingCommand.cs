@@ -9,9 +9,9 @@ namespace MultiShop.Order.Application.Features.Mediator.Commands.OrderingCommand
 {
     public class RemoveOrderingCommand : IRequest
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
-        public RemoveOrderingCommand(int id)
+        public RemoveOrderingCommand(Guid id)
         {
             Id = id;
         }

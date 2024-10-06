@@ -8,9 +8,9 @@ namespace MultiShop.Order.Application.Features.CQRS.Commands.AddressCommands
 {
     public class RemoveAddressCommand
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
-        public RemoveAddressCommand(int id)
+        public RemoveAddressCommand(Guid id)
         {
             Id = id;
         }

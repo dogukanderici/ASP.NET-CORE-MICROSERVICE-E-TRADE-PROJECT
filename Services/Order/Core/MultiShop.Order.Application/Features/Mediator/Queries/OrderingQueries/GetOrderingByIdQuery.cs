@@ -10,9 +10,9 @@ namespace MultiShop.Order.Application.Features.Mediator.Queries.OrderingQueries
 {
     public class GetOrderingByIdQuery : IRequest<GetOrderingByIdQueryResult>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
-        public GetOrderingByIdQuery(int id)
+        public GetOrderingByIdQuery(Guid id)
         {
             Id = id;
         }

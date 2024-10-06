@@ -26,11 +26,12 @@ namespace MultiShop.WebUI.Controllers
             ViewBag.Directory3 = "Sepetim";
 
             var values = await _basketService.GetBasket();
-            var totalPriceWithTax = values.TotalPrice + (values.TotalPrice / 100 * 10);
+            var totalPriceWithTax = values.TotalPrice;
+            var totalPriceWithoutTax = values.TotalPrice - (values.TotalPrice / 100 * 10);
 
-            ViewBag.TotalPrice = values.TotalPrice;
-            ViewBag.Tax = values.TotalPrice / 100 * 10;
             ViewBag.TotalPriceWithTax = totalPriceWithTax;
+            ViewBag.TotalPrice = totalPriceWithoutTax;
+            ViewBag.Tax = totalPriceWithoutTax / 100 * 10;
             ViewBag.Code = code;
             ViewBag.DiscountRate = discountRate;
             ViewBag.DiscountAmount = discountAmount;

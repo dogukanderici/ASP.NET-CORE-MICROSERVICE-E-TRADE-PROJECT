@@ -60,7 +60,7 @@ namespace MultiShop.Order.WebApi.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteAddress(int id)
+        public async Task<IActionResult> DeleteAddress(Guid id)
         {
             await _removeAddressCommandHandler.Handle(new RemoveAddressCommand(id));
 

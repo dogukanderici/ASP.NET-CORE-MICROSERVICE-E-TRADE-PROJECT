@@ -19,5 +19,10 @@ namespace MultiShop.WebUI.Services.OrderServices.OrderOrderingServices
 
             return values;
         }
+
+        public async Task CreateOrdering(CreateOrderingDto createOrderingDto)
+        {
+            await _httpClient.PostAsJsonAsync<CreateOrderingDto>("orderings", createOrderingDto);
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using MultiShop.Dtos.CargoDtos.CargoCompanyDtos;
+using MultiShop.Dtos.CargoDtos.CargoDetailDtos;
+using System.Linq.Expressions;
 
 namespace MultiShop.WebUI.Services.CargoServices.CargoCompanyServices
 {
@@ -22,7 +24,7 @@ namespace MultiShop.WebUI.Services.CargoServices.CargoCompanyServices
             await _httpClient.DeleteAsync("cargocompanies?id=" + id);
         }
 
-        public async Task<List<ResultCargoCompanyDto>> TGetAllAsync()
+        public async Task<List<ResultCargoCompanyDto>> TGetAllAsync(Guid? barcode)
         {
             var response = await _httpClient.GetAsync("cargocompanies");
             var values = await response.Content.ReadFromJsonAsync<List<ResultCargoCompanyDto>>();

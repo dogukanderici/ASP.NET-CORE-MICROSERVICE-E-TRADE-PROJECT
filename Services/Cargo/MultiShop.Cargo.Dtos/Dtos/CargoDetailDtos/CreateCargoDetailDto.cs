@@ -10,7 +10,7 @@ namespace MultiShop.Cargo.Dtos.Dtos.CargoDetailDtos
     {
         public string SenderCustomer { get; set; }
         public string RecieverCustomer { get; set; }
-        public int Barcode { get; set; }
+        public Guid Barcode { get; set; }
         public int CargoCompanyId { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace MultiShop.Order.Application.Interfaces
         where T : class, new()
     {
         Task<List<T>> GetAllAsync();
-        Task<T> GetByIdAsync(int userId);
+        Task<T> GetByIdAsync(Guid userId);
         Task CreateAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);

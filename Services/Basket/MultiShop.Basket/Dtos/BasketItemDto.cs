@@ -7,5 +7,13 @@
         public string ProductImageUrl { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
+        public int Tax { get; set; } = 10;
+        public decimal TotalItemPrice
+        {
+            get
+            {
+                return Quantity * Price;
+            }
+        }
     }
 }

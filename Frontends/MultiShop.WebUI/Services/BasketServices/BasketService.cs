@@ -1,4 +1,5 @@
-﻿using MultiShop.Dtos.BasketDtos;
+﻿using Microsoft.AspNetCore.Mvc;
+using MultiShop.Dtos.BasketDtos;
 
 namespace MultiShop.WebUI.Services.BasketServices
 {
@@ -16,17 +17,17 @@ namespace MultiShop.WebUI.Services.BasketServices
             var response = await _httpClient.GetAsync("basket");
             var values = await response.Content.ReadFromJsonAsync<BasketTotalDto>();
 
+            if (values.BasketItems != null)
+            {
+                values.TotalPrice = values.BasketItems.Sum(x => x.TotalItemPrice + (x.TotalItemPrice / 100 * x.Tax));
+            }
+
             return values;
         }
 
         public async Task SaveBasket(BasketTotalDto basketTotalDto)
         {
             await _httpClient.PostAsJsonAsync<BasketTotalDto>("basket", basketTotalDto);
-        }
-
-        public Task DeleteBasket(string userId)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task AddBasketItem(BasketItemDto basketItemDto)
@@ -54,6 +55,8 @@ namespace MultiShop.WebUI.Services.BasketServices
 
             };
 
+            values.TotalPrice = values.BasketItems.Sum(x => x.TotalItemPrice + (x.TotalItemPrice / 100 * x.Tax));
+
             await SaveBasket(values);
         }
 
@@ -64,6 +67,13 @@ namespace MultiShop.WebUI.Services.BasketServices
             var result = values.BasketItems.Remove(deletedItem);
 
             await SaveBasket(values);
+
+            return true;
+        }
+
+        public async Task<bool> DeleteBasket()
+        {
+            await _httpClient.DeleteAsync("basket");
 
             return true;
         }

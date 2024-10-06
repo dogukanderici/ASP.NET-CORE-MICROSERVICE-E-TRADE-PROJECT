@@ -24,11 +24,9 @@ namespace MultiShop.Order.Persistence.Migrations
 
             modelBuilder.Entity("MultiShop.Order.Domain.Entities.Address", b =>
                 {
-                    b.Property<int>("AddressId")
+                    b.Property<Guid>("AddressId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -91,8 +89,8 @@ namespace MultiShop.Order.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailId"));
 
-                    b.Property<int>("OrderingId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OrderingId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ProductAmount")
                         .HasColumnType("int");
@@ -120,11 +118,9 @@ namespace MultiShop.Order.Persistence.Migrations
 
             modelBuilder.Entity("MultiShop.Order.Domain.Entities.Ordering", b =>
                 {
-                    b.Property<int>("OrderingId")
+                    b.Property<Guid>("OrderingId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderingId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("OrderDat")
                         .HasColumnType("datetime2");

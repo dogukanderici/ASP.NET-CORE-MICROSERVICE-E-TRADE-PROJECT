@@ -1,4 +1,5 @@
-﻿<div class="col-lg-4">
+﻿@using System.Globalization
+<div class="col-lg-4">
     <form class="mb-30" asp-controller="Discount" asp-action="ConfirmDiscountCode" method="post">
         <div class="input-group">
             <input name="code" type="text" value="@ViewBag.Code" class="form-control border-0 p-4" placeholder="Kupon Kodunuz">
@@ -12,11 +13,11 @@
         <div class="border-bottom pb-2">
             <div class="d-flex justify-content-between mb-3">
                 <h6>Toplam Ürün Fiyatı</h6>
-                <h6>@ViewBag.TotalPrice.ToString("C")</h6>
+                <h6>@ViewBag.TotalPrice.ToString("C", new CultureInfo("tr-TR"))</h6>
             </div>
             <div class="d-flex justify-content-between">
                 <h6 class="font-weight-medium">KDV</h6>
-                <h6 class="font-weight-medium">@ViewBag.Tax.ToString("C")</h6>
+                <h6 class="font-weight-medium">@ViewBag.Tax.ToString("C", new CultureInfo("tr-TR"))</h6>
             </div>
             <div class="d-flex justify-content-between">
                 <h6 class="font-weight-medium">İndirim Oranı</h6>
@@ -24,17 +25,17 @@
             </div>
             <div class="d-flex justify-content-between">
                 <h6 class="font-weight-medium">İndirim Tutarı</h6>
-                <h6 class="font-weight-medium">@ViewBag.DiscountAmount.ToString("C")</h6>
+                <h6 class="font-weight-medium">@ViewBag.DiscountAmount.ToString("C", new CultureInfo("tr-TR"))</h6>
             </div>
             <div class="d-flex justify-content-between">
                 <h6 class="font-weight-medium">İndirimsiz Tutar</h6>
-                <h6 class="font-weight-medium">@ViewBag.TotalPriceWithTax.ToString("C")</h6>
+                <h6 class="font-weight-medium">@ViewBag.TotalPriceWithTax.ToString("C", new CultureInfo("tr-TR"))</h6>
             </div>
         </div>
         <div class="pt-2">
             <div class="d-flex justify-content-between mt-2">
                 <h5>İndirimli Güncel Tutar</h5>
-                <h5>@((ViewBag.TotalPriceWithTax - ViewBag.DiscountAmount).ToString("C"))</h5>
+                <h5>@((ViewBag.TotalPriceWithTax - ViewBag.DiscountAmount).ToString("C", new CultureInfo("tr-TR")))</h5>
             </div>
             <a href="/order" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Siparişi Tamamla</a>
         </div>

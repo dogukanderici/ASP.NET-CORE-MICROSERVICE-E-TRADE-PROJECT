@@ -38,9 +38,9 @@ namespace MultiShop.WebUI.Handlers
                 }
             }
 
-            if(response.StatusCode == HttpStatusCode.Unauthorized)
+            if(response.StatusCode==HttpStatusCode.InternalServerError)
             {
-                // Hata Mesajı
+                throw new Exception("Beklenmedik Hata! Kod:500-InternalServerError");
             }
 
             return response;

@@ -25,7 +25,7 @@ namespace MultiShop.Cargo.WebApi.Controllers
         [HttpGet]
         public IActionResult CargoCompanyList()
         {
-            var values = _cargoCompanyService.TGetAll();
+            var values = _cargoCompanyService.TGetAll(null);
 
             return Ok(values.Select(x => _mapper.Map<GetCargoCompanyDto>(x)).ToList());
         }
