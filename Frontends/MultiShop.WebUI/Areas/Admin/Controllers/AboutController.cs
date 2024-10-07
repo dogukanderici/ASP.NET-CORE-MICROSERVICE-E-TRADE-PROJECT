@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.AboutDtos;
 using MultiShop.WebUI.Services.CatalogServices.AboutServices;
-using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AboutValidation;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AdminAreaValidation.AboutValidation;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;

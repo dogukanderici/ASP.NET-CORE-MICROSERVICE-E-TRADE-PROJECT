@@ -30,7 +30,7 @@ namespace MultiShop.Order.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> OrderDetailList()
         {
-            var values = await _getOrderDetailQueryHandler.Handle();
+            var values = await _getOrderDetailQueryHandler.Handle(null);
 
             return Ok(values);
         }
@@ -41,6 +41,15 @@ namespace MultiShop.Order.WebApi.Controllers
             var value = await _getOrderDetailByIdQueryHandler.Handle(new GetOrderDetailByIdQuery(id));
 
             return Ok(value);
+        }
+
+        [HttpGet]
+        [Route("GetOrderDetailByOrderingId/{orderingId}")]
+        public async Task<IActionResult> GetOrderDetailByOrderingId(Guid orderingId)
+        {
+            var values = await _getOrderDetailQueryHandler.Handle(new GetOrderDetailByIdQuery(orderingId));
+
+            return Ok(values);
         }
 
         [HttpPost]

@@ -25,6 +25,7 @@ namespace MultiShop.WebUI.Services.CargoServices.CargoDetailServices
         public async Task<List<ResultCargoDetailDto>> TGetAllAsync(Guid? barcode)
         {
             var response = await _httpClient.GetAsync("cargodetails?barcode=" + barcode);
+            var valuesx = await response.Content.ReadAsStringAsync();
             var values = await response.Content.ReadFromJsonAsync<List<ResultCargoDetailDto>>();
 
             return values;

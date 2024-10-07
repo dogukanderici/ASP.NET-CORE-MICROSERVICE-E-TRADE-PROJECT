@@ -75,5 +75,14 @@ namespace MultiShop.Catalog.Controllers
 
             return Ok(values);
         }
+
+        [HttpGet]
+        [Route("GetProductCountWithCategoryId/{id}")]
+        public async Task<IActionResult> GetProductCountWithCategoryId(string id)
+        {
+            var values = await _productService.GetProductCountWithCategoryId(id);
+
+            return Ok(values);
+        }
     }
 }

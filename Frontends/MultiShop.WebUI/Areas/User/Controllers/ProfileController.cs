@@ -1,8 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.OrderDtos.OrderAddressDtos;
+using MultiShop.IdentityServer.Models;
+using MultiShop.WebUI.Areas.User.Models;
 using MultiShop.WebUI.Services.Abstract;
 using MultiShop.WebUI.Services.OrderServices.OrderAddressServices;
+using MultiShop.WebUI.Services.UserIdentityServices;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.UserAreaValidation.ChangePasswordValidation;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.UserAreaValidation.ChangePersonalInfoValidation;
 
 namespace MultiShop.WebUI.Areas.User.Controllers
 {
@@ -11,12 +17,14 @@ namespace MultiShop.WebUI.Areas.User.Controllers
     public class ProfileController : BaseController
     {
         private readonly IOrderAddressService _orderAddressService;
+        private IUserIdentityService _userIdentityService;
         private IUserService _userService;
 
-        public ProfileController(IOrderAddressService orderAddressService, IUserService userService)
+        public ProfileController(IOrderAddressService orderAddressService, IUserService userService, IUserIdentityService userIdentityService)
         {
             _orderAddressService = orderAddressService;
             _userService = userService;
+            _userIdentityService = userIdentityService;
         }
 
         public IActionResult Index()
@@ -69,6 +77,64 @@ namespace MultiShop.WebUI.Areas.User.Controllers
             await _orderAddressService.UpdateOrderAddressAsync(updateUserAddressDto);
 
             return RedirectToAction("Addresses", "Profile", new { area = "User" });
+        }
+
+        [HttpGet]
+        [Route("ChangePassword")]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel changePasswordViewModel)
+        {
+            var changePasswordValidator = new ChangePasswordValidator();
+            var validator = changePasswordValidator.Validate(changePasswordViewModel);
+
+            if (validator.IsValid)
+            {
+                var result = await _userIdentityService.ChangePassword(changePasswordViewModel.NewPassword);
+
+                if (result)
+                {
+                    return RedirectToAction("Addresses", "Profile", new { area = "User" });
+                }
+
+                ViewBag.ChangePasswordError = "Şifre Değişikliğiniz Sırasında Beklenmedik Bir Hata Oluştu. Lütfen Tekrar Deneyiniz!";
+            }
+
+            return View();
+        }
+
+        [HttpGet]
+        [Route("PersonalInfos")]
+        public IActionResult ChangePersonalInfo()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("PersonalInfos")]
+        public async Task<IActionResult> ChangePersonalInfo(ChangePersonalInfoViewModel changePersonalInfoViewModel)
+        {
+            var changePersonalInfoValidator = new ChangePersonalInfoValidator();
+            var validator = changePersonalInfoValidator.Validate(changePersonalInfoViewModel);
+
+            if (validator.IsValid)
+            {
+                var result = await _userIdentityService.ChangePersonalInfo(changePersonalInfoViewModel);
+
+                if (result)
+                {
+                    return RedirectToAction("Addresses", "Profile", new { area = "User" });
+                }
+
+                ViewBag.ChangePersonalInfoError = "Kişisel Bilgileriniz Güncellenirken Beklenmedik Bir Hata Oluştu. Lütfen Tekrar Deneyiniz!";
+            }
+
+            return View();
         }
     }
 }

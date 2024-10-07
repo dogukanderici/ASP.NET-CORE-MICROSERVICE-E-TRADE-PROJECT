@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.ServiceStandardDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
 using MultiShop.WebUI.Services.CatalogServices.ServiceStandardServices;
-using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.ServiceStandardValidation;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AdminAreaValidation.ServiceStandardValidation;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Text;

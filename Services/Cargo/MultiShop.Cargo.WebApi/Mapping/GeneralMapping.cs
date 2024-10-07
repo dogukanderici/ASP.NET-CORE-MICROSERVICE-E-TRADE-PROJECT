@@ -19,7 +19,10 @@ namespace MultiShop.Cargo.WebApi.Mapping
             CreateMap<CargoCustomer, CreateCargoCustomerDto>().ReverseMap();
             CreateMap<CargoCustomer, UpdateCargoCustomerDto>().ReverseMap();
 
-            CreateMap<CargoDetail, GetCargoDetailDto>().ReverseMap();
+            CreateMap<CargoDetail, GetCargoDetailDto>()
+                .ForPath(dest => dest.GetCargoCompanyDto.CargoCompanyName, opt => opt.MapFrom(src => src.CargoCompany.CargoCompanyName))
+                .ForPath(dest => dest.GetCargoCompanyDto.CargoCompanyId, opt => opt.MapFrom(src => src.CargoCompany.CargoCompanyId))
+                .ReverseMap();
             CreateMap<CargoDetail, CreateCargoDetailDto>().ReverseMap();
             CreateMap<CargoDetail, UpdateCargoDetailDto>().ReverseMap();
 

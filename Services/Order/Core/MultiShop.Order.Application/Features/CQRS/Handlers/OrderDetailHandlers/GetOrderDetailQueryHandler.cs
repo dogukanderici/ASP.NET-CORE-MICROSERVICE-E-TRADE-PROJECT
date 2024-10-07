@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MultiShop.Order.Application.Features.CQRS.Queries.OrderDetailsQueries;
 using MultiShop.Order.Application.Features.CQRS.Results.OrderDetailsResults;
 using MultiShop.Order.Application.Interfaces;
 using MultiShop.Order.Domain.Entities;
@@ -22,9 +23,9 @@ namespace MultiShop.Order.Application.Features.CQRS.Handlers.OrderDetailHandlers
             _mapper = mapper;
         }
 
-        public async Task<List<GetOrderDetailQueryResult>> Handle()
+        public async Task<List<GetOrderDetailQueryResult>> Handle(GetOrderDetailByIdQuery? query)
         {
-            var values = await _repository.GetAllAsync();
+            var values = await _repository.GetAllAsync(query == null ? null : od => od.OrderingId == query.OrderingId);
 
             return values.Select(x => _mapper.Map<GetOrderDetailQueryResult>(x)).ToList();
         }

@@ -33,11 +33,18 @@ namespace MultiShop.Order.Persistence.Repositories
             }
         }
 
-        public async Task<List<TEntity>> GetAllAsync()
+        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null)
         {
             using (var context = new OrderContext())
             {
-                return await context.Set<TEntity>().ToListAsync();
+                IQueryable<TEntity> query = context.Set<TEntity>();
+
+                if (filter != null)
+                {
+                    query = query.Where(filter);
+                }
+
+                return await query.ToListAsync();
             }
         }
 

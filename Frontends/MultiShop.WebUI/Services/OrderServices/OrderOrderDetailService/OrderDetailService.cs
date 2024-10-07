@@ -15,5 +15,13 @@ namespace MultiShop.WebUI.Services.OrderServices.OrderOrderDetailService
         {
             await _httpClient.PostAsJsonAsync<List<CreateOrderDetailDto>>("orderdetails", createOrderDetailDto);
         }
+
+        public async Task<List<ResultOrderDetailDto>> GetOrderDetail(Guid orderingId)
+        {
+            var response = await _httpClient.GetAsync("orderdetails/getorderdetailbyorderingid/" + orderingId);
+            var values = await response.Content.ReadFromJsonAsync<List<ResultOrderDetailDto>>();
+
+            return values;
+        }
     }
 }

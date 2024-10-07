@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.OrderDtos.OrderAddressDtos;
+using MultiShop.WebUI.Models;
 using MultiShop.WebUI.Services.Abstract;
+using MultiShop.WebUI.Services.BasketServices;
 using MultiShop.WebUI.Services.OrderServices.OrderAddressServices;
 
 namespace MultiShop.WebUI.Controllers
@@ -11,11 +13,13 @@ namespace MultiShop.WebUI.Controllers
     {
         private readonly IOrderAddressService _orderAddressService;
         private readonly IUserService _userService;
+        private readonly IBasketService _basketService;
 
-        public OrderController(IOrderAddressService orderAddressService, IUserService userService)
+        public OrderController(IOrderAddressService orderAddressService, IUserService userService, IBasketService basketService)
         {
             _orderAddressService = orderAddressService;
             _userService = userService;
+            _basketService = basketService;
         }
 
         [HttpGet]
@@ -28,22 +32,32 @@ namespace MultiShop.WebUI.Controllers
             var user = await _userService.GetUserInfo();
             var value = await _orderAddressService.GetUserOrderAddressAsync(user.Id);
 
-            return View(value);
+            var model = new OrderViewModel();
+
+            model.UpdateOrderAddress = value;
+
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Index(CreateOrderAddressDto createOrderAddressDto)
+        public IActionResult Index(OrderViewModel orderViewModel)
         {
             ViewBag.Directory1 = "MultiShop";
             ViewBag.Directory2 = "Siparişler";
             ViewBag.Directory3 = "Sipariş İşlemleri";
 
-            //var values = await _userService.GetUserInfo();
-            //createOrderAddressDto.UserId = values.Id;
-
-            //await _orderAddressService.CreateOrderAddressAsync(createOrderAddressDto);
-
             return RedirectToAction("Index", "Payment");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SetTempCargoCompany(string selectedCargoCompany)
+        {
+            var values = await _basketService.GetBasket();
+            values.CargoCompany = selectedCargoCompany;
+
+            await _basketService.SaveBasket(values);
+
+            return Json(new { success = true, selectedCargoCompany });
         }
     }
 }

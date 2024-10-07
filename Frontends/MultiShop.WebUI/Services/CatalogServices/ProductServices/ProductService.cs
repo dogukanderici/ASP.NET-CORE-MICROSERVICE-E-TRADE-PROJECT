@@ -42,6 +42,14 @@ namespace MultiShop.WebUI.Services.CatalogServices.ProductServices
             return value;
         }
 
+        public async Task<int> GetProductCountWithCategoryId(string id)
+        {
+            var response = await _httpClient.GetAsync("products/getproductcountwithcategoryid/" + id);
+            var value = await response.Content.ReadAsStringAsync();
+
+            return int.Parse(value);
+        }
+
         public async Task<List<ResultProductWithCategoryDto>> GetProductsWithCategoryAsync()
         {
             var response = await _httpClient.GetAsync("products/ProductListWithCategory");

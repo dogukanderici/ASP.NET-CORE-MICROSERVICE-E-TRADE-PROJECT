@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Dtos.CatalogDtos.ProductDetailDtos;
 using MultiShop.WebUI.Services.CatalogServices.ProductDetailServices;
-using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.ProductDetailValidation;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AdminAreaValidation.ProductDetailValidation;
 using Newtonsoft.Json;
 using System.Text;
 

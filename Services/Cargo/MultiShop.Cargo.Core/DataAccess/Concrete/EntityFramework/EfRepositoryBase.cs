@@ -38,7 +38,7 @@ namespace MultiShop.Cargo.Core.DataAccess.Concrete.EntityFramework
             }
         }
 
-        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
+        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, Expression<Func<TEntity, object>> includes = null)
         {
             using (var context = new TContext())
             {
@@ -49,11 +49,16 @@ namespace MultiShop.Cargo.Core.DataAccess.Concrete.EntityFramework
                     query = query.Where(filter);
                 }
 
+                if (includes != null)
+                {
+                    query = query.Include(includes);
+                }
+
                 return query.ToList();
             }
         }
 
-        public TEntity GetByFilter(Expression<Func<TEntity, bool>> filter)
+        public TEntity GetByFilter(Expression<Func<TEntity, bool>> filter, string includes = null)
         {
             using (var context = new TContext())
             {
@@ -62,6 +67,11 @@ namespace MultiShop.Cargo.Core.DataAccess.Concrete.EntityFramework
                 if (filter != null)
                 {
                     query = query.Where(filter);
+                }
+
+                if (includes != null)
+                {
+                    query = query.Include(includes);
                 }
 
                 return query.FirstOrDefault();

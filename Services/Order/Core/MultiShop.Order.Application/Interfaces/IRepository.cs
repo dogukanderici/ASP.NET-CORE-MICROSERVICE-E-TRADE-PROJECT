@@ -10,7 +10,7 @@ namespace MultiShop.Order.Application.Interfaces
     public interface IRepository<T>
         where T : class, new()
     {
-        Task<List<T>> GetAllAsync();
+        Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter = null);
         Task<T> GetByIdAsync(Guid userId);
         Task CreateAsync(T entity);
         Task UpdateAsync(T entity);

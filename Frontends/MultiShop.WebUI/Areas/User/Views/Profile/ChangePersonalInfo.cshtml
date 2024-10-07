@@ -1,0 +1,61 @@
+﻿@model ChangePersonalInfoViewModel
+
+@{
+    ViewData["Title"] = "ChangePersonalInfo";
+    Layout = "~/Areas/User/Views/UserLayout/Index.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Kişisel Bilgileri Güncelleme</h4></p>
+                    <form id="ChangePasswordForm" class="forms-sample" method="post">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Adınız</label>
+                                    <input asp-for="Name" class="form-control" type="text" placeholder="Adınız">
+                                    <span asp-validation-for="Name" class="text text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Soyadınız</label>
+                                    <input asp-for="Surname" class="form-control" type="text" placeholder="Soyadınız">
+                                    <span asp-validation-for="Surname" class="text text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>E-Posta Adresiniz</label>
+                                    <input asp-for="Email" class="form-control" type="text" placeholder="E-Posta Adresiniz">
+                                    <span asp-validation-for="Email" class="text text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <span asp-validation-summary="ModelOnly"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success mr-2">Güncelle</button>
+                        <a href="/user/profile/addresses" class="btn btn-outline-danger">İptal</a>
+                    </form>
+                    @if (ViewBag.ChangePersonalInfoError != null)
+                    {
+                        <div class="row">
+                            <div class="col-md-12 d-flex justify-content-end align-items-center">
+                                <span class="text-left alert alert-danger w-25">@ViewBag.ChangePersonalInfoError</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

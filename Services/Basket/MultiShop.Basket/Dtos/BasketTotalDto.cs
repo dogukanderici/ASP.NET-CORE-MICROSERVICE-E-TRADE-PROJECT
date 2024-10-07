@@ -6,16 +6,8 @@
         public string DiscountCode { get; set; }
         public int DiscountRate { get; set; }
         public bool IsAppliedDiscount { get; set; } = false;
+        public string CargoCompany { get; set; }
         public List<BasketItemDto> BasketItems { get; set; }
-        //public decimal TotalPrice
-        //{
-        //    get
-        //    {
-        //        return (BasketItems != null && BasketItems.Any())
-        //            ? BasketItems.Where(x => x != null).Sum(x => x.TotalItemPrice * ((100 + Tax) / 100))
-        //            : 0;
-        //    }
-        //}
         public decimal TotalPrice { get; set; }
     }
 }

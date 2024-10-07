@@ -3,7 +3,7 @@ using MultiShop.Dtos.CatalogDtos.SpecialOfferDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
 using MultiShop.WebUI.Services.CatalogServices.SpecailOfferServies;
 using MultiShop.WebUI.Utilities.FileOperations;
-using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.SpecailOfferValidation;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AdminAreaValidation.SpecailOfferValidation;
 using Newtonsoft.Json;
 using System.Text;
 

@@ -21,7 +21,7 @@ namespace MultiShop.Cargo.Business.Concrete
 
         public List<CargoDetail> TGetAll(Guid? barcode)
         {
-            return _cargoDetailDal.GetAll(cd => cd.Barcode == barcode);
+            return _cargoDetailDal.GetAll(cd => cd.Barcode == barcode, cd=>cd.CargoCompany);
         }
 
         public CargoDetail TGetByFilter(int id)

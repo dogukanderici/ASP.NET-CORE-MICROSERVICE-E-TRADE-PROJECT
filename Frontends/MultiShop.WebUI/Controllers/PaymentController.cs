@@ -1,5 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using MultiShop.Dtos.CargoDtos.CargoDetailDtos;
 using MultiShop.Dtos.CargoDtos.CargoOperationsDtos;
 using MultiShop.Dtos.OrderDtos.OrderDetailDtos;
@@ -11,6 +15,7 @@ using MultiShop.WebUI.Services.CargoServices.CargoOperationsServices;
 using MultiShop.WebUI.Services.OrderServices.OrderAddressServices;
 using MultiShop.WebUI.Services.OrderServices.OrderOrderDetailService;
 using MultiShop.WebUI.Services.OrderServices.OrderOrderingServices;
+using MultiShop.WebUI.Utilities.RazorViewRendererHelper;
 
 namespace MultiShop.WebUI.Controllers
 {
@@ -24,8 +29,9 @@ namespace MultiShop.WebUI.Controllers
         private readonly ICargoDetailService _cargoDetailService;
         private readonly ICargoOperationService _cargoOperationService;
         private readonly IMapper _mapper;
+        private readonly IRazorViewRenderer _razorViewRenderer;
 
-        public PaymentController(IOrderAddressService orderAddressService, IUserService userService, IBasketService basketService, IOrderDetailService orderDetailService, IOrderOrderingService orderOrderingService, IMapper mapper, ICargoDetailService cargoDetailService, ICargoOperationService cargoOperationService)
+        public PaymentController(IOrderAddressService orderAddressService, IUserService userService, IBasketService basketService, IOrderDetailService orderDetailService, IOrderOrderingService orderOrderingService, IMapper mapper, ICargoDetailService cargoDetailService, ICargoOperationService cargoOperationService, IRazorViewRenderer razorViewRenderer)
         {
             _orderAddressService = orderAddressService;
             _userService = userService;
@@ -35,6 +41,7 @@ namespace MultiShop.WebUI.Controllers
             _mapper = mapper;
             _cargoDetailService = cargoDetailService;
             _cargoOperationService = cargoOperationService;
+            _razorViewRenderer = razorViewRenderer;
         }
 
         public IActionResult Index()
@@ -52,6 +59,8 @@ namespace MultiShop.WebUI.Controllers
             // Sisteme giriş yapmış kullanıcının adres bilgilerini getirir.
             var user = await _userService.GetUserInfo();
             var value = await _orderAddressService.GetUserOrderAddressAsync(user.Id);
+
+            var x = ViewBag.SelectedCargoCompanyId;
 
             // Kullanıcnın sepet bilgisini getirir.
             var values = await _basketService.GetBasket();
@@ -85,8 +94,7 @@ namespace MultiShop.WebUI.Controllers
                 SenderCustomer = "MultiShop",
                 RecieverCustomer = user.Name + ' ' + user.Surname,
                 Barcode = newGuid,
-                //CargoCompanyId = values.CargoCompany
-                CargoCompanyId = 1
+                CargoCompanyId = int.Parse(values.CargoCompany)
             });
 
             // CargoOperations tablosuna veriler yazılır.
@@ -97,6 +105,8 @@ namespace MultiShop.WebUI.Controllers
                 IsDelivered = false,
                 OperationDate = DateTime.Now
             });
+
+            string emailcontent = await _razorViewRenderer.RenderRazorViewToStringAsync("OrderSummaryEmailTemplate", values.BasketItems);
 
             // Kullanıcıya ait sepet temizlenir.
             await _basketService.DeleteBasket();

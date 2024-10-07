@@ -2,7 +2,7 @@
 using MultiShop.Dtos.CatalogDtos.ProductImageDtos;
 using MultiShop.WebUI.Services.CatalogServices.ProductImageServices;
 using MultiShop.WebUI.Utilities.FileOperations;
-using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.ProductImageValidation;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AdminAreaValidation.ProductImageValidation;
 using Newtonsoft.Json;
 using System.Text;
 

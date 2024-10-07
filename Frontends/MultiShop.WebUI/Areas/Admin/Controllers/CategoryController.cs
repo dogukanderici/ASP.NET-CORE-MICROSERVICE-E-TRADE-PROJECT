@@ -3,7 +3,7 @@ using MultiShop.Dtos.CatalogDtos.CategoryDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
 using MultiShop.WebUI.Services.CatalogServices.CategoryServices;
 using MultiShop.WebUI.Utilities.FileOperations;
-using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.CategoryValidation;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AdminAreaValidation.CategoryValidation;
 using Newtonsoft.Json;
 using System.Text;
 

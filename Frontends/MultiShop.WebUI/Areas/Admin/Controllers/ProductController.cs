@@ -6,7 +6,7 @@ using MultiShop.WebUI.Areas.Admin.Models;
 using MultiShop.WebUI.Services.CatalogServices.CategoryServices;
 using MultiShop.WebUI.Services.CatalogServices.ProductServices;
 using MultiShop.WebUI.Utilities.FileOperations;
-using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.ProductValidation;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AdminAreaValidation.ProductValidation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;

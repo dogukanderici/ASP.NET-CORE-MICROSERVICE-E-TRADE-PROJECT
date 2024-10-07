@@ -4,7 +4,7 @@ using MultiShop.Dtos.CommentDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
 using MultiShop.WebUI.Services.CommentServices;
 using MultiShop.WebUI.Utilities.FileOperations;
-using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.CommentValidation;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AdminAreaValidation.CommentValidation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net;

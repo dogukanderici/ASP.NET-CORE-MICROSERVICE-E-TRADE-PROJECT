@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Razor.Compilation;
+using Microsoft.AspNetCore.Mvc.ViewFeatures.Buffers;
 using MultiShop.WebUI.Handlers;
 using MultiShop.WebUI.Services;
 using MultiShop.WebUI.Services.Abstract;
@@ -38,6 +40,7 @@ using MultiShop.WebUI.Services.StatisticsServices.UserStatisticsServices;
 using MultiShop.WebUI.Services.UserIdentityServices;
 using MultiShop.WebUI.Settings;
 using MultiShop.WebUI.Utilities.FileOperations;
+using MultiShop.WebUI.Utilities.RazorViewRendererHelper;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -87,6 +90,8 @@ builder.Services.Configure<ApiKeySettings>(builder.Configuration.GetSection("Rap
 builder.Services.AddScoped<ResourceOwnerPasswordTokenHandler>();
 builder.Services.AddScoped<ClientCredentialTokenHandler>();
 builder.Services.AddScoped<IFileOperationHelper, FileOperationHelper>();
+builder.Services.AddSingleton<IRazorViewEngine, RazorViewEngine>();
+builder.Services.AddScoped<IRazorViewRenderer, RazorViewRendererHelper>();
 
 builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
 

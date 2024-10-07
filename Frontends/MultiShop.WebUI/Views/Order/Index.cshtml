@@ -1,11 +1,11 @@
-﻿@model UpdateOrderAddressDto
+﻿@model OrderViewModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/UILayout/_UILayout.cshtml";
 }
 
-@if (Model.UserId == null)
+@if (Model.UpdateOrderAddress.UserId == null)
 {
     <div class="container-fluid">
         <div class="row px-xl-5">
@@ -35,47 +35,47 @@ else
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label>Adınız</label>
-                                <input asp-for="Name" class="form-control" type="text" placeholder="Adınız" readonly="true">
+                                <input asp-for="UpdateOrderAddress.Name" class="form-control" type="text" placeholder="Adınız" readonly="true">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Soyadınız</label>
-                                <input asp-for="Surname" class="form-control" type="text" placeholder="Soyadınız" readonly="true">
+                                <input asp-for="UpdateOrderAddress.Surname" class="form-control" type="text" placeholder="Soyadınız" readonly="true">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>E-mail</label>
-                                <input asp-for="Email" class="form-control" type="text" placeholder="mail@email.com" readonly="true">
+                                <input asp-for="UpdateOrderAddress.Email" class="form-control" type="text" placeholder="mail@email.com" readonly="true">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Telefon</label>
-                                <input asp-for="Phone" class="form-control" type="text" placeholder="+90 5xxx xxx xx xx" readonly="true">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Adres Detayı 1</label>
-                                <input asp-for="Detail1" class="form-control" type="text" placeholder="Adres Detayı" readonly="true">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Adres Detay 2</label>
-                                <input asp-for="Detail2" class="form-control" type="text" placeholder="Adres Detayı" readonly="true">
+                                <input asp-for="UpdateOrderAddress.Phone" class="form-control" type="text" placeholder="+90 5xxx xxx xx xx" readonly="true">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Ülke</label>
-                                <input asp-for="Country" class="form-control" type="text" placeholder="Türkiye" readonly="true">
+                                <input asp-for="UpdateOrderAddress.Country" class="form-control" type="text" placeholder="Türkiye" readonly="true">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Şehir</label>
-                                <input asp-for="City" class="form-control" type="text" placeholder="Şehir" readonly="true">
+                                <input asp-for="UpdateOrderAddress.City" class="form-control" type="text" placeholder="Şehir" readonly="true">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>İlçe</label>
-                                <input asp-for="Discrict" class="form-control" type="text" placeholder="İlçe" readonly="true">
+                                <input asp-for="UpdateOrderAddress.Discrict" class="form-control" type="text" placeholder="İlçe" readonly="true">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Posta Kodu</label>
-                                <input asp-for="ZipCode" class="form-control" type="text" placeholder="Posta Kodu" readonly="true">
+                                <input asp-for="UpdateOrderAddress.ZipCode" class="form-control" type="text" placeholder="Posta Kodu" readonly="true">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Adres Detayı 1</label>
+                                <textarea asp-for="UpdateOrderAddress.Detail1" class="form-control" type="text" rows="5" placeholder="Adres Detayı" readonly="true"></textarea>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Adres Detayı 2</label>
+                                <textarea asp-for="UpdateOrderAddress.Detail2" class="form-control" type="text" rows="5" placeholder="Adres Detayı" readonly="true"></textarea>
                             </div>
                             <div class="col-md-12 form-group">
                                 <label>Açıklama</label>
-                                <textarea asp-for="Description" class="form-control" type="text" rows="5" placeholder="Açıklama" readonly="true"></textarea>
+                                <textarea asp-for="UpdateOrderAddress.Description" class="form-control" type="text" rows="5" placeholder="Açıklama" readonly="true"></textarea>
                             </div>
                             <div class="col-md-6 form-group">
                                 <a href="/user/profile/addresses" class="btn btn-success">Adres Güncelle</a>
@@ -88,10 +88,34 @@ else
 
                     @await Component.InvokeAsync("_OrderSummaryComponentPartial")
 
+                    @await Component.InvokeAsync("_OrderCargoOptionComponentPartial")
+
                     @await Component.InvokeAsync("_PaymentMethodComponentPartial")
 
                 </div>
             </div>
         </div>
     </form>
+
+    @section Scripts {
+    <script>
+
+        // Seçilen Kargo Şirketini Geçici Olarak Hafızada Tutar.
+        $(document).ready(function () {
+            $("#CargoCompanyList").on("change", function () {
+                var selectedValue = $(this).val();
+                console.log("Kargo Şirketi: ", selectedValue);
+
+                $.ajax({
+                    type: 'POST',
+                    url: "/Order/SetTempCargoCompany",
+                    data: { selectedCargoCompany: selectedValue },
+                    success: function (response) {
+                        console.log("Sunucuya Gönderildi: ", response);
+                    }
+                });
+            });
+        });
+    </script>
+    }
 }

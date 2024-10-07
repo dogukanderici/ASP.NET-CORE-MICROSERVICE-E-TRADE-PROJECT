@@ -82,5 +82,12 @@ namespace MultiShop.Catalog.Services.ProductServices
 
             return productValuesFromDto;
         }
+
+        public async Task<int> GetProductCountWithCategoryId(string id)
+        {
+            List<ResultProductWithCategoryDto> values = await GetProductsWithCategoryByCategoryIdAsync(id);
+
+            return values.Count();
+        }
     }
 }

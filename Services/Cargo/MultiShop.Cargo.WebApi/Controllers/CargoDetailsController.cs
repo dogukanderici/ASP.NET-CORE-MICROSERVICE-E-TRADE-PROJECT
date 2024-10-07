@@ -28,8 +28,9 @@ namespace MultiShop.Cargo.WebApi.Controllers
         public IActionResult CargoDetailList(Guid barcode)
         {
             var values = _cargoDetailService.TGetAll(barcode);
+            var valueToDto = values.Select(x => _mapper.Map<GetCargoDetailDto>(x)).ToList();
 
-            return Ok(values.Select(x => _mapper.Map<GetCargoDetailDto>(x)).ToList());
+            return Ok(valueToDto);
         }
 
         [HttpGet("{id}")]

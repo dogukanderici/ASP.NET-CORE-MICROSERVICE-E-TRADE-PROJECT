@@ -1,14 +1,13 @@
-﻿@model List<ResultProductWithCategoryDto>
+﻿@using System.Globalization
+@model List<ResultProductWithCategoryDto>
 <div class="container-fluid pt-5 pb-3">
     <div class="row px-xl-5">
         @foreach (var item in Model)
         {
             <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
-
                 <div class="product-item bg-light mb-4">
-
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="~/userfiles/@item.ProductImageUrl" alt="product-image" style="width: 300px; height: 275px">
+                    <div class="product-img position-relative overflow-hidden" style="height: 200px;">
+                        <img class="img-fluid w-100 h-100" src="~/userfiles/@item.ProductImageUrl" alt="product-image" style="object-fit: cover;">
                         <div class="product-action">
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
@@ -17,9 +16,9 @@
                         </div>
                     </div>
                     <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="">@item.ProductName</a>
+                        <a class="h6 text-decoration-none text-truncate d-block" href="/productlist/productdetail/@item.ProductID" style="max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@item.ProductName</a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>4599.99 ₺</h5><h6 class="text-muted ml-2"><del>@item.ProductPrice.ToString("C")</del></h6>
+                            <h5>@item.ProductPrice.ToString("C", new CultureInfo("tr-TR"))</h5>
                         </div>
                         <div class="d-flex align-items-center justify-content-center mb-1">
                             <small class="fa fa-star text-primary mr-1"></small>

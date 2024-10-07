@@ -2,7 +2,7 @@
 using MultiShop.Dtos.CatalogDtos.VendorDtos;
 using MultiShop.WebUI.Services.CatalogServices.VendorServices;
 using MultiShop.WebUI.Utilities.FileOperations;
-using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.VendorValidation;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AdminAreaValidation.VendorValidation;
 using Newtonsoft.Json;
 using System.Text;
 

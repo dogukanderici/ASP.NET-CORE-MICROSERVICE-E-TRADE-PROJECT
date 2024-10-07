@@ -7,5 +7,6 @@ namespace MultiShop.WebUI.Services.CatalogServices.ProductServices
     {
         Task<List<ResultProductWithCategoryDto>> GetProductsWithCategoryAsync();
         Task<List<ResultProductWithCategoryDto>> GetProductsWithCategoryByCategoryIdAsync(string id);
+        Task<int> GetProductCountWithCategoryId(string id);
     }
 }

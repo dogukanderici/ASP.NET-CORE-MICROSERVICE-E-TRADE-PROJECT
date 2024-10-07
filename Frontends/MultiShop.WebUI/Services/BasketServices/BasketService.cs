@@ -51,8 +51,8 @@ namespace MultiShop.WebUI.Services.BasketServices
                 DiscountCode = "Yok",
                 DiscountRate = 0,
                 UserId = values.UserId,
-                BasketItems = values.BasketItems
-
+                BasketItems = values.BasketItems,
+                CargoCompany = "0"
             };
 
             values.TotalPrice = values.BasketItems.Sum(x => x.TotalItemPrice + (x.TotalItemPrice / 100 * x.Tax));

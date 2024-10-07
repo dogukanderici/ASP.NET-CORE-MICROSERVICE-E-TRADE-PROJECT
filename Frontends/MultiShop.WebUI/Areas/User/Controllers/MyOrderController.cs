@@ -36,7 +36,9 @@ namespace MultiShop.WebUI.Areas.User.Controllers
         [Route("GetOrderDetail/{id}")]
         public async Task<IActionResult> GetOrderDetail(Guid id)
         {
-            return View();
+            var values = await _orderDetailService.GetOrderDetail(id);
+
+            return View(values);
         }
 
         [HttpGet]

@@ -43,6 +43,47 @@ namespace MultiShop.IdentityServer.Controllers
             });
         }
 
+        [HttpGet("GetUserDefault")]
+        public async Task<IActionResult> GetUserDefault()
+        {
+            // Jwt token'daki sub değerine erişim sağlar.
+            var userClaim = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
+
+            var user = await _userManager.FindByIdAsync(userClaim.Value);
+
+            return Ok(user);
+        }
+
+        [HttpGet("ChangePassword/{newPassword}")]
+        public async Task<IActionResult> ChangePassword(string newPassword)
+        {
+            // Jwt token'daki sub değerine erişim sağlar.
+            var userClaim = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
+            var user = await _userManager.FindByIdAsync(userClaim.Value);
+
+            user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, newPassword);
+
+            var changePasswordResult = await _userManager.UpdateAsync(user);
+
+            return Ok(changePasswordResult.Succeeded ? true : false);
+        }
+
+        [HttpPost("ChangePersonalInfo")]
+        public async Task<IActionResult> ChangePersonalInfo(PersonalInfoViewModel changePersonalInfoViewModel)
+        {
+            // Jwt token'daki sub değerine erişim sağlar.
+            var userClaim = User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub);
+            var user = await _userManager.FindByIdAsync(userClaim.Value);
+
+            user.Name = changePersonalInfoViewModel.Name;
+            user.Surname = changePersonalInfoViewModel.Surname;
+            user.Email = changePersonalInfoViewModel.Email;
+
+            var changePersonalInfoResult = await _userManager.UpdateAsync(user);
+
+            return Ok(changePersonalInfoResult.Succeeded ? true : false);
+        }
+
         [HttpGet("AllUserList")]
         public async Task<IActionResult> GetAllUserList()
         {

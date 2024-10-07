@@ -2,7 +2,7 @@
 using MultiShop.Dtos.CatalogDtos.OfferDiscountDtos;
 using MultiShop.WebUI.Services.CatalogServices.OfferDiscountServices;
 using MultiShop.WebUI.Utilities.FileOperations;
-using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.OfferDiscountValidation;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AdminAreaValidation.OfferDiscountValidation;
 using Newtonsoft.Json;
 using System.Text;
 

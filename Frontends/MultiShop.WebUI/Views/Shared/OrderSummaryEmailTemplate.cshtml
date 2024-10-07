@@ -1,0 +1,56 @@
+﻿@using System.Globalization
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Sipariş Onayı</title>
+    <link href="~/css/confirmordermailstyle.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Sipariş Onayı</h1>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Değerli Müşterimiz,</h5>
+                <p>Siparişiniz alınmıştır. Aşağıda sipariş detaylarınız yer almaktadır:</p>
+
+                <h6>Sipariş Bilgileri:</h6>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Ürün Adı</th>
+                            <th>Adet</th>
+                            <th>Fiyat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ProductName</td>
+                                <td>@item.ProductName</td>
+                                <td>@item.ProductName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <h6>Müşteri Bilgileri:</h6>
+                <p><strong>Ad:</strong> John Doe</p>
+                <p><strong>Email:</strong> john.doe@example.com</p>
+                <p><strong>Adres:</strong> 1234 Sokak, Şehir, Ülke</p>
+
+                <p>Herhangi bir sorunuz olursa lütfen bizimle <a href="/contact" target="_blank">iletişime</a> geçin.</p>
+                <p>İyi günler dileriz!</p>
+            </div>
+        </div>
+        <div class="footer">
+            <p>&copy; @DateTime.Now.Year MultiShop. Tüm hakları saklıdır.</p>
+        </div>
+    </div>
+</body>
+</html>

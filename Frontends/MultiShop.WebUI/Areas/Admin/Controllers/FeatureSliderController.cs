@@ -3,7 +3,7 @@ using MultiShop.Dtos.CatalogDtos.FeatureSliderDtos;
 using MultiShop.WebUI.Areas.Admin.Models;
 using MultiShop.WebUI.Services.CatalogServices.FeatureSliderServices;
 using MultiShop.WebUI.Utilities.FileOperations;
-using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.FeatureSliderValidation;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.AdminAreaValidation.FeatureSliderValidation;
 using Newtonsoft.Json;
 using System.Text;
 
