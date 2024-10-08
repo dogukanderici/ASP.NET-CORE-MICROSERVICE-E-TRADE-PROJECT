@@ -1,4 +1,7 @@
 ﻿@model List<BasketItemDto>
+@{
+    int count = 0;
+}
 
 <div class="col-lg-8 table-responsive mb-5">
     @if (Model == null || Model.Count() < 1)
@@ -20,19 +23,21 @@
             <tbody class="align-middle">
                 @foreach (var item in Model)
                 {
+                    count += 1;
+
                     <tr>
                         <td class="align-middle"><img src="~/userfiles/@item.ProductImageUrl" alt="" style="width: 50px; height: 50px;"> @item.ProductName</td>
                         <td class="align-middle">@item.Price</td>
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus">
+                                    <button id="removeBasketItem-@count" class="btn btn-sm btn-primary btn-minus" onclick="removeItemFromBasket(@count)">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="@item.Quantity">
+                                <input id="itemQuantity-@count" type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="@item.Quantity" readonly="true">
                                 <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
+                                    <button id="addBasketItem" class="btn btn-sm btn-primary btn-plus" onclick="addItemToBasket(@count)">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>

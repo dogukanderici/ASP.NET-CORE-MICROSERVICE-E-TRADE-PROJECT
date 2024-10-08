@@ -13,3 +13,27 @@
 
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        function removeItemFromBasket(htmlId) {
+            setTimeout(function () {
+                var quantityValue = $("#itemQuantity-" + htmlId + "").val();
+                console.log("htmlId: ", htmlId);
+                console.log("itemQuantityForRemove: ", quantityValue);
+            }, 1000);
+        }
+
+        function addItemToBasket(htmlId) {
+            setTimeout(function () {
+                var quantityValue = $("#itemQuantity-" + htmlId + "").val();
+                console.log("htmlId: ", htmlId);
+                console.log("itemQuantityForAdd: ", quantityValue);
+            }, 1000);
+        }
+
+        // $("#removeBasketItem").click(removeItemFromBasket);
+        // $("#addBasketItem").click(addItemToBasket);
+
+    </script>
+}

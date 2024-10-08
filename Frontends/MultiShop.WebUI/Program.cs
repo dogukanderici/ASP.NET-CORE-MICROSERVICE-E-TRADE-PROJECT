@@ -86,12 +86,14 @@ builder.Services.AddHttpClient<IIdentityService, IdentityService>();
 builder.Services.Configure<ClientSettings>(builder.Configuration.GetSection("ClientSettings"));
 builder.Services.Configure<ServiceApiSettings>(builder.Configuration.GetSection("ServiceApiSettings"));
 builder.Services.Configure<ApiKeySettings>(builder.Configuration.GetSection("RapidApiSettings"));
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 builder.Services.AddScoped<ResourceOwnerPasswordTokenHandler>();
 builder.Services.AddScoped<ClientCredentialTokenHandler>();
 builder.Services.AddScoped<IFileOperationHelper, FileOperationHelper>();
 builder.Services.AddSingleton<IRazorViewEngine, RazorViewEngine>();
 builder.Services.AddScoped<IRazorViewRenderer, RazorViewRendererHelper>();
+builder.Services.AddScoped<IMailService, MailService>();
 
 builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
 

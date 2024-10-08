@@ -36,6 +36,10 @@ namespace MultiShop.WebUI.Handlers
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
                     response = await base.SendAsync(request, cancellationToken);
                 }
+                else
+                {
+                    // Login ekranına yönlendirme
+                }
             }
 
             if(response.StatusCode==HttpStatusCode.InternalServerError)

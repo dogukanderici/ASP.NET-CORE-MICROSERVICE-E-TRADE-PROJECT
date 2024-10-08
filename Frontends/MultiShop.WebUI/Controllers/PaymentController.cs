@@ -8,6 +8,7 @@ using MultiShop.Dtos.CargoDtos.CargoDetailDtos;
 using MultiShop.Dtos.CargoDtos.CargoOperationsDtos;
 using MultiShop.Dtos.OrderDtos.OrderDetailDtos;
 using MultiShop.Dtos.OrderDtos.OrderingDtos;
+using MultiShop.WebUI.Models;
 using MultiShop.WebUI.Services.Abstract;
 using MultiShop.WebUI.Services.BasketServices;
 using MultiShop.WebUI.Services.CargoServices.CargoDetailServices;
@@ -30,8 +31,9 @@ namespace MultiShop.WebUI.Controllers
         private readonly ICargoOperationService _cargoOperationService;
         private readonly IMapper _mapper;
         private readonly IRazorViewRenderer _razorViewRenderer;
+        private readonly IMailService _mailService;
 
-        public PaymentController(IOrderAddressService orderAddressService, IUserService userService, IBasketService basketService, IOrderDetailService orderDetailService, IOrderOrderingService orderOrderingService, IMapper mapper, ICargoDetailService cargoDetailService, ICargoOperationService cargoOperationService, IRazorViewRenderer razorViewRenderer)
+        public PaymentController(IOrderAddressService orderAddressService, IUserService userService, IBasketService basketService, IOrderDetailService orderDetailService, IOrderOrderingService orderOrderingService, IMapper mapper, ICargoDetailService cargoDetailService, ICargoOperationService cargoOperationService, IRazorViewRenderer razorViewRenderer, IMailService mailService)
         {
             _orderAddressService = orderAddressService;
             _userService = userService;
@@ -42,6 +44,7 @@ namespace MultiShop.WebUI.Controllers
             _cargoDetailService = cargoDetailService;
             _cargoOperationService = cargoOperationService;
             _razorViewRenderer = razorViewRenderer;
+            _mailService = mailService;
         }
 
         public IActionResult Index()
@@ -59,8 +62,6 @@ namespace MultiShop.WebUI.Controllers
             // Sisteme giriş yapmış kullanıcının adres bilgilerini getirir.
             var user = await _userService.GetUserInfo();
             var value = await _orderAddressService.GetUserOrderAddressAsync(user.Id);
-
-            var x = ViewBag.SelectedCargoCompanyId;
 
             // Kullanıcnın sepet bilgisini getirir.
             var values = await _basketService.GetBasket();
@@ -106,7 +107,28 @@ namespace MultiShop.WebUI.Controllers
                 OperationDate = DateTime.Now
             });
 
-            string emailcontent = await _razorViewRenderer.RenderRazorViewToStringAsync("OrderSummaryEmailTemplate", values.BasketItems);
+            var emailContentModel = new OrderMailViewModel()
+            {
+                BasketItems = values.BasketItems,
+                TotalPrice = values.TotalPrice,
+                Address = value.Detail1,
+                UserInfo = user
+            };
+
+            string emailcontent = await _razorViewRenderer.RenderRazorViewToStringAsync("OrderSummaryEmailTemplate", emailContentModel);
+
+            List<string> ToList = new List<string> { "dogukan_derici@hotmail.com" };
+
+            var mailModel = new SendMailViewModel
+            {
+                ReceiverMail = ToList,
+                Subject = "MultiShop - Sipariş Onayı",
+                Body = emailcontent,
+                IsSend = false,
+                SendDate = DateTime.Now
+            };
+
+            _mailService.SendMail(mailModel);
 
             // Kullanıcıya ait sepet temizlenir.
             await _basketService.DeleteBasket();

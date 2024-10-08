@@ -4,9 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <title>Sipariş Onayı</title>
-    <link href="~/css/confirmordermailstyle.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f8f9fa;
+            font-weight: 400;
+            font-size: 1rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin: 50px auto;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+            table th, table td {
+                padding: 0.5rem;
+                text-align: left;
+            }
+
+            table th {
+                background-color: #f1f1f1;
+            }
+
+            table tfoot th {
+                text-align: right;
+                font-weight: bold;
+            }
+
+        .customer-info {
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            margin: 1rem 0 0 0;
+            padding: .5rem;
+        }
+
+        h5, h6 {
+            margin: 1rem 0 0.5rem;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -14,38 +86,51 @@
             <h1>Sipariş Onayı</h1>
         </div>
         <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Değerli Müşterimiz,</h5>
-                <p>Siparişiniz alınmıştır. Aşağıda sipariş detaylarınız yer almaktadır:</p>
+            <div class="card-body" style="text-align: left; width: 100%;">
 
-                <h6>Sipariş Bilgileri:</h6>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Ürün Adı</th>
-                            <th>Adet</th>
-                            <th>Fiyat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                <div>
+                    <h5 style="font-size: 1.25rem;">Değerli Müşterimiz,</h5>
+                    <p>Siparişiniz alınmıştır. Aşağıda sipariş detaylarınız yer almaktadır.</p>
+                </div>
+                <div>
+                    <h6 style="font-size: 1.1rem;">Sipariş Bilgileri:</h6>
+                    <table border="1">
+                        <thead>
                             <tr>
-                                <td>@item.ProductName</td>
-                                <td>@item.ProductName</td>
-                                <td>@item.ProductName</td>
+                                <th>Ürün Adı</th>
+                                <th style="width: 100px; max-width: 100px;">Adet</th>
+                                <th style="width: 100px; max-width: 100px; ">Fiyat</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.BasketItems)
+                            {
+                                <tr>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Price.ToString("C", new CultureInfo("tr-TR"))</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2"></th>
+                                <th style="text-align: left;">@Model.TotalPrice.ToString("C", new CultureInfo("tr-TR"))</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
 
-                <h6>Müşteri Bilgileri:</h6>
-                <p><strong>Ad:</strong> John Doe</p>
-                <p><strong>Email:</strong> john.doe@example.com</p>
-                <p><strong>Adres:</strong> 1234 Sokak, Şehir, Ülke</p>
-
-                <p>Herhangi bir sorunuz olursa lütfen bizimle <a href="/contact" target="_blank">iletişime</a> geçin.</p>
-                <p>İyi günler dileriz!</p>
+                <div class="customer-info">
+                    <h6 style="font-size: 1.1rem;">Müşteri Bilgileri:</h6>
+                    <p><strong>Ad:</strong> @Model.UserInfo.Name @Model.UserInfo.Surname</p>
+                    <p><strong>Email:</strong> @Model.UserInfo.Email</p>
+                    <p><strong>Adres:</strong> @Model.Address</p>
+                </div>
+                <div>
+                    <p>Herhangi bir sorunuz olursa lütfen bizimle iletişime geçin.</p>
+                    <p>İyi günler dileriz!</p>
+                </div>
             </div>
         </div>
         <div class="footer">

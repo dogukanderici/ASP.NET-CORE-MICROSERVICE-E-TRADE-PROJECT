@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.WebUI.Services.BasketServices;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace MultiShop.WebUI.ViewComponents.OrderViewComponents
 {
@@ -16,6 +17,11 @@ namespace MultiShop.WebUI.ViewComponents.OrderViewComponents
         {
             var values = await _basketService.GetBasket();
             var basketItems = values.BasketItems;
+
+            var totalPriceWithTax = values.TotalPrice;
+
+            ViewBag.TotalPriceWithTax = totalPriceWithTax;
+            ViewBag.DiscountAmount = totalPriceWithTax / 100 * (values.DiscountRate);
 
             return View(basketItems);
         }
