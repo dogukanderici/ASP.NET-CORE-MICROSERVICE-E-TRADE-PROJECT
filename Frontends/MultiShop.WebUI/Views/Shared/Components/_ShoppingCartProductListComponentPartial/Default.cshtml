@@ -23,7 +23,7 @@
             <tbody class="align-middle">
                 @foreach (var item in Model)
                 {
-                    count += 1;
+                    @* count += 1; *@
 
                     <tr>
                         <td class="align-middle"><img src="~/userfiles/@item.ProductImageUrl" alt="" style="width: 50px; height: 50px;"> @item.ProductName</td>
@@ -31,13 +31,13 @@
                         <td class="align-middle">
                             <div class="input-group quantity mx-auto" style="width: 100px;">
                                 <div class="input-group-btn">
-                                    <button id="removeBasketItem-@count" class="btn btn-sm btn-primary btn-minus" onclick="removeItemFromBasket(@count)">
+                                    <button id="removeBasketItem-item-@(item.ProductId.ToString())" class="btn btn-sm btn-primary btn-minus" onclick="removeItemFromBasket('@(item.ProductId.ToString())')">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
-                                <input id="itemQuantity-@count" type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="@item.Quantity" readonly="true">
+                                <input id="itemQuantity-item-@(item.ProductId.ToString())" type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="@item.Quantity" readonly="true">
                                 <div class="input-group-btn">
-                                    <button id="addBasketItem" class="btn btn-sm btn-primary btn-plus" onclick="addItemToBasket(@count)">
+                                    <button id="addBasketItem-item-@(item.ProductId.ToString())" class="btn btn-sm btn-primary btn-plus" onclick="addItemToBasket('@(item.ProductId.ToString())')">
                                         <i class="fa fa-plus"></i>
                                     </button>
                                 </div>

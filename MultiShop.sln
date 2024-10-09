@@ -102,11 +102,40 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalRRealTimeApi", "Servi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMQMessage", "RabbitMQMessage", "{D0E4EA93-D72E-4E26-84FD-193A9F8D52AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiShop.RabbitMQMessage", "Services\RabbitMQMessage\MultiShop.RabbitMQMessage\MultiShop.RabbitMQMessage.csproj", "{54FB0DEA-3EB6-4900-9D1B-64BEFA6C26C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiShop.RabbitMQMessage", "Services\RabbitMQMessage\MultiShop.RabbitMQMessage\MultiShop.RabbitMQMessage.csproj", "{54FB0DEA-3EB6-4900-9D1B-64BEFA6C26C8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RapidAPI", "RapidAPI", "{56C6896C-C03F-48FC-A591-27E1E6994620}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiShop.RapidApiWebUI", "RapidAPI\MultiShop.RapidApiWebUI\MultiShop.RapidApiWebUI.csproj", "{8BDC1B76-2025-49FD-BA9A-7E134AE7EA11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiShop.RapidApiWebUI", "RapidAPI\MultiShop.RapidApiWebUI\MultiShop.RapidApiWebUI.csproj", "{8BDC1B76-2025-49FD-BA9A-7E134AE7EA11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Screenshots", "Screenshots", "{A2DEB883-04F0-4518-8980-5CBFA890C212}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\doguk\OneDrive\Masaüstü\adminpanel1.png = C:\Users\doguk\OneDrive\Masaüstü\adminpanel1.png
+		C:\Users\doguk\OneDrive\Masaüstü\adminpanel2.png = C:\Users\doguk\OneDrive\Masaüstü\adminpanel2.png
+		C:\Users\doguk\OneDrive\Masaüstü\adminpanel3.png = C:\Users\doguk\OneDrive\Masaüstü\adminpanel3.png
+		C:\Users\doguk\OneDrive\Masaüstü\adminpanel4.png = C:\Users\doguk\OneDrive\Masaüstü\adminpanel4.png
+		C:\Users\doguk\OneDrive\Masaüstü\adminpanel5.png = C:\Users\doguk\OneDrive\Masaüstü\adminpanel5.png
+		C:\Users\doguk\OneDrive\Masaüstü\footer.png = C:\Users\doguk\OneDrive\Masaüstü\footer.png
+		C:\Users\doguk\OneDrive\Masaüstü\homepage1.png = C:\Users\doguk\OneDrive\Masaüstü\homepage1.png
+		C:\Users\doguk\OneDrive\Masaüstü\homepage2.png = C:\Users\doguk\OneDrive\Masaüstü\homepage2.png
+		C:\Users\doguk\OneDrive\Masaüstü\homepage3.png = C:\Users\doguk\OneDrive\Masaüstü\homepage3.png
+		C:\Users\doguk\OneDrive\Masaüstü\homepage4.png = C:\Users\doguk\OneDrive\Masaüstü\homepage4.png
+		C:\Users\doguk\OneDrive\Masaüstü\homepage5.png = C:\Users\doguk\OneDrive\Masaüstü\homepage5.png
+		C:\Users\doguk\OneDrive\Masaüstü\invalidpage.png = C:\Users\doguk\OneDrive\Masaüstü\invalidpage.png
+		C:\Users\doguk\OneDrive\Masaüstü\login.png = C:\Users\doguk\OneDrive\Masaüstü\login.png
+		C:\Users\doguk\OneDrive\Masaüstü\order1.png = C:\Users\doguk\OneDrive\Masaüstü\order1.png
+		C:\Users\doguk\OneDrive\Masaüstü\order2.png = C:\Users\doguk\OneDrive\Masaüstü\order2.png
+		C:\Users\doguk\OneDrive\Masaüstü\ordermail.png = C:\Users\doguk\OneDrive\Masaüstü\ordermail.png
+		C:\Users\doguk\OneDrive\Masaüstü\payment.png = C:\Users\doguk\OneDrive\Masaüstü\payment.png
+		C:\Users\doguk\OneDrive\Masaüstü\productdetail1.png = C:\Users\doguk\OneDrive\Masaüstü\productdetail1.png
+		C:\Users\doguk\OneDrive\Masaüstü\productdetail2.png = C:\Users\doguk\OneDrive\Masaüstü\productdetail2.png
+		C:\Users\doguk\OneDrive\Masaüstü\register.png = C:\Users\doguk\OneDrive\Masaüstü\register.png
+		C:\Users\doguk\OneDrive\Masaüstü\shoppingcart.png = C:\Users\doguk\OneDrive\Masaüstü\shoppingcart.png
+		C:\Users\doguk\OneDrive\Masaüstü\userpanel1.png = C:\Users\doguk\OneDrive\Masaüstü\userpanel1.png
+		C:\Users\doguk\OneDrive\Masaüstü\userpanel2.png = C:\Users\doguk\OneDrive\Masaüstü\userpanel2.png
+		C:\Users\doguk\OneDrive\Masaüstü\userpanel3.png = C:\Users\doguk\OneDrive\Masaüstü\userpanel3.png
+		C:\Users\doguk\OneDrive\Masaüstü\userpanel4.png = C:\Users\doguk\OneDrive\Masaüstü\userpanel4.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -253,6 +282,7 @@ Global
 		{D0E4EA93-D72E-4E26-84FD-193A9F8D52AE} = {4DD82FF5-8850-409F-8241-191FFF807A5E}
 		{54FB0DEA-3EB6-4900-9D1B-64BEFA6C26C8} = {D0E4EA93-D72E-4E26-84FD-193A9F8D52AE}
 		{8BDC1B76-2025-49FD-BA9A-7E134AE7EA11} = {56C6896C-C03F-48FC-A591-27E1E6994620}
+		{A2DEB883-04F0-4518-8980-5CBFA890C212} = {667DDDCF-8A80-4BB6-BBDA-E8A5A9FFA92B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C35195FA-190F-4E84-A9D2-9FE0FF36241D}

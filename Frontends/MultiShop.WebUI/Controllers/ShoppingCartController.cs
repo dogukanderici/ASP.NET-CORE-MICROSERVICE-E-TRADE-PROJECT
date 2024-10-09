@@ -65,11 +65,45 @@ namespace MultiShop.WebUI.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> UpdateBasketItem(string productId, int itemQuantity)
+        {
+            var values = await _basketService.GetBasket();
+
+            foreach (var basketItem in values.BasketItems)
+            {
+                if (basketItem.ProductId == productId)
+                {
+                    basketItem.Quantity = itemQuantity;
+
+                    await _basketService.SaveBasket(values);
+                }
+            }
+
+            return Json(new { success = true });
+        }
+
         public async Task<IActionResult> RemoveBasketItem(string productId)
         {
             await _basketService.RemoveBasketItem(productId);
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> RemoveBasketItemFromBasket(string productId, int itemQuantity)
+        {
+            var values = await _basketService.GetBasket();
+
+            foreach (var basketItem in values.BasketItems)
+            {
+                if (basketItem.ProductId == productId)
+                {
+                    basketItem.Quantity = itemQuantity;
+
+                    await _basketService.SaveBasket(values);
+                }
+            }
+
+            return Json(new { success = true });
         }
     }
 }

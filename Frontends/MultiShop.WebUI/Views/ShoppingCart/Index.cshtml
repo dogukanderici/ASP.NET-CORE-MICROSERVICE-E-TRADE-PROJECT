@@ -16,24 +16,41 @@
 
 @section Scripts {
     <script>
+        function executePostAjaxOperations(url, data) {
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: data,
+                success: function (successResult) {
+                    console.log("successResult: ", successResult);
+                    window.location.reload();
+                }
+            });
+        }
+
         function removeItemFromBasket(htmlId) {
             setTimeout(function () {
-                var quantityValue = $("#itemQuantity-" + htmlId + "").val();
-                console.log("htmlId: ", htmlId);
-                console.log("itemQuantityForRemove: ", quantityValue);
+                var quantityValue = $("#itemQuantity-item-" + htmlId + "").val();
+
+                var removedData = {
+                    productId: htmlId,
+                    itemQuantity: quantityValue
+                }
+                executePostAjaxOperations("/shoppingcart/removebasketitemfrombasket", removedData);
             }, 1000);
         }
 
         function addItemToBasket(htmlId) {
             setTimeout(function () {
-                var quantityValue = $("#itemQuantity-" + htmlId + "").val();
-                console.log("htmlId: ", htmlId);
-                console.log("itemQuantityForAdd: ", quantityValue);
+                var quantityValue = $("#itemQuantity-item-" + htmlId + "").val();
+
+                var addedData = {
+                    productId: htmlId,
+                    itemQuantity: quantityValue
+                }
+                executePostAjaxOperations("/shoppingcart/updatebasketitem", addedData);
             }, 1000);
         }
-
-        // $("#removeBasketItem").click(removeItemFromBasket);
-        // $("#addBasketItem").click(addItemToBasket);
 
     </script>
 }
