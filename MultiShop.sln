@@ -108,7 +108,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RapidAPI", "RapidAPI", "{56
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiShop.RapidApiWebUI", "RapidAPI\MultiShop.RapidApiWebUI\MultiShop.RapidApiWebUI.csproj", "{8BDC1B76-2025-49FD-BA9A-7E134AE7EA11}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Screenshots", "Screenshots", "{A2DEB883-04F0-4518-8980-5CBFA890C212}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{A2DEB883-04F0-4518-8980-5CBFA890C212}"
 	ProjectSection(SolutionItems) = preProject
 		C:\Users\doguk\OneDrive\Masaüstü\adminpanel1.png = C:\Users\doguk\OneDrive\Masaüstü\adminpanel1.png
 		C:\Users\doguk\OneDrive\Masaüstü\adminpanel2.png = C:\Users\doguk\OneDrive\Masaüstü\adminpanel2.png
