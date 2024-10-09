@@ -108,35 +108,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RapidAPI", "RapidAPI", "{56
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiShop.RapidApiWebUI", "RapidAPI\MultiShop.RapidApiWebUI\MultiShop.RapidApiWebUI.csproj", "{8BDC1B76-2025-49FD-BA9A-7E134AE7EA11}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{EA8210A2-63F3-46FA-AB8E-21BE72824F3C}"
-	ProjectSection(SolutionItems) = preProject
-		..\Screenshots\MultiShop\assets\adminpanel1.png = ..\Screenshots\MultiShop\assets\adminpanel1.png
-		..\Screenshots\MultiShop\assets\adminpanel2.png = ..\Screenshots\MultiShop\assets\adminpanel2.png
-		..\Screenshots\MultiShop\assets\adminpanel3.png = ..\Screenshots\MultiShop\assets\adminpanel3.png
-		..\Screenshots\MultiShop\assets\adminpanel4.png = ..\Screenshots\MultiShop\assets\adminpanel4.png
-		..\Screenshots\MultiShop\assets\adminpanel5.png = ..\Screenshots\MultiShop\assets\adminpanel5.png
-		..\Screenshots\MultiShop\assets\footer.png = ..\Screenshots\MultiShop\assets\footer.png
-		..\Screenshots\MultiShop\assets\homepage1.png = ..\Screenshots\MultiShop\assets\homepage1.png
-		..\Screenshots\MultiShop\assets\homepage2.png = ..\Screenshots\MultiShop\assets\homepage2.png
-		..\Screenshots\MultiShop\assets\homepage3.png = ..\Screenshots\MultiShop\assets\homepage3.png
-		..\Screenshots\MultiShop\assets\homepage4.png = ..\Screenshots\MultiShop\assets\homepage4.png
-		..\Screenshots\MultiShop\assets\homepage5.png = ..\Screenshots\MultiShop\assets\homepage5.png
-		..\Screenshots\MultiShop\assets\invalidpage.png = ..\Screenshots\MultiShop\assets\invalidpage.png
-		..\Screenshots\MultiShop\assets\login.png = ..\Screenshots\MultiShop\assets\login.png
-		..\Screenshots\MultiShop\assets\order1.png = ..\Screenshots\MultiShop\assets\order1.png
-		..\Screenshots\MultiShop\assets\order2.png = ..\Screenshots\MultiShop\assets\order2.png
-		..\Screenshots\MultiShop\assets\ordermail.png = ..\Screenshots\MultiShop\assets\ordermail.png
-		..\Screenshots\MultiShop\assets\payment.png = ..\Screenshots\MultiShop\assets\payment.png
-		..\Screenshots\MultiShop\assets\productdetail1.png = ..\Screenshots\MultiShop\assets\productdetail1.png
-		..\Screenshots\MultiShop\assets\productdetail2.png = ..\Screenshots\MultiShop\assets\productdetail2.png
-		..\Screenshots\MultiShop\assets\register.png = ..\Screenshots\MultiShop\assets\register.png
-		..\Screenshots\MultiShop\assets\shoppingcart.png = ..\Screenshots\MultiShop\assets\shoppingcart.png
-		..\Screenshots\MultiShop\assets\userpanel1.png = ..\Screenshots\MultiShop\assets\userpanel1.png
-		..\Screenshots\MultiShop\assets\userpanel2.png = ..\Screenshots\MultiShop\assets\userpanel2.png
-		..\Screenshots\MultiShop\assets\userpanel3.png = ..\Screenshots\MultiShop\assets\userpanel3.png
-		..\Screenshots\MultiShop\assets\userpanel4.png = ..\Screenshots\MultiShop\assets\userpanel4.png
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

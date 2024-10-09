@@ -3,7 +3,7 @@
 - Bu proje mikroservis mimarisiyle oluþturulmuþ bir e-ticaret projesidir. Her bir mikroservis baðýmsýz olarak çalýþabilen ve belirli görevleri yerine getiren baðýmsýz servislerden oluþmaktadýr.
 - Ana sayfada kategorileri görüntüleyebilir, kategorilere ait ürünleri listeyebilir, sepetinize ekleyebilir, ürün detayýna giderek ürün hakkýndaki açýklamalarý ve yorumlarý listeleyebilir ve özel teklifleri görüntüleyebilirsiniz.
 - Sepete eklenen ürünleri Sipariþi Tamamla ile adres ve kargo bilgisi için Order adýmýna yönlendirir. Kargo adresi varsa güncelleyebilir yoksa ekleyebilir ve Ödeme adýmýna geçer. Kart bilgileri girildikten sonra Sipariþ Onayý maili göndererek sipraiþ iþlemi tamamlanýr.
-- Dosyanýn en altýnda projeye ait bazý ekran görüntüleri bulunmaktadýr. Daha fazlasý için **assets** klasörü altýndan ulaþabilirsiniz.
+- Dosyanýn en altýnda projeye ait bazý ekran görüntüleri bulunmaktadýr. Daha fazlasý için **Frontends -> wwwroot -> assets** klasörü altýndan ulaþabilirsiniz.
 
 **Kullanýlan Teknolojiler:**
 
@@ -85,8 +85,8 @@ Bu mikroservis ile;
 **Projeden Ekran Görüntüleri**
 - Daha fazlasý için **assets** klasörü altýndan ulaþabilirsiniz.
 
-![Ana Sayfa](assets/homepage1.png)
-![Ana Sayfa](assets/homepage4.png)
-![Ana Sayfa](assets/shoppingcart.png)
-![Ana Sayfa](assets/adminpanel1.png)
-![Ana Sayfa](assets/userpanel1.png)
+![Ana Sayfa](Frontends/wwwroot/assets/homepage1.png)
+![Ana Sayfa](Frontends/wwwroot/assets/homepage4.png)
+![Ana Sayfa](Frontends/wwwroot/assets/shoppingcart.png)
+![Ana Sayfa](Frontends/wwwroot/assets/adminpanel1.png)
+![Ana Sayfa](Frontends/wwwroot/assets/userpanel1.png)
