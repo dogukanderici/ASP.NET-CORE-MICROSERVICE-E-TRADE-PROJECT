@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MultiShop.Dtos.CommentDtos;
+using MultiShop.WebUI.Services.CommentServices;
 using MultiShop.WebUI.Utilities.FileOperations;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.UIValidations.CommentValidations;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -8,11 +11,11 @@ namespace MultiShop.WebUI.Controllers
 {
     public class ProductListController : Controller
     {
-        private IHttpClientFactory _httpClientFactory;
+        private readonly ICommentService _commentService;
 
-        public ProductListController(IHttpClientFactory httpClientFactory)
+        public ProductListController(ICommentService commentService)
         {
-            _httpClientFactory = httpClientFactory;
+            _commentService = commentService;
         }
 
         public IActionResult Index(string id)
@@ -46,25 +49,29 @@ namespace MultiShop.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddComment(CreateCommentDto createCommentDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var createCommentValidator = new CommentValidator();
+            var validation = createCommentValidator.Validate(createCommentDto);
 
-            createCommentDto.ImageUrl = "test";
-            createCommentDto.Rating = 1;
-            createCommentDto.CreatedDate = DateTime.Now;
-            createCommentDto.IsActive = false;
-
-            var jsonData = JsonConvert.SerializeObject(createCommentDto);
-
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            var responseMessage = await client.PostAsync("http://localhost:7296/api/comments", stringContent);
-
-            if (responseMessage.IsSuccessStatusCode)
+            if (validation.IsValid)
             {
-                return RedirectToAction("Index", "Default");
-            }
+                createCommentDto.ImageUrl = "https://localhost:7155/online-shop-website-template/img/profile-logo.png";
+                createCommentDto.Rating = (createCommentDto.Rating == null ? 1 : createCommentDto.Rating);
+                createCommentDto.CreatedDate = DateTime.Now;
+                createCommentDto.IsActive = false;
 
-            return RedirectToAction("NotFound404", "Error");
+                var responseMessage = await _commentService.CreateDataAsync(createCommentDto);
+
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "Default");
+                }
+
+                return RedirectToAction("NotFound404", "Error");
+            }
+            else
+            {
+                return View();
+            }
         }
 
     }

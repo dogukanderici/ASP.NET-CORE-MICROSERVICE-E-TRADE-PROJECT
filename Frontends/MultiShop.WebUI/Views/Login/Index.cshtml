@@ -9,15 +9,13 @@
 <head>
     <meta charset="utf-8">
     <title>MultiShop Kullanıcı Girişi Sayfası</title>
-    <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <!-- Font-->
     <link rel="stylesheet" type="text/css" href="~/colorlib-regform-30/css/opensans-font.css">
     <link rel="stylesheet" type="text/css" href="~/colorlib-regform-30/fonts/line-awesome/css/line-awesome.min.css">
-    <!-- Jquery -->
     <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
-    <!-- Main Style Css -->
     <link rel="stylesheet" href="~/colorlib-regform-30/css/style.css" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 </head>
 <body class="form-v4">
     <div class="page-content">
@@ -32,14 +30,24 @@
             </div>
             <form id="RegisterForm" class="form-detail" asp-controller="Login" asp-action="Index" method="post">
                 <h2>MultiShop Giriş Formu</h2>
-                <div class="form-row">
-                    <label asp-for="Username">Kullanıcı Adınız</label>
-                    <input asp-for="Username" type="text" id="your_username" class="input-text">
+
+                @if (ViewBag.InvalidUserPassword != null)
+                {
+                    <div class="alert alert-danger text-center">@ViewBag.InvalidUserPassword</div>
+                }
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <label asp-for="Username">Kullanıcı Adınız</label>
+                        <input asp-for="Username" type="text" id="your_username" class="input-text">
+                        <span asp-validation-for="Username" class="text text-danger"></span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="form-row">
                         <label asp-for="Password">Şifre</label>
                         <input asp-for="Password" type="password" id="password" class="input-text">
+                        <span asp-validation-for="Password" class="text text-danger"></span>
                     </div>
                 </div>
                 <div class="form-row-last">
@@ -48,5 +56,5 @@
             </form>
         </div>
     </div>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</body>
 </html>

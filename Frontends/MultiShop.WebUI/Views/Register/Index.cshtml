@@ -9,15 +9,13 @@
 <head>
     <meta charset="utf-8">
     <title>MultiShop Kullanıcı Kayıt Sayfası</title>
-    <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <!-- Font-->
     <link rel="stylesheet" type="text/css" href="~/colorlib-regform-30/css/opensans-font.css">
     <link rel="stylesheet" type="text/css" href="~/colorlib-regform-30/fonts/line-awesome/css/line-awesome.min.css">
-    <!-- Jquery -->
     <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
-    <!-- Main Style Css -->
     <link rel="stylesheet" href="~/colorlib-regform-30/css/style.css" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 </head>
 <body class="form-v4">
     <div class="page-content">
@@ -36,28 +34,39 @@
                     <div class="form-row form-row-1">
                         <label asp-for="Name">Adınız</label>
                         <input asp-for="Name" type="text" id="first_name" class="input-text">
+                        <span asp-validation-for="Name" class="text text-danger"></span>
                     </div>
                     <div class="form-row form-row-1">
                         <label asp-for="Surname">Soyadınız</label>
                         <input asp-for="Surname" type="text" id="last_name" class="input-text">
+                        <span asp-validation-for="Surname" class="text text-danger"></span>
                     </div>
                 </div>
                 <div class="form-row">
                     <label asp-for="Email">E-Posta</label>
-                    <input asp-for="Email" type="text" id="your_email" class="input-text" required pattern="[^@@]+@@[^@@]+.[a-zA-Z]{2,6}">
+                    <input asp-for="Email" type="text" id="your_email" class="input-text">
+                    <span asp-validation-for="Email" class="text text-danger"></span>
                 </div>
                 <div class="form-row">
                     <label asp-for="Username">Kullanıcı Adınız</label>
                     <input asp-for="Username" type="text" id="your_username" class="input-text">
+                    <span asp-validation-for="Username" class="text text-danger"></span>
                 </div>
                 <div class="form-group">
                     <div class="form-row form-row-1 ">
                         <label asp-for="Password">Şifre</label>
-                        <input asp-for="Password" type="password" id="password" class="input-text" required>
+                        <input asp-for="Password" type="password" id="password" class="input-text">
+                        <span asp-validation-for="Password" class="text text-danger"></span>
                     </div>
                     <div class="form-row form-row-1">
                         <label asp-for="ConfirmPassword">Şifre Tekrarı</label>
-                        <input asp-for="ConfirmPassword" type="password" id="comfirm_password" class="input-text" required>
+                        <input asp-for="ConfirmPassword" type="password" id="comfirm_password" class="input-text">
+                        <span asp-validation-for="ConfirmPassword" class="text text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-row">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
                     </div>
                 </div>
                 <div class="form-checkbox">
@@ -76,5 +85,5 @@
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</body>
 </html>

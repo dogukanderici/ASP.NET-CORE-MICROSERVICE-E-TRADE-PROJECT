@@ -3,6 +3,8 @@
 - Bu proje mikroservis mimarisiyle oluþturulmuþ bir e-ticaret projesidir. Her bir mikroservis baðýmsýz olarak çalýþabilen ve belirli görevleri yerine getiren baðýmsýz servislerden oluþmaktadýr.
 - Ana sayfada kategorileri görüntüleyebilir, kategorilere ait ürünleri listeyebilir, sepetinize ekleyebilir, ürün detayýna giderek ürün hakkýndaki açýklamalarý ve yorumlarý listeleyebilir ve özel teklifleri görüntüleyebilirsiniz.
 - Sepete eklenen ürünleri Sipariþi Tamamla ile adres ve kargo bilgisi için Order adýmýna yönlendirir. Kargo adresi varsa güncelleyebilir yoksa ekleyebilir ve Ödeme adýmýna geçer. Kart bilgileri girildikten sonra Sipariþ Onayý maili göndererek sipraiþ iþlemi tamamlanýr.
+- Admin ve kullanýcý panelleri bulunmaktadýr. Admin panelinden ürün, kategori, özel indirim, kargo hareketi güncelleme gibi tüm veri ekleme, güncelleme ve silme iþlemlerini yönetebilirsiniz.
+- Kullanýcý panelinde kargo adresi ekleyebilir, sipariþlerinizi ve kargo detaylarýný görüntüleyebilir admine gönderilmiþ olan mailleri listeleyebilir, Kiþisel bilgi þifre güncelleme iþlemlerini yapabilirsiniz.
 - Dosyanýn en altýnda projeye ait bazý ekran görüntüleri bulunmaktadýr. Daha fazlasý için **Frontends -> MultiShop.WebUI -> wwwroot -> assets** klasörü altýndan ulaþabilirsiniz.
 
 **Kullanýlan Teknolojiler:**
@@ -85,8 +87,8 @@ Bu mikroservis ile;
 **Projeden Ekran Görüntüleri**
 - Daha fazlasý için **Frontends -> MultiShop.WebUI -> wwwroot -> assets** klasörü altýndan ulaþabilirsiniz.
 
-![Ana Sayfa](Frontends/MultiShop.WebUI/wwwroot/assets/homepage1.png)
-![Ana Sayfa](Frontends/MultiShop.WebUI/wwwroot/assets/homepage4.png)
-![Ana Sayfa](Frontends/MultiShop.WebUI/wwwroot/assets/shoppingcart.png)
-![Ana Sayfa](Frontends/MultiShop.WebUI/wwwroot/assets/adminpanel1.png)
-![Ana Sayfa](Frontends/MultiShop.WebUI/wwwroot/assets/userpanel1.png)
+![Hopme Page1](Frontends/MultiShop.WebUI/wwwroot/assets/homepage1.png)
+![Home Page2](Frontends/MultiShop.WebUI/wwwroot/assets/homepage4.png)
+![ShoppingCart](Frontends/MultiShop.WebUI/wwwroot/assets/shoppingcart.png)
+![Admin Panel](Frontends/MultiShop.WebUI/wwwroot/assets/adminpanel1.png)
+![User Panel](Frontends/MultiShop.WebUI/wwwroot/assets/userpanel1.png)

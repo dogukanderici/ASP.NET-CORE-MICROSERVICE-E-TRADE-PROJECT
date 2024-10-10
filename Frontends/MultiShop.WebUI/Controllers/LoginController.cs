@@ -5,6 +5,7 @@ using MultiShop.Dtos.IdentityDtos;
 using MultiShop.WebUI.Models;
 using MultiShop.WebUI.Services;
 using MultiShop.WebUI.Services.Abstract;
+using MultiShop.WebUI.Utilities.ValidationRules.FluentValidation.UIValidations.LoginRegisterValidations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -26,15 +27,32 @@ namespace MultiShop.WebUI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var deneme = ViewBag.InvalidUserPassword;
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(SignInDto signUpDto)
         {
+            var signInValidator = new LoginValidator();
+            var validator = signInValidator.Validate(signUpDto);
 
-            await _identityService.SignIn(signUpDto);
-            return RedirectToAction("Index", "Default");
+            if (validator.IsValid)
+            {
+                var result = await _identityService.SignIn(signUpDto);
+
+                if (!result)
+                {
+                    ViewBag.InvalidUserPassword = "Kullanıcı Adı veya Şifre Hatalı!";
+                    return View();
+                }
+
+                return RedirectToAction("Index", "Default");
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }

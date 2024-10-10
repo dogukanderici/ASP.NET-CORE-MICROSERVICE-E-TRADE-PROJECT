@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MultiShop.IdentityServer.Dtos;
 using MultiShop.IdentityServer.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MultiShop.IdentityServer.Controllers
@@ -43,7 +44,7 @@ namespace MultiShop.IdentityServer.Controllers
                 return Ok("Kullanıcı Başarıyla Oluşturuldu.");
             }
 
-            return BadRequest("Kullanıcı Oluşturulurken Bir Hata Oluştu.");
+            return BadRequest(new { success = false, message = result.Errors.Select(e=>e.Description).ToList() });
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using MultiShop.Dtos.IdentityDtos;
 using MultiShop.WebUI.Services.Abstract;
 using MultiShop.WebUI.Settings;
+using System.Net;
 using System.Security.Claims;
 
 namespace MultiShop.WebUI.Services.Concrete
@@ -111,6 +112,11 @@ namespace MultiShop.WebUI.Services.Concrete
 
             // IdentityServer'a istek gönderir ve bir token değeri döner.
             var token = await _httpClient.RequestPasswordTokenAsync(passwordTokenRequest);
+
+            if (token.HttpStatusCode != HttpStatusCode.OK)
+            {
+                return false;
+            }
 
             // userinfo endpoint'ine istek göndermek için bir istek oluşturur.
             var userInfoRequest = new UserInfoRequest

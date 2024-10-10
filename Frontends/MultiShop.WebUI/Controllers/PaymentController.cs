@@ -117,7 +117,7 @@ namespace MultiShop.WebUI.Controllers
 
             string emailcontent = await _razorViewRenderer.RenderRazorViewToStringAsync("OrderSummaryEmailTemplate", emailContentModel);
 
-            List<string> ToList = new List<string> { "dogukan_derici@hotmail.com" };
+            List<string> ToList = new List<string> { user.Email };
 
             var mailModel = new SendMailViewModel
             {

@@ -1,32 +1,50 @@
 ﻿<div class="col-md-6">
-    <h4 class="mb-4">Bir Yorum Bırakınız</h4>
-    <small>Yorumunuzun alınması için geçerli bir e-posta adresi giriniz.*</small>
-    <div class="d-flex my-3">
-        <p class="mb-0 mr-2">Puanınız* :</p>
-        <div class="text-primary">
-            <i class="far fa-star"></i>
-            <i class="far fa-star"></i>
-            <i class="far fa-star"></i>
-            <i class="far fa-star"></i>
-            <i class="far fa-star"></i>
-        </div>
-    </div>
     <form id="AddNewComment" asp-controller="ProductList" asp-action="AddComment" method="post">
-        <input id="ProductId" value="@ViewBag.x" type="text" style="display: none !important;" name="ProductId" />
+        <h4 class="mb-4">Bir Yorum Bırakınız</h4>
+        <small>Yorumunuzun alınması için geçerli bir e-posta adresi giriniz.*</small>
+        <div class="d-flex my-3">
+            <div class="dropdown">
+                <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownRatingMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Puanınız*
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownRatingMenuButton">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <a class="dropdown-item" href="javascript:void(0);" onclick="selectRating(@i)">
+                            @for (int j = 1; j <= i; j++)
+                            {
+                                <i class="fas fa-star" style="color: #ffc107;"></i>
+                            }
+                            ( @i )
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+        <input id="ProductId" value="@ViewBag.x" type="hidden" name="ProductId" />
+        <input id="Rating" type="hidden" name="Rating" />
         <div class="form-group">
             <label for="name">Adınız*</label>
-            <input id="name" type="text" class="form-control" name="NameSurname">
+            <input id="name" type="text" class="form-control" name="NameSurname" required>
         </div>
         <div class="form-group">
             <label for="Email">E-Posta Adresiniz*</label>
-            <input id="Email" type="email" class="form-control" name="Email">
+            <input id="Email" type="email" class="form-control" name="Email" required>
         </div>
         <div class="form-group">
             <label for="CommentDetail">Yorumunuz*</label>
-            <textarea id="CommentDetail" cols="30" rows="5" class="form-control" name="CommentDetail"></textarea>
+            <textarea id="CommentDetail" cols="30" rows="5" class="form-control" name="CommentDetail" required></textarea>
         </div>
         <div class="form-group mb-0">
             <input type="submit" value="Yorum Yap" class="btn btn-primary px-3">
         </div>
     </form>
 </div>
+
+<script>
+    function selectRating(rating) {
+        console.log("rating: ", rating);
+        document.getElementById('Rating').value = rating;
+        document.getElementById('dropdownRatingMenuButton').innerText = "Puanınız* : " + rating;
+    }
+</script>
