@@ -32,7 +32,7 @@
 
 **Mikroservisler**
 
-- Tüm mikroservisler kullanýcý giriþine gerek olsun veya olmasýn token ile koruma altýna alýnmýþtýr.
+- Tüm mikroservisler token ile koruma altýna alýnmýþtýr.
 
 **1. Catalog Mikroservisi:** Kategoriler ve kategorilere göre ürünlerin listelendiði, öne çýkan ürünlerin, özel indirimlerin, servis standartlarýnýn ve markalarýn listelendiði ve yönetildiði mikroservistir.
 Bu mikroserviste veriler Mongo DB veritabanýnda saklanýr. Bu mikroservis kullanýcý giriþi yapýlarak alýnan token deðerine gerek kalmadan fakat client credential token ile koruma altýna alýnmýþtýr.
